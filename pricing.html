@@ -15,8 +15,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.5metrescrum.com/"},{"@type":"ListItem","position":2,"name":"Pricing","item":"https://www.5metrescrum.com/pricing"}]}</script>
   <style>
-    /* ── PRICING PAGE ─────────────────────────────────────── */
     body { background: #fff; }
 
     /* page-hero matches about.html style exactly */
@@ -129,25 +129,6 @@
       padding: 80px 0;
       border-top: 1px solid var(--slate-100);
     }
-    .faq-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      max-width: 860px;
-      margin: 0 auto;
-    }
-    @media (max-width: 700px) { .faq-grid { grid-template-columns: 1fr; } }
-    .faq-item {
-      background: var(--off-white);
-      border-radius: 16px;
-      padding: 24px 28px;
-    }
-    .faq-item p:first-child {
-      font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 8px;
-    }
-    .faq-item p:last-child {
-      font-size: 14px; color: var(--slate-600); line-height: 1.65;
-    }
 
     /* Guarantee — navy, centred, no overlay */
     .guarantee-section {
@@ -169,24 +150,45 @@
       font-size: 16px; color: var(--slate-400); line-height: 1.65; margin-bottom: 32px;
     }
   </style>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.5metrescrum.com/"},{"@type":"ListItem","position":2,"name":"Pricing","item":"https://www.5metrescrum.com/pricing"}]}</script>
 </head>
 <body>
 
-<nav class="nav" id="main-nav" role="navigation" aria-label="Main navigation"><div class="container"><div class="nav-inner"><a href="/" class="nav-logo" aria-label="5 Metre Scrum home"><img src="/assets/logo-v2.png" alt="5 Metre Scrum" width="480" height="82" style="height:40px;width:auto;display:block;" loading="eager"></a><div class="nav-cta">
+<nav class="nav" id="main-nav" role="navigation" aria-label="Main navigation">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" aria-label="5 Metre Scrum Home">
+        <img src="/assets/logo-v2.png" alt="5 Metre Scrum" width="480" height="82" style="height:40px;width:auto;display:block;" loading="eager">
+      </a>
+      <div class="nav-cta">
         <a href="/" class="nav-link">Home</a>
-  <a href="/about.html" class="nav-link">About Us</a>
-  <a href="/scout-board.html" class="nav-link">Scout Board</a><a href="/trials.html" class="nav-link">Trials &amp; Tours</a><a href="/clubs.html" class="nav-link">Clubs</a><a href="/blog.html" class="nav-link">Blog</a><a href="/pricing.html" class="nav-link active" aria-current="page">Pricing</a>
-        <a href="/login.html" class="nav-login">Log In</a><a href="/contact.html" class="nav-login">Contact Us</a><a href="/onboarding.html" class="btn-nav">Build My CV</a><button class="hamburger" id="mob-btn" aria-label="Open menu" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div></div></div></nav>
-<div class="mob-menu" id="mob-menu" role="dialog" aria-label="Mobile navigation"><a href="/" class="nav-link">Home</a>
+        <a href="/about.html" class="nav-link">About Us</a>
+        <a href="/scout-board.html" class="nav-link">Scout Board</a>
+        <a href="/trials.html" class="nav-link">Trials &amp; Tours</a>
+        <a href="/clubs.html" class="nav-link">Clubs</a>
+        <a href="/blog.html" class="nav-link">Blog</a>
+        <a href="/pricing.html" class="nav-link active" aria-current="page">Pricing</a>
+        <a href="/login.html" class="nav-login">Log In</a>
+        <a href="/contact.html" class="nav-login">Contact Us</a>
+        <a href="/onboarding.html" class="btn btn-primary btn-sm">Build My CV</a>
+        <button class="hamburger" id="mob-btn" aria-label="Open menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="mob-menu" id="mob-menu" role="dialog" aria-label="Mobile navigation">
+  <a href="/" class="nav-link">Home</a>
   <a href="/about.html" class="nav-link">About Us</a>
   <a href="/scout-board.html" class="nav-link">Scout Board</a>
-<a href="/trials.html" class="nav-link">Trials &amp; Tours</a>
-<a href="/clubs.html" class="nav-link">Clubs</a>
-<a href="/blog.html" class="nav-link">Blog</a>
-<a href="/pricing.html" class="nav-link">Pricing</a>
-<a href="/contact.html" class="nav-link">Contact Us</a>
-<div class="mob-cta"><a href="/login.html" class="btn btn-secondary btn-lg">Log In</a><a href="/onboarding.html" class="btn btn-primary btn-lg">Build My CV &mdash; Free</a></div>
+  <a href="/trials.html" class="nav-link">Trials &amp; Tours</a>
+  <a href="/clubs.html" class="nav-link">Clubs</a>
+  <a href="/blog.html" class="nav-link">Blog</a>
+  <a href="/pricing.html" class="nav-link">Pricing</a>
+  <a href="/contact.html" class="nav-link">Contact Us</a>
+  <div class="mob-cta"><a href="/login.html" class="btn btn-secondary btn-lg">Log In</a><a href="/onboarding.html" class="btn btn-primary btn-lg">Build My CV &mdash; Free</a></div>
+</div>
 
 <!-- PRICING HERO -->
 <div class="page-hero">
@@ -195,8 +197,8 @@
   </div>
   <div class="container ph-inner">
     <nav class="breadcrumb"><a href="/">Home</a><span>&#8250;</span><span>Pricing</span></nav>
-    <h1 style="text-align:center;">Start Free.<br><span style="color:var(--green);">Upgrade Anytime.</span></h1>
-    <p style="text-align:center;">No credit card required. Build your profile, get discovered, and upgrade when you're ready for analytics and priority placement.</p>
+    <h1>Start Free.<br><span style="color:var(--green);">Upgrade Anytime.</span></h1>
+    <p>No credit card required. Build your profile, get discovered, and upgrade when you're ready for analytics and priority placement.</p>
     <div class="billing-toggle" role="group" aria-label="Billing period" style="margin-top:24px;">
       <span class="active" id="lbl-monthly">Monthly</span>
       <div class="toggle-switch" id="billing-toggle" role="switch" aria-checked="false" tabindex="0" aria-label="Switch to annual billing">
@@ -374,327 +376,65 @@
     </div>
   </div>
 </footer>
+
 <script>
-/* ================================================================
-   RUGBYPASS — MAIN JS
-   ================================================================ */
+document.addEventListener('DOMContentLoaded', function () {
 
-document.addEventListener('DOMContentLoaded', () => {
-
-  /* ── NAV SCROLL ──────────────────────────────────────────────── */
-  const nav = document.getElementById('main-nav');
+  // Nav scroll shadow
+  var nav = document.getElementById('main-nav');
   if (nav) {
-    const onScroll = () => {
+    window.addEventListener('scroll', function () {
       nav.classList.toggle('scrolled', window.scrollY > 20);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    }, { passive: true });
   }
 
-  /* ── MOBILE NAV TOGGLE ───────────────────────────────────────── */
-  const mobileBtn = document.getElementById('mobile-menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-  if (mobileBtn && mobileMenu) {
-    mobileBtn.addEventListener('click', () => {
-      const isOpen = mobileMenu.classList.toggle('open');
-      mobileBtn.setAttribute('aria-expanded', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    });
-  }
-
-  /* ── TABS ────────────────────────────────────────────────────── */
-  document.querySelectorAll('[data-tab-group]').forEach(group => {
-    const btns = group.querySelectorAll('[data-tab]');
-    const panels = group.querySelectorAll('[data-tab-panel]');
-    btns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const target = btn.dataset.tab;
-        btns.forEach(b => b.classList.remove('active'));
-        panels.forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
-        group.querySelector('[data-tab-panel="' + target + '"]')?.classList.add('active');
-      });
-    });
-  });
-
-  /* ── FILTER TAGS ─────────────────────────────────────────────── */
-  document.querySelectorAll('.filter-tag').forEach(tag => {
-    tag.addEventListener('click', () => {
-      const group = tag.dataset.group;
-      if (group) {
-        document.querySelectorAll('.filter-tag[data-group="' + group + '"]').forEach(t => t.classList.remove('active'));
-      }
-      tag.classList.toggle('active');
-    });
-  });
-
-  /* ── ANIMATE BARS ON SCROLL ──────────────────────────────────── */
-  const bars = document.querySelectorAll('.pcm-bar-fill, .attr-bar-fill, .completion-bar-fill');
-  if ('IntersectionObserver' in window) {
-    const barObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          const target = el.dataset.width || '0%';
-          el.style.width = target;
-          barObserver.unobserve(el);
-        }
-      });
-    }, { threshold: 0.3 });
-    bars.forEach(bar => {
-      const w = bar.style.width;
-      bar.style.width = '0%';
-      bar.dataset.width = w;
-      barObserver.observe(bar);
-    });
-  } else {
-    bars.forEach(bar => bar.style.width = bar.dataset.width || bar.style.width);
-  }
-
-  /* ── ANIMATE COUNTERS ────────────────────────────────────────── */
-  const counters = document.querySelectorAll('[data-count]');
-  if ('IntersectionObserver' in window && counters.length) {
-    const countObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateCounter(entry.target);
-          countObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-    counters.forEach(el => countObserver.observe(el));
-  }
-
-  function animateCounter(el) {
-    const target = parseInt(el.dataset.count, 10);
-    const suffix = el.dataset.suffix || '';
-    const duration = 1200;
-    const start = performance.now();
-    const update = (now) => {
-      const p = Math.min((now - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(ease * target) + suffix;
-      if (p < 1) requestAnimationFrame(update);
-    };
-    requestAnimationFrame(update);
-  }
-
-  /* ── SCOUT BOARD SEARCH FILTER ───────────────────────────────── */
-  const searchInput = document.getElementById('player-search');
-  const playerRows = document.querySelectorAll('.player-row[data-name]');
-  if (searchInput && playerRows.length) {
-    searchInput.addEventListener('input', () => {
-      const q = searchInput.value.toLowerCase().trim();
-      playerRows.forEach(row => {
-        const name = (row.dataset.name || '').toLowerCase();
-        const pos = (row.dataset.position || '').toLowerCase();
-        row.style.display = (!q || name.includes(q) || pos.includes(q)) ? '' : 'none';
-      });
+  // Mobile menu toggle
+  var mobBtn = document.getElementById('mob-btn');
+  var mobMenu = document.getElementById('mob-menu');
+  if (mobBtn && mobMenu) {
+    mobBtn.addEventListener('click', function () {
+      var open = mobMenu.classList.toggle('open');
+      mobBtn.setAttribute('aria-expanded', open);
+      document.body.style.overflow = open ? 'hidden' : '';
     });
   }
 
-  /* ── POSITION FILTER ─────────────────────────────────────────── */
-  const posFilter = document.getElementById('position-filter');
-  if (posFilter && playerRows.length) {
-    posFilter.addEventListener('change', () => {
-      const val = posFilter.value.toLowerCase();
-      playerRows.forEach(row => {
-        const pos = (row.dataset.position || '').toLowerCase();
-        row.style.display = (!val || pos.includes(val)) ? '' : 'none';
-      });
-    });
-  }
-
-  /* ── PRICING TOGGLE ──────────────────────────────────────────── */
-  const pricingToggle = document.getElementById('pricing-toggle');
-  const monthlyPrices = document.querySelectorAll('[data-monthly]');
-  const annualPrices = document.querySelectorAll('[data-annual]');
-  if (pricingToggle) {
-    pricingToggle.addEventListener('change', () => {
-      const isAnnual = pricingToggle.checked;
-      monthlyPrices.forEach(el => el.classList.toggle('hidden', isAnnual));
-      annualPrices.forEach(el => el.classList.toggle('hidden', !isAnnual));
-    });
-  }
-
-  /* ── ONBOARDING WIZARD ───────────────────────────────────────── */
-  let currentStep = 1;
-  const totalSteps = 8;
-  const stepEls = document.querySelectorAll('[data-step]');
-  const stepDots = document.querySelectorAll('.progress-step-dot');
-  const stepLines = document.querySelectorAll('.progress-step-line');
-  const stepCounter = document.getElementById('step-counter');
-  const stepProgress = document.getElementById('step-progress');
-
-  function showStep(n) {
-    stepEls.forEach(el => {
-      el.style.display = parseInt(el.dataset.step) === n ? 'block' : 'none';
-    });
-    stepDots.forEach((dot, i) => {
-      dot.classList.toggle('done', i + 1 < n);
-      dot.classList.toggle('active', i + 1 === n);
-    });
-    stepLines.forEach((line, i) => {
-      line.classList.toggle('done', i + 1 < n);
-    });
-    if (stepCounter) stepCounter.textContent = 'Step ' + n + ' of ' + totalSteps;
-    if (stepProgress) stepProgress.style.width = ((n - 1) / (totalSteps - 1) * 100) + '%';
-  }
-
-  document.querySelectorAll('[data-next-step]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (currentStep < totalSteps) { currentStep++; showStep(currentStep); }
-    });
-  });
-  document.querySelectorAll('[data-prev-step]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (currentStep > 1) { currentStep--; showStep(currentStep); }
-    });
-  });
-  if (stepEls.length) showStep(1);
-
-  /* ── PROFILE TAB NAV ──────────────────────────────────────────── */
-  document.querySelectorAll('.profile-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      const section = tab.dataset.profileTab;
-      document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      document.querySelectorAll('.profile-section').forEach(s => {
-        s.style.display = s.dataset.profileSection === section ? 'block' : 'none';
-      });
-    });
-  });
-
-  /* ── VIDEO MODAL ─────────────────────────────────────────────── */
-  document.querySelectorAll('[data-video-trigger]').forEach(trigger => {
-    trigger.addEventListener('click', () => {
-      const src = trigger.dataset.videoTrigger;
-      const modal = document.getElementById('video-modal');
-      const iframe = document.getElementById('video-iframe');
-      if (modal && iframe && src) {
-        iframe.src = src;
-        modal.classList.add('open');
-        document.body.style.overflow = 'hidden';
-      }
-    });
-  });
-  document.getElementById('video-modal-close')?.addEventListener('click', closeVideoModal);
-  document.getElementById('video-modal')?.addEventListener('click', e => {
-    if (e.target === e.currentTarget) closeVideoModal();
-  });
-  function closeVideoModal() {
-    const modal = document.getElementById('video-modal');
-    const iframe = document.getElementById('video-iframe');
-    if (modal) modal.classList.remove('open');
-    if (iframe) iframe.src = '';
-    document.body.style.overflow = '';
-  }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVideoModal(); });
-
-  /* ── SCROLL REVEAL ───────────────────────────────────────────── */
-  if ('IntersectionObserver' in window) {
-    const revealEls = document.querySelectorAll('.reveal');
-    const revealObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-    revealEls.forEach(el => revealObserver.observe(el));
-  } else {
-    document.querySelectorAll('.reveal').forEach(el => el.classList.add('revealed'));
-  }
-
-});
-
-
-// Nav scroll
-var nav=document.getElementById('main-nav');
-window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>20);});
-
-// Mobile menu
-var mobBtn=document.getElementById('mob-btn');
-var mobMenu=document.getElementById('mob-menu');
-if(mobBtn&&mobMenu){
-  mobBtn.addEventListener('click',function(){
-    var open=mobMenu.classList.toggle('open');
-    mobBtn.setAttribute('aria-expanded',open);
-    document.body.style.overflow=open?'hidden':'';
-  });
-}
-
-// FAQ accordion
-document.querySelectorAll('.faq-q').forEach(function(btn){
-  btn.addEventListener('click',function(){
-    var wasOpen=btn.classList.contains('open');
-    document.querySelectorAll('.faq-q.open').forEach(function(b){
-      b.classList.remove('open');
-      var a=b.parentElement.querySelector('.faq-a');
-      if(a)a.classList.remove('open');
-    });
-    if(!wasOpen){
-      btn.classList.add('open');
-      var ans=btn.parentElement.querySelector('.faq-a');
-      if(ans)ans.classList.add('open');
-    }
-  });
-});
-
-</script>
-
-<script>
-function toggleAcc(btn) {
-  const answer = btn.nextElementSibling;
-  const icon = btn.querySelector('.acc-icon');
-  const isOpen = answer.style.display !== 'none';
-  // Close all
-  document.querySelectorAll('.acc-a').forEach(a => a.style.display = 'none');
-  document.querySelectorAll('.acc-icon').forEach(i => { i.textContent = '+'; i.style.transform = ''; });
-  // Open this one if it was closed
-  if (!isOpen) {
-    answer.style.display = 'block';
-    icon.textContent = '×';
-    icon.style.transform = 'rotate(0deg)';
-  }
-}
-</script>
-</body>
-
-<script>
-  const toggle = document.getElementById('billing-toggle');
-  const priceDisplay = document.getElementById('price-display');
-  const lblMonthly = document.getElementById('lbl-monthly');
-  const lblAnnual = document.getElementById('lbl-annual');
-  let annual = false;
+  // Billing toggle (Monthly / Annual)
+  var toggle = document.getElementById('billing-toggle');
+  var priceDisplay = document.getElementById('price-display');
+  var lblMonthly = document.getElementById('lbl-monthly');
+  var lblAnnual = document.getElementById('lbl-annual');
+  var annual = false;
   function updateToggle() {
     annual = !annual;
     toggle.classList.toggle('on', annual);
     toggle.setAttribute('aria-checked', annual);
-    priceDisplay.textContent = annual ? '£7' : '£9';
-    lblMonthly.classList.toggle('active', !annual);
-    lblAnnual.classList.toggle('active', annual);
+    if (priceDisplay) priceDisplay.textContent = annual ? '£7' : '£9';
+    if (lblMonthly) lblMonthly.classList.toggle('active', !annual);
+    if (lblAnnual) lblAnnual.classList.toggle('active', annual);
   }
-  toggle.addEventListener('click', updateToggle);
-  toggle.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); updateToggle(); } });
+  if (toggle) {
+    toggle.addEventListener('click', updateToggle);
+    toggle.addEventListener('keydown', function (e) {
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); updateToggle(); }
+    });
+  }
+
+  // FAQ accordion
+  window.toggleAcc = function (btn) {
+    var answer = btn.nextElementSibling;
+    var icon = btn.querySelector('.acc-icon');
+    var isOpen = answer.style.display !== 'none';
+    document.querySelectorAll('.acc-a').forEach(function (a) { a.style.display = 'none'; });
+    document.querySelectorAll('.acc-icon').forEach(function (i) { i.textContent = '+'; });
+    if (!isOpen) {
+      answer.style.display = 'block';
+      icon.textContent = '×';
+    }
+  };
+
+});
 </script>
 
-<script>
-function toggleAcc(btn) {
-  const answer = btn.nextElementSibling;
-  const icon = btn.querySelector('.acc-icon');
-  const isOpen = answer.style.display !== 'none';
-  // Close all
-  document.querySelectorAll('.acc-a').forEach(a => a.style.display = 'none');
-  document.querySelectorAll('.acc-icon').forEach(i => { i.textContent = '+'; i.style.transform = ''; });
-  // Open this one if it was closed
-  if (!isOpen) {
-    answer.style.display = 'block';
-    icon.textContent = '×';
-    icon.style.transform = 'rotate(0deg)';
-  }
-}
-</script>
 </body>
 </html>
