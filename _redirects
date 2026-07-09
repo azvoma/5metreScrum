@@ -1,0 +1,29 @@
+# 5 Metre Scrum — Netlify Redirects
+
+/scout-board     /scout-board.html     301
+/scout           /scout-board.html     301
+/trials          /trials.html          301
+/clubs           /clubs.html           301
+/blog            /blog.html            301
+/pricing         /pricing.html         301
+/login           /login.html           301
+/signup          /login.html           301
+/dashboard       /dashboard.html       301
+/build           /onboarding.html      301
+/onboarding      /onboarding.html      301
+/about           /about.html           301
+/contact         /contact.html         301
+/privacy         /privacy.html         301
+/terms           /terms.html           301
+/player          /player-profile.html  301
+
+# Blog article routes
+/blog/bronco-test-guide       /blog/bronco-test-guide.html    301
+/blog/eu-passport-guide       /blog/eu-passport-guide.html    301
+/blog/how-to-get-scouted      /blog/how-to-get-scouted.html   301
+/blog/agent-guide             /blog/agent-guide.html          301
+/blog/scholarship-pathways    /blog/scholarship-pathways.html 301
+/blog/rugby-cv-guide          /blog/rugby-cv-guide.html       301
+/blog/deadlift-standards      /blog/deadlift-standards.html   301
+/blog/highlight-reel-guide    /blog/highlight-reel-guide.html 301
+/blog/premiership-salaries    /blog/premiership-salaries.html 301

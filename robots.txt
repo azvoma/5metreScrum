@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Keep auth and account pages out of search results
+Disallow: /login.html
+Disallow: /dashboard.html
+Disallow: /onboarding.html
+
+# Sitemap location
+Sitemap: https://www.5metrescrum.com/sitemap.xml
