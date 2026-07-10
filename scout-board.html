@@ -2,17 +2,21 @@
 <html lang="en-GB">
 <head>
   <meta charset="UTF-8">
-<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rugby Scout Board | Search Verified Rugby Player Profiles | 5 Metre Scrum</title>
-  <meta name="description" content="Search verified rugby player profiles. Filter by position, Bronco time, age, height and EU passport eligibility. Used by scouts at 340+ professional clubs worldwide.">
+  <title>Rugby Scout Board | Search Verified Player Profiles</title>
+  <meta name="description" content="Search verified rugby player profiles by position, Bronco time, age, height and passport eligibility. Used by scouts at 340+ professional clubs.">
   <meta name="keywords" content="rugby scout board, rugby player database, rugby recruitment, find rugby players, rugby scouting UK, rugby talent search">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.5metrescrum.com/scout-board">
+  <link rel="canonical" href="https://www.5metrescrum.com/scout-board.html">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Rugby Scout Board | Search Verified Rugby Player Profiles">
+  <meta property="og:title" content="Rugby Scout Board | Search Verified Player Profiles">
   <meta property="og:description" content="Professional rugby player database. Filter by position, combine stats, passport eligibility and video. Used by 340+ clubs worldwide.">
-  <meta property="og:url" content="https://www.5metrescrum.com/scout-board">
+  <meta property="og:url" content="https://www.5metrescrum.com/scout-board.html">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Rugby Scout Board — 5 Metre Scrum Player Database">
 
@@ -22,7 +26,7 @@
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.5metrescrum.com/" },
-      { "@type": "ListItem", "position": 2, "name": "Scout Board", "item": "https://www.5metrescrum.com/scout-board" }
+      { "@type": "ListItem", "position": 2, "name": "Scout Board", "item": "https://www.5metrescrum.com/scout-board.html" }
     ]
   }
   </script>
@@ -1497,10 +1501,25 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
         <a href="/login.html" class="nav-login">Log In</a>
         <a href="/contact.html" class="nav-login">Contact Us</a>
         <a href="/onboarding.html" class="btn btn-primary btn-sm">Build My CV</a>
-      </div>
+      <button class="nav-mobile-btn" id="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button></div>
     </div>
   </div>
 </nav>
+<div class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+  <a href="/" class="nav-link">Home</a>
+  <a href="/about.html" class="nav-link">About Us</a>
+  <a href="/scout-board.html" class="nav-link">Scout Board</a>
+  <a href="/trials.html" class="nav-link">Trials &amp; Tours</a>
+  <a href="/clubs.html" class="nav-link">Clubs</a>
+  <a href="/blog.html" class="nav-link">Blog</a>
+  <a href="/pricing.html" class="nav-link">Pricing</a>
+  <a href="/contact.html" class="nav-link">Contact Us</a>
+  <div style="margin-top: auto; display: flex; flex-direction: column; gap: 12px;">
+    <a href="/login.html" class="btn btn-secondary btn-lg">Log In</a>
+    <a href="/onboarding.html" class="btn btn-primary btn-lg">Build My CV — Free</a>
+  </div>
+</div>
+
 
 <!-- SCOUT BOARD HEADER -->
 <div class="page-hero" style="position:relative;overflow:hidden;background:var(--navy);padding:100px 0 60px;">
@@ -1919,9 +1938,9 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
         <nav class="footer-links" aria-label="Resources navigation">
           <a href="/blog/rugby-cv-guide.html" class="footer-link">Rugby CV Guide</a>
           <a href="/blog/bronco-test-guide.html" class="footer-link">Bronco Test Guide</a>
-          <a href="/blog/scholarship-pathways.html" class="footer-link">Scholarship Pathways</a>
-          <a href="/blog/agent-guide.html" class="footer-link">Agent Guide</a>
-          <a href="/blog/eu-passport-guide.html" class="footer-link">EU Passport Guide</a>
+          <a href="/blog/deadlift-standards.html" class="footer-link">Deadlift Standards</a>
+          <a href="/blog/highlight-reel-guide.html" class="footer-link">Highlight Reel Guide</a>
+          <a href="/blog/premiership-salaries.html" class="footer-link">Premiership Salaries</a>
         </nav>
       </div>
       <div class="footer-col">
@@ -2195,6 +2214,49 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+</script>
+
+<button class="scroll-top-btn" id="scroll-top-btn" aria-label="Scroll to top">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 11l5-5 5 5M9 6.5V16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+<script>
+(function () {
+  var btn = document.getElementById('scroll-top-btn');
+  if (!btn) return;
+  window.addEventListener('scroll', function () {
+    btn.classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+  btn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
+</script>
+
+<div class="cookie-banner" id="cookie-banner" role="dialog" aria-label="Cookie notice">
+  <p>We use minimal cookies to keep you logged in and remember your preferences. No tracking or advertising cookies are used. See our <a href="/privacy.html">Privacy Policy</a> for details.</p>
+  <div class="cookie-banner-actions">
+    <button class="btn btn-outline btn-sm" id="cookie-decline" type="button">Decline</button>
+    <button class="btn btn-primary btn-sm" id="cookie-accept" type="button">Accept</button>
+  </div>
+</div>
+<script>
+(function () {
+  var KEY = '5ms-cookie-consent';
+  var banner = document.getElementById('cookie-banner');
+  if (!banner) return;
+  try {
+    if (localStorage.getItem(KEY)) return;
+  } catch (e) { return; }
+  setTimeout(function () { banner.classList.add('visible'); }, 600);
+  function dismiss(value) {
+    try { localStorage.setItem(KEY, value); } catch (e) {}
+    banner.classList.remove('visible');
+  }
+  var acceptBtn = document.getElementById('cookie-accept');
+  var declineBtn = document.getElementById('cookie-decline');
+  if (acceptBtn) acceptBtn.addEventListener('click', function () { dismiss('accepted'); });
+  if (declineBtn) declineBtn.addEventListener('click', function () { dismiss('declined'); });
+})();
 </script>
 </body>
 </html>
