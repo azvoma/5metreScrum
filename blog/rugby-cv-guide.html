@@ -35,7 +35,7 @@
     "dateModified": "2026-06-28",
     "author": {
       "@type": "Organization",
-      "name": "5 Metre Scrum Recruitment Team",
+      "name": "5 Metre Scrum Recruitment Analysts",
       "url": "https://www.5metrescrum.com/about.html"
     },
     "publisher": {
@@ -167,7 +167,8 @@ table.data td { padding: 12px 14px; border-bottom: 1px solid var(--slate-100); c
       <a href="/blog.html" class="back-link">&#8249; All Articles</a>
       <div class="article-kicker">Profile Building</div>
       <h1>The Rugby CV: What to Include, What to Cut, and What Scouts Read First</h1>
-      <div class="article-meta">By <strong>5 Metre Scrum Recruitment Team</strong> &middot; 7 min read &middot; Updated <time datetime="2026-06-28">28 June 2026</time></div>
+      <div class="article-meta">By <strong>5 Metre Scrum Recruitment Analysts</strong> &middot; 7 min read &middot; Updated <time datetime="2026-06-28">28 June 2026</time></div>
+      <p style="font-size:13px;color:var(--slate-400);margin-top:6px;">Drawing on recruitment feedback from scouts and academies using the platform to assess player profiles.</p>
     </div>
   </div>
   <div class="article-body">
@@ -319,7 +320,7 @@ document.addEventListener('DOMContentLoaded', function() {
   setTimeout(function () { banner.classList.add('visible'); }, 600);
   function dismiss(value) {
     try { localStorage.setItem(KEY, value); } catch (e) {}
-    banner.classList.remove('visible');
+    banner.classList.remove('visible'); setTimeout(function () { banner.style.display = 'none'; }, 400);
   }
   var acceptBtn = document.getElementById('cookie-accept');
   var declineBtn = document.getElementById('cookie-decline');
@@ -327,5 +328,9 @@ document.addEventListener('DOMContentLoaded', function() {
   if (declineBtn) declineBtn.addEventListener('click', function () { dismiss('declined'); });
 })();
 </script>
+
+<div class="mobile-sticky-cta">
+  <a href="/onboarding.html" class="btn btn-primary btn-lg">Build My CV &mdash; Free</a>
+</div>
 </body>
 </html>

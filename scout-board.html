@@ -664,6 +664,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
   transition: border-color var(--t-fast);
 }
 .filter-search:focus { outline: none; border-color: var(--green); }
+.filter-search::placeholder { color: var(--slate-600); opacity: 1; }
 .filter-tag {
   padding: 8px 16px;
   border: 1px solid var(--slate-200);
@@ -1680,7 +1681,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           <div class="player-row-full" role="listitem" tabindex="0" data-name="Conor Fitzgerald" data-position="Fly-Half" data-passport="EU" data-verified="true" data-video="true" onclick="location.href='/player-profile-1.html'" onkeypress="if(event.key==='Enter')location.href='/player-profile-1.html'" aria-label="View Conor Fitzgerald's profile">
             <img onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMEYyMDQwIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMEExNjI4Ii8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSI3MiIgcj0iMzAiIGZpbGw9IiMxQzM1NjAiLz48cGF0aCBkPSJNNTIgMTY4YzAtMjggMjItNDggNDgtNDhzNDggMjAgNDggNDh6IiBmaWxsPSIjMUMzNTYwIi8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iNzIiIHI9IjMwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMEM4NTMiIHN0cm9rZS1vcGFjaXR5PSIwLjI1IiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4='" src="/assets/images/players/player-1.jpg" alt="Conor Fitzgerald rugby player profile photo" loading="lazy">
             <div>
-              <div class="prf-name">Conor Fitzgerald <span class="badge-verified" style="font-size:10px;padding:2px 6px;">✓</span></div>
+              <div class="prf-name">Conor Fitzgerald <span class="badge-verified" style="font-size:10px;padding:2px 6px;" role="img" aria-label="Verified player">✓</span></div>
               <div class="prf-meta">Cork, Ireland · 19 yrs · 5'11" / 84kg</div>
             </div>
             <div class="prf-stat"><span class="val"><span class="badge-pos" style="font-size:11px;padding:3px 8px;">Fly-Half</span></span><span class="lbl">&nbsp;</span></div>
@@ -1695,7 +1696,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           <div class="player-row-full" role="listitem" tabindex="0" data-name="Sione Taufa" data-position="No. 8" data-passport="EU" data-verified="true" data-video="true" aria-label="View Sione Taufa's profile">
             <img onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMEYyMDQwIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMEExNjI4Ii8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSI3MiIgcj0iMzAiIGZpbGw9IiMxQzM1NjAiLz48cGF0aCBkPSJNNTIgMTY4YzAtMjggMjItNDggNDgtNDhzNDggMjAgNDggNDh6IiBmaWxsPSIjMUMzNTYwIi8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iNzIiIHI9IjMwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMEM4NTMiIHN0cm9rZS1vcGFjaXR5PSIwLjI1IiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4='" src="/assets/images/players/player-2.jpg" alt="Sione Taufa rugby player profile photo" loading="lazy">
             <div>
-              <div class="prf-name">Sione Taufa <span class="badge-verified" style="font-size:10px;padding:2px 6px;">✓</span></div>
+              <div class="prf-name">Sione Taufa <span class="badge-verified" style="font-size:10px;padding:2px 6px;" role="img" aria-label="Verified player">✓</span></div>
               <div class="prf-meta">Auckland, New Zealand · 24 yrs · 6'3" / 112kg</div>
             </div>
             <div class="prf-stat"><span class="val"><span class="badge-pos" style="font-size:11px;padding:3px 8px;">No. 8</span></span><span class="lbl">&nbsp;</span></div>
@@ -1725,7 +1726,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           <div class="player-row-full" role="listitem" tabindex="0" data-name="Diego Fernández" data-position="Centre" data-passport="EU" data-verified="true" data-video="true" aria-label="View Diego Fernández's profile">
             <img onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMEYyMDQwIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMEExNjI4Ii8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSI3MiIgcj0iMzAiIGZpbGw9IiMxQzM1NjAiLz48cGF0aCBkPSJNNTIgMTY4YzAtMjggMjItNDggNDgtNDhzNDggMjAgNDggNDh6IiBmaWxsPSIjMUMzNTYwIi8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iNzIiIHI9IjMwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMEM4NTMiIHN0cm9rZS1vcGFjaXR5PSIwLjI1IiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4='" src="/assets/images/players/player-4.jpg" alt="Diego Fernández rugby player profile photo" loading="lazy">
             <div>
-              <div class="prf-name">Diego Fernández <span class="badge-verified" style="font-size:10px;padding:2px 6px;">✓</span></div>
+              <div class="prf-name">Diego Fernández <span class="badge-verified" style="font-size:10px;padding:2px 6px;" role="img" aria-label="Verified player">✓</span></div>
               <div class="prf-meta">Buenos Aires, Argentina · 21 yrs · 6'1" / 97kg</div>
             </div>
             <div class="prf-stat"><span class="val"><span class="badge-pos" style="font-size:11px;padding:3px 8px;">Inside Centre</span></span><span class="lbl">&nbsp;</span></div>
@@ -1740,7 +1741,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           <div class="player-row-full" role="listitem" tabindex="0" data-name="Marcus Bailey" data-position="Wing" data-passport="UK" data-verified="true" data-video="true" aria-label="View Marcus Bailey's profile">
             <img onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMEYyMDQwIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMEExNjI4Ii8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSI3MiIgcj0iMzAiIGZpbGw9IiMxQzM1NjAiLz48cGF0aCBkPSJNNTIgMTY4YzAtMjggMjItNDggNDgtNDhzNDggMjAgNDggNDh6IiBmaWxsPSIjMUMzNTYwIi8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iNzIiIHI9IjMwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMEM4NTMiIHN0cm9rZS1vcGFjaXR5PSIwLjI1IiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4='" src="/assets/images/players/player-5.jpg" alt="Marcus Bailey rugby player profile photo" loading="lazy">
             <div>
-              <div class="prf-name">Marcus Bailey <span class="badge-verified" style="font-size:10px;padding:2px 6px;">✓</span></div>
+              <div class="prf-name">Marcus Bailey <span class="badge-verified" style="font-size:10px;padding:2px 6px;" role="img" aria-label="Verified player">✓</span></div>
               <div class="prf-meta">London, England · 20 yrs · 6'0" / 91kg</div>
             </div>
             <div class="prf-stat"><span class="val"><span class="badge-pos" style="font-size:11px;padding:3px 8px;">Wing</span></span><span class="lbl">&nbsp;</span></div>
@@ -1755,7 +1756,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           <div class="player-row-full" role="listitem" tabindex="0" data-name="Isaiah Thompson" data-position="Fullback" data-passport="UK" data-verified="true" data-video="false" aria-label="View Isaiah Thompson's profile">
             <img onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMEYyMDQwIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMEExNjI4Ii8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSI3MiIgcj0iMzAiIGZpbGw9IiMxQzM1NjAiLz48cGF0aCBkPSJNNTIgMTY4YzAtMjggMjItNDggNDgtNDhzNDggMjAgNDggNDh6IiBmaWxsPSIjMUMzNTYwIi8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iNzIiIHI9IjMwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMEM4NTMiIHN0cm9rZS1vcGFjaXR5PSIwLjI1IiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4='" src="/assets/images/players/player-6.jpg" alt="Isaiah Thompson rugby player profile photo" loading="lazy">
             <div>
-              <div class="prf-name">Isaiah Thompson <span class="badge-verified" style="font-size:10px;padding:2px 6px;">✓</span></div>
+              <div class="prf-name">Isaiah Thompson <span class="badge-verified" style="font-size:10px;padding:2px 6px;" role="img" aria-label="Verified player">✓</span></div>
               <div class="prf-meta">Cardiff, Wales · 19 yrs · 5'11" / 86kg</div>
             </div>
             <div class="prf-stat"><span class="val"><span class="badge-pos" style="font-size:11px;padding:3px 8px;">Fullback</span></span><span class="lbl">&nbsp;</span></div>
@@ -1785,7 +1786,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           <div class="player-row-full" role="listitem" tabindex="0" data-name="Oliver Stanton" data-position="Flanker" data-passport="UK" data-verified="true" data-video="true" aria-label="View Oliver Stanton's profile">
             <img onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMEYyMDQwIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMEExNjI4Ii8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSI3MiIgcj0iMzAiIGZpbGw9IiMxQzM1NjAiLz48cGF0aCBkPSJNNTIgMTY4YzAtMjggMjItNDggNDgtNDhzNDggMjAgNDggNDh6IiBmaWxsPSIjMUMzNTYwIi8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iNzIiIHI9IjMwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMEM4NTMiIHN0cm9rZS1vcGFjaXR5PSIwLjI1IiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4='" src="/assets/images/players/player-8.jpg" alt="Oliver Stanton rugby player profile photo" loading="lazy">
             <div>
-              <div class="prf-name">Oliver Stanton <span class="badge-verified" style="font-size:10px;padding:2px 6px;">✓</span></div>
+              <div class="prf-name">Oliver Stanton <span class="badge-verified" style="font-size:10px;padding:2px 6px;" role="img" aria-label="Verified player">✓</span></div>
               <div class="prf-meta">Exeter, England · 22 yrs · 6'3" / 105kg</div>
             </div>
             <div class="prf-stat"><span class="val"><span class="badge-pos" style="font-size:11px;padding:3px 8px;">Blindside Flanker</span></span><span class="lbl">&nbsp;</span></div>
@@ -1800,7 +1801,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           <div class="player-row-full" role="listitem" tabindex="0" data-name="Callum Reid" data-position="Hooker" data-passport="UK" data-verified="true" data-video="false" aria-label="View Callum Reid's profile">
             <img onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMEYyMDQwIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMEExNjI4Ii8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSI3MiIgcj0iMzAiIGZpbGw9IiMxQzM1NjAiLz48cGF0aCBkPSJNNTIgMTY4YzAtMjggMjItNDggNDgtNDhzNDggMjAgNDggNDh6IiBmaWxsPSIjMUMzNTYwIi8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iNzIiIHI9IjMwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMEM4NTMiIHN0cm9rZS1vcGFjaXR5PSIwLjI1IiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4='" src="/assets/images/players/player-9.jpg" alt="Callum Reid rugby player profile photo" loading="lazy">
             <div>
-              <div class="prf-name">Callum Reid <span class="badge-verified" style="font-size:10px;padding:2px 6px;">✓</span></div>
+              <div class="prf-name">Callum Reid <span class="badge-verified" style="font-size:10px;padding:2px 6px;" role="img" aria-label="Verified player">✓</span></div>
               <div class="prf-meta">Edinburgh, Scotland · 23 yrs · 5'10" / 101kg</div>
             </div>
             <div class="prf-stat"><span class="val"><span class="badge-pos" style="font-size:11px;padding:3px 8px;">Hooker</span></span><span class="lbl">&nbsp;</span></div>
@@ -2267,5 +2268,9 @@ document.querySelectorAll('.faq-q').forEach(function(btn){
   });
 });
 </script>
+
+<div class="mobile-sticky-cta">
+  <a href="/onboarding.html" class="btn btn-primary btn-lg">Build My CV &mdash; Free</a>
+</div>
 </body>
 </html>

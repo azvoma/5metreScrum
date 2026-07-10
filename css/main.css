@@ -365,9 +365,11 @@ img, video { max-width: 100%; display: block; }
   z-index: 300;
   transform: translateY(140%);
   opacity: 0;
-  transition: transform .35s ease, opacity .35s ease;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform .35s ease, opacity .35s ease, visibility .35s;
 }
-.cookie-banner.visible { transform: translateY(0); opacity: 1; }
+.cookie-banner.visible { transform: translateY(0); opacity: 1; visibility: visible; pointer-events: auto; }
 .cookie-banner p {
   font-size: 14px;
   line-height: 1.6;
@@ -377,6 +379,32 @@ img, video { max-width: 100%; display: block; }
 .cookie-banner p a { color: var(--green); text-decoration: underline; }
 .cookie-banner-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .cookie-banner-actions .btn { flex: 1; min-width: 110px; }
+.cookie-banner-actions .btn-outline { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.35); }
+.cookie-banner-actions .btn-outline:hover { border-color: var(--green); color: var(--green); }
 @media (max-width: 480px) {
-  .cookie-banner { left: 12px; right: 12px; bottom: 12px; padding: 18px 20px; }
+  .cookie-banner { left: 12px; right: 12px; bottom: 78px; padding: 18px 20px; }
+}
+
+/* ── MOBILE STICKY CTA BAR ───────────────────────────────────────── */
+.mobile-sticky-cta {
+  display: none;
+}
+@media (max-width: 640px) {
+  .mobile-sticky-cta {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 250;
+    background: var(--navy);
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -6px 24px rgba(10,22,40,0.25);
+  }
+  .mobile-sticky-cta .btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+  .scroll-top-btn { bottom: 74px; }
 }
