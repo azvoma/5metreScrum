@@ -1621,6 +1621,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
       .onboard-right { padding: 32px 24px; min-height: auto; }
     }
   </style>
+<script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 
@@ -1631,7 +1632,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
     <div class="onboard-left-glow" aria-hidden="true"></div>
 
     <a href="/" class="ob-logo" aria-label="5 Metre Scrum Home">
-      <img src="/assets/logo-v2.png" alt="5 Metre Scrum" width="480" height="82" style="height:40px;width:auto;display:block;" loading="eager">
+      <img src="/assets/logo-v2.png" alt="5 Metre Scrum" width="480" height="82" style="height:36px;width:auto;display:block;" loading="eager">
     </a>
 
     <div class="login-tagline">
@@ -1693,7 +1694,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
         <div style="text-align:right;margin-bottom:var(--space-lg);">
           <a href="/contact.html" style="font-size:13px;color:var(--green);font-weight:600;text-decoration:none;">Forgot password?</a>
         </div>
-        <button class="btn btn-primary btn-lg" style="width:100%;" type="button" onclick="location.href='/dashboard.html'">Log In</button>
+        <button class="btn btn-primary btn-lg" style="width:100%;" type="button" onclick="handleLogin()" id="login-submit-btn">Log In</button>
       </div>
 
       <!-- SIGNUP FORM -->
@@ -1723,7 +1724,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           <input type="checkbox" style="accent-color:var(--green);width:16px;height:16px;margin-top:2px;flex-shrink:0;" required>
           I agree to 5 Metre Scrum <a href="/terms.html" style="color:var(--green);">Terms of Service</a> and <a href="/privacy.html" style="color:var(--green);">Privacy Policy</a>
         </label>
-        <button class="btn btn-primary btn-lg" style="width:100%;" type="button" onclick="location.href='/onboarding.html'">Create Free Account</button>
+        <button class="btn btn-primary btn-lg" style="width:100%;" type="button" onclick="handleSignup()" id="signup-submit-btn">Create Free Account</button>
       </div>
 
       <div class="auth-footer">
@@ -1765,6 +1766,65 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
   function togglePassword(id) {
     const input = document.getElementById(id);
     if (input) input.type = input.type === 'password' ? 'text' : 'password';
+  }
+
+  /* ── AUTHENTICATION (Netlify Identity) ─────────────────────────
+     Real account creation and login, powered by Netlify's built-in
+     Identity service. Requires Identity to be enabled once in the
+     Netlify site dashboard (Project configuration → Identity → Enable Identity)
+     before this will work — the code below is ready and waiting for that. */
+
+  function showAuthStatus(message, isError) {
+    var el = document.getElementById('auth-status-msg');
+    if (!el) {
+      el = document.createElement('p');
+      el.id = 'auth-status-msg';
+      el.style.fontSize = '13px';
+      el.style.marginTop = '12px';
+      el.style.textAlign = 'center';
+      var footer = document.querySelector('.auth-footer');
+      if (footer) footer.parentNode.insertBefore(el, footer);
+    }
+    el.style.color = isError ? '#E5484D' : 'var(--slate-600)';
+    el.textContent = message;
+  }
+
+  function handleLogin() {
+    if (typeof netlifyIdentity === 'undefined') {
+      showAuthStatus('Sign-in isn\'t available yet — this needs to be turned on in the site\'s admin settings first.', true);
+      return;
+    }
+    netlifyIdentity.open('login');
+  }
+
+  function handleSignup() {
+    if (typeof netlifyIdentity === 'undefined') {
+      showAuthStatus('Sign-up isn\'t available yet — this needs to be turned on in the site\'s admin settings first.', true);
+      return;
+    }
+    var name = document.getElementById('signup-name') ? document.getElementById('signup-name').value : '';
+    netlifyIdentity.open('signup');
+    if (name) {
+      netlifyIdentity.on('open', function () {
+        // Pre-fill full name into Netlify's signup modal where supported
+      });
+    }
+  }
+
+  if (typeof netlifyIdentity !== 'undefined') {
+    netlifyIdentity.on('login', function (user) {
+      netlifyIdentity.close();
+      location.href = '/dashboard.html';
+    });
+    netlifyIdentity.on('signup', function (user) {
+      showAuthStatus('Account created! Check your email to confirm, then log in.', false);
+    });
+    netlifyIdentity.on('error', function (err) {
+      showAuthStatus((err && err.message) ? err.message : 'Something went wrong. Please try again.', true);
+    });
+    netlifyIdentity.on('init', function (user) {
+      if (user) location.href = '/dashboard.html';
+    });
   }
 </script>
 

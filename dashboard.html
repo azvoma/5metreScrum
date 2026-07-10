@@ -1455,6 +1455,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
     .trial-mini-title { font-size: 13px; font-weight: 700; color: var(--navy); }
     .trial-mini-meta { font-size: 12px; color: var(--slate-400); margin-top: 2px; }
   </style>
+<script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 
@@ -1464,7 +1465,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
   <aside class="dash-sidebar" role="navigation" aria-label="Dashboard navigation">
     <div class="dash-logo">
       <a href="/" class="nav-logo" aria-label="5 Metre Scrum Home">
-        <img src="/assets/logo-v2.png" alt="5 Metre Scrum" width="480" height="82" style="height:40px;width:auto;display:block;" loading="eager">
+        <img src="/assets/logo-v2.png" alt="5 Metre Scrum" width="480" height="82" style="height:36px;width:auto;display:block;" loading="eager">
       </a>
     </div>
 
@@ -1517,7 +1518,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.25"/><path d="M8 4v4l3 2" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/></svg>
           Settings
         </div>
-        <div class="dash-nav-item" onclick="location.href='/login.html'">
+        <div class="dash-nav-item" onclick="handleLogout()">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 11l3-3-3-3M13 8H5M7 3H3a1 1 0 00-1 1v8a1 1 0 001 1h4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Log Out
         </div>
@@ -1947,6 +1948,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+
+function handleLogout() {
+  if (typeof netlifyIdentity !== 'undefined' && netlifyIdentity.currentUser()) {
+    netlifyIdentity.logout();
+  }
+  location.href = '/login.html';
+}
 
 </script>
 
