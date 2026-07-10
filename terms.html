@@ -1881,7 +1881,7 @@ document.querySelectorAll('.faq-q').forEach(function(btn){
   setTimeout(function () { banner.classList.add('visible'); }, 600);
   function dismiss(value) {
     try { localStorage.setItem(KEY, value); } catch (e) {}
-    banner.classList.remove('visible');
+    banner.classList.remove('visible'); setTimeout(function () { banner.style.display = 'none'; }, 400);
   }
   var acceptBtn = document.getElementById('cookie-accept');
   var declineBtn = document.getElementById('cookie-decline');

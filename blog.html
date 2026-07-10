@@ -1466,8 +1466,18 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
     .topic-tags { display: flex; flex-wrap: wrap; gap: 6px; }
     .topic-tag { font-size: 12px; font-weight: 600; padding: 6px 12px; border: 1px solid var(--slate-200); border-radius: var(--r-full); color: var(--slate-600); cursor: pointer; transition: all var(--t-fast); }
     .topic-tag:hover { border-color: var(--green); color: var(--green); }
-  </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.5metrescrum.com/"},{"@type":"ListItem","position":2,"name":"Rugby Blog","item":"https://www.5metrescrum.com/blog.html"}]}</script>
+  
+.faq-wrap { display:flex;flex-direction:column;border:1px solid rgba(255,255,255,0.12);border-radius:16px;overflow:hidden; }
+.faq-item { border-bottom:1px solid rgba(255,255,255,0.08); }
+.faq-item:last-child { border-bottom:none; }
+.faq-q { width:100%;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-size:16px;font-weight:600;color:#fff;background:none;border:none;text-align:left;font-family:inherit;transition:color .15s; }
+.faq-q:hover,.faq-q.open { color:var(--green); }
+.faq-icon { flex-shrink:0;transition:transform .2s;color:var(--slate-400); }
+.faq-q.open .faq-icon { transform:rotate(180deg);color:var(--green); }
+.faq-a { max-height:0;overflow:hidden;transition:max-height .35s ease,padding .15s;font-size:15px;color:var(--slate-400);line-height:1.75;padding:0 24px; }
+.faq-a.open { max-height:400px;padding:0 24px 20px; }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.5metrescrum.com/"},{"@type":"ListItem","position":2,"name":"Rugby Blog","item":"https://www.5metrescrum.com/blog.html"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How often is new content published?", "acceptedAnswer": {"@type": "Answer", "text": "We publish new guides and articles regularly, covering training standards, recruitment advice, and rugby career pathways."}}, {"@type": "Question", "name": "Who writes the articles?", "acceptedAnswer": {"@type": "Answer", "text": "Content is produced by the 5 Metre Scrum recruitment team, drawing on data and standards from professional academy scouts."}}, {"@type": "Question", "name": "Can I suggest a topic?", "acceptedAnswer": {"@type": "Answer", "text": "Yes \u2014 email hello@5metrescrum.com with your suggestion. We prioritise topics players and scouts ask about most."}}, {"@type": "Question", "name": "Can I share or reference your articles elsewhere?", "acceptedAnswer": {"@type": "Answer", "text": "You're welcome to link to our articles. Please contact us before reproducing full content elsewhere."}}]}</script>
 </head>
 <body>
 
@@ -1691,7 +1701,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 
     </div>
   </div>
-</main>
+<section class="section section-dark"><div class="container" style="max-width:760px;"><div style="text-align:center;margin-bottom:40px;"><span class="eyebrow">Blog FAQs</span><h2 class="section-title wht">FAQs</h2></div><div class="faq-wrap"><div class="faq-item"><button class="faq-q">How often is new content published?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">We publish new guides and articles regularly, covering training standards, recruitment advice, and rugby career pathways.</div></div><div class="faq-item"><button class="faq-q">Who writes the articles?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Content is produced by the 5 Metre Scrum recruitment team, drawing on data and standards from professional academy scouts.</div></div><div class="faq-item"><button class="faq-q">Can I suggest a topic?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Yes — email hello@5metrescrum.com with your suggestion. We prioritise topics players and scouts ask about most.</div></div><div class="faq-item"><button class="faq-q">Can I share or reference your articles elsewhere?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">You're welcome to link to our articles. Please contact us before reproducing full content elsewhere.</div></div></div></div></section></main>
 
 <footer class="footer" role="contentinfo">
   <div class="container">
@@ -2026,13 +2036,31 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(function () { banner.classList.add('visible'); }, 600);
   function dismiss(value) {
     try { localStorage.setItem(KEY, value); } catch (e) {}
-    banner.classList.remove('visible');
+    banner.classList.remove('visible'); setTimeout(function () { banner.style.display = 'none'; }, 400);
   }
   var acceptBtn = document.getElementById('cookie-accept');
   var declineBtn = document.getElementById('cookie-decline');
   if (acceptBtn) acceptBtn.addEventListener('click', function () { dismiss('accepted'); });
   if (declineBtn) declineBtn.addEventListener('click', function () { dismiss('declined'); });
 })();
+</script>
+<script>
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var wasOpen=btn.classList.contains('open');
+    document.querySelectorAll('.faq-q.open').forEach(function(b){
+      b.classList.remove('open');
+      var a=b.parentElement.querySelector('.faq-a');
+      if(a)a.classList.remove('open');
+    });
+    if(!wasOpen){
+      btn.classList.add('open');
+      var ans=btn.parentElement.querySelector('.faq-a');
+      if(ans)ans.classList.add('open');
+    }
+  });
+});
 </script>
 </body>
 </html>

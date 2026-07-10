@@ -29,7 +29,7 @@
       { "@type": "ListItem", "position": 2, "name": "Scout Board", "item": "https://www.5metrescrum.com/scout-board.html" }
     ]
   }
-  </script>
+  </script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How current is the player data shown here?", "acceptedAnswer": {"@type": "Answer", "text": "Players update their own combine stats and playing history directly, so profiles reflect what each player has most recently entered."}}, {"@type": "Question", "name": "What does the verified badge mean?", "acceptedAnswer": {"@type": "Answer", "text": "A verified badge means the player's identity and key stats have been checked against supporting evidence, such as club or academy confirmation."}}, {"@type": "Question", "name": "Can I filter players by passport eligibility?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Use the passport filter to narrow results by EU, UK, or other eligibility \u2014 useful for checking overseas quota implications."}}, {"@type": "Question", "name": "How do I get in touch with a player?", "acceptedAnswer": {"@type": "Answer", "text": "Open their profile and use the contact option. You'll need a verified scout account to message players directly."}}]}</script>
 
   <style>
 /* ================================================================
@@ -1478,7 +1478,17 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
     }
     .page-btn:hover { border-color: var(--green); color: var(--green); }
     .page-btn.active { background: var(--green); border-color: var(--green); color: var(--navy); }
-  </style>
+  
+.faq-wrap { display:flex;flex-direction:column;border:1px solid rgba(255,255,255,0.12);border-radius:16px;overflow:hidden; }
+.faq-item { border-bottom:1px solid rgba(255,255,255,0.08); }
+.faq-item:last-child { border-bottom:none; }
+.faq-q { width:100%;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-size:16px;font-weight:600;color:#fff;background:none;border:none;text-align:left;font-family:inherit;transition:color .15s; }
+.faq-q:hover,.faq-q.open { color:var(--green); }
+.faq-icon { flex-shrink:0;transition:transform .2s;color:var(--slate-400); }
+.faq-q.open .faq-icon { transform:rotate(180deg);color:var(--green); }
+.faq-a { max-height:0;overflow:hidden;transition:max-height .35s ease,padding .15s;font-size:15px;color:var(--slate-400);line-height:1.75;padding:0 24px; }
+.faq-a.open { max-height:400px;padding:0 24px 20px; }
+</style>
 </head>
 <body>
 
@@ -1834,7 +1844,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 
     </div>
   </div>
-</main>
+<section class="section section-dark"><div class="container" style="max-width:760px;"><div style="text-align:center;margin-bottom:40px;"><span class="eyebrow">Scout Board FAQs</span><h2 class="section-title wht">FAQs</h2></div><div class="faq-wrap"><div class="faq-item"><button class="faq-q">How current is the player data shown here?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Players update their own combine stats and playing history directly, so profiles reflect what each player has most recently entered.</div></div><div class="faq-item"><button class="faq-q">What does the verified badge mean?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">A verified badge means the player's identity and key stats have been checked against supporting evidence, such as club or academy confirmation.</div></div><div class="faq-item"><button class="faq-q">Can I filter players by passport eligibility?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Yes. Use the passport filter to narrow results by EU, UK, or other eligibility — useful for checking overseas quota implications.</div></div><div class="faq-item"><button class="faq-q">How do I get in touch with a player?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Open their profile and use the contact option. You'll need a verified scout account to message players directly.</div></div></div></div></section></main>
 
 <!-- FOOTER -->
 <footer class="footer" role="contentinfo">
@@ -2231,13 +2241,31 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(function () { banner.classList.add('visible'); }, 600);
   function dismiss(value) {
     try { localStorage.setItem(KEY, value); } catch (e) {}
-    banner.classList.remove('visible');
+    banner.classList.remove('visible'); setTimeout(function () { banner.style.display = 'none'; }, 400);
   }
   var acceptBtn = document.getElementById('cookie-accept');
   var declineBtn = document.getElementById('cookie-decline');
   if (acceptBtn) acceptBtn.addEventListener('click', function () { dismiss('accepted'); });
   if (declineBtn) declineBtn.addEventListener('click', function () { dismiss('declined'); });
 })();
+</script>
+<script>
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var wasOpen=btn.classList.contains('open');
+    document.querySelectorAll('.faq-q.open').forEach(function(b){
+      b.classList.remove('open');
+      var a=b.parentElement.querySelector('.faq-a');
+      if(a)a.classList.remove('open');
+    });
+    if(!wasOpen){
+      btn.classList.add('open');
+      var ans=btn.parentElement.querySelector('.faq-a');
+      if(ans)ans.classList.add('open');
+    }
+  });
+});
 </script>
 </body>
 </html>

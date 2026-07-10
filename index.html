@@ -2438,7 +2438,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
   <div class="container-sm">
     <div class="section-header center">
       <p class="section-eyebrow">Common Questions</p>
-      <h2 id="faq-heading" class="section-title reveal">Everything About Your Rugby CV</h2>
+      <h2 id="faq-heading" class="section-title reveal">FAQs</h2>
     </div>
 
     <div class="faq-list reveal" role="list">
@@ -2846,7 +2846,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(function () { banner.classList.add('visible'); }, 600);
   function dismiss(value) {
     try { localStorage.setItem(KEY, value); } catch (e) {}
-    banner.classList.remove('visible');
+    banner.classList.remove('visible'); setTimeout(function () { banner.style.display = 'none'; }, 400);
   }
   var acceptBtn = document.getElementById('cookie-accept');
   var declineBtn = document.getElementById('cookie-decline');

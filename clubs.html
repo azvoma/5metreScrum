@@ -1420,8 +1420,18 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
     .club-needs { display: flex; gap: 4px; flex-wrap: wrap; }
     .club-status { font-size: 11px; font-weight: 700; color: var(--green); display: flex; gap: 4px; align-items: center; }
     .club-status.closed { color: var(--slate-400); }
-  </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.5metrescrum.com/"},{"@type":"ListItem","position":2,"name":"Club Profiles","item":"https://www.5metrescrum.com/clubs.html"}]}</script>
+  
+.faq-wrap { display:flex;flex-direction:column;border:1px solid rgba(255,255,255,0.12);border-radius:16px;overflow:hidden; }
+.faq-item { border-bottom:1px solid rgba(255,255,255,0.08); }
+.faq-item:last-child { border-bottom:none; }
+.faq-q { width:100%;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-size:16px;font-weight:600;color:#fff;background:none;border:none;text-align:left;font-family:inherit;transition:color .15s; }
+.faq-q:hover,.faq-q.open { color:var(--green); }
+.faq-icon { flex-shrink:0;transition:transform .2s;color:var(--slate-400); }
+.faq-q.open .faq-icon { transform:rotate(180deg);color:var(--green); }
+.faq-a { max-height:0;overflow:hidden;transition:max-height .35s ease,padding .15s;font-size:15px;color:var(--slate-400);line-height:1.75;padding:0 24px; }
+.faq-a.open { max-height:400px;padding:0 24px 20px; }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.5metrescrum.com/"},{"@type":"ListItem","position":2,"name":"Club Profiles","item":"https://www.5metrescrum.com/clubs.html"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How does a club get access to the scout board?", "acceptedAnswer": {"@type": "Answer", "text": "Email clubs@5metrescrum.com with your club name and role. Verified clubs get free scout accounts, typically within 24 hours."}}, {"@type": "Question", "name": "Is there a cost for clubs to use the platform?", "acceptedAnswer": {"@type": "Answer", "text": "Scout board access is free for verified clubs during our growth phase. Optional club CRM and messaging tools are available under a separate subscription."}}, {"@type": "Question", "name": "Can more than one scout from our club have an account?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Each scout or coach at a verified club can have their own login, so your recruitment team can search and shortlist independently."}}, {"@type": "Question", "name": "How do we contact a player we're interested in?", "acceptedAnswer": {"@type": "Answer", "text": "Every player profile has a direct contact option once you're logged in as a verified scout. Messages go straight to the player."}}]}</script>
 </head>
 <body>
 
@@ -1686,7 +1696,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
       <a href="mailto:hello@5metrescrum.com" class="btn btn-primary btn-lg" style="white-space:nowrap;flex-shrink:0;">List Your Club</a>
     </div>
   </div>
-</main>
+<section class="section section-dark"><div class="container" style="max-width:760px;"><div style="text-align:center;margin-bottom:40px;"><span class="eyebrow">Got Questions</span><h2 class="section-title wht">FAQs</h2></div><div class="faq-wrap"><div class="faq-item"><button class="faq-q">How does a club get access to the scout board?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Email clubs@5metrescrum.com with your club name and role. Verified clubs get free scout accounts, typically within 24 hours.</div></div><div class="faq-item"><button class="faq-q">Is there a cost for clubs to use the platform?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Scout board access is free for verified clubs during our growth phase. Optional club CRM and messaging tools are available under a separate subscription.</div></div><div class="faq-item"><button class="faq-q">Can more than one scout from our club have an account?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Yes. Each scout or coach at a verified club can have their own login, so your recruitment team can search and shortlist independently.</div></div><div class="faq-item"><button class="faq-q">How do we contact a player we're interested in?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Every player profile has a direct contact option once you're logged in as a verified scout. Messages go straight to the player.</div></div></div></div></section></main>
 
 <footer class="footer" role="contentinfo">
   <div class="container">
@@ -2021,13 +2031,31 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(function () { banner.classList.add('visible'); }, 600);
   function dismiss(value) {
     try { localStorage.setItem(KEY, value); } catch (e) {}
-    banner.classList.remove('visible');
+    banner.classList.remove('visible'); setTimeout(function () { banner.style.display = 'none'; }, 400);
   }
   var acceptBtn = document.getElementById('cookie-accept');
   var declineBtn = document.getElementById('cookie-decline');
   if (acceptBtn) acceptBtn.addEventListener('click', function () { dismiss('accepted'); });
   if (declineBtn) declineBtn.addEventListener('click', function () { dismiss('declined'); });
 })();
+</script>
+<script>
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var wasOpen=btn.classList.contains('open');
+    document.querySelectorAll('.faq-q.open').forEach(function(b){
+      b.classList.remove('open');
+      var a=b.parentElement.querySelector('.faq-a');
+      if(a)a.classList.remove('open');
+    });
+    if(!wasOpen){
+      btn.classList.add('open');
+      var ans=btn.parentElement.querySelector('.faq-a');
+      if(ans)ans.classList.add('open');
+    }
+  });
+});
 </script>
 </body>
 </html>
