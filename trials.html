@@ -2065,34 +2065,31 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 </script>
 
-<div class="cookie-banner" id="cookie-banner" role="dialog" aria-label="Cookie notice">
-  <div class="cookie-banner-icon" aria-hidden="true">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="8" r="1" fill="currentColor"/><circle cx="12" cy="7" r="1" fill="currentColor"/><circle cx="8" cy="12.5" r="1" fill="currentColor"/><circle cx="12.5" cy="11.5" r="1" fill="currentColor"/></svg>
-  </div>
-  <h4>We use minimal cookies</h4>
-  <p>Just enough to keep you logged in and remember your preferences. No tracking or advertising cookies. See our <a href="/privacy.html">Privacy Policy</a> for details.</p>
-  <div class="cookie-banner-actions">
-    <button class="btn btn-outline btn-sm" id="cookie-decline" type="button">Decline</button>
-    <button class="btn btn-primary btn-sm" id="cookie-accept" type="button">Accept</button>
+<div class="cookie-box-backdrop" id="cookie-box-backdrop" role="dialog" aria-modal="true" aria-label="Cookie notice">
+  <div class="cookie-box">
+    <div class="cookie-box-icon" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="8" r="1" fill="currentColor"/><circle cx="12" cy="7" r="1" fill="currentColor"/><circle cx="8" cy="12.5" r="1" fill="currentColor"/><circle cx="12.5" cy="11.5" r="1" fill="currentColor"/></svg>
+    </div>
+    <h4>We use minimal cookies</h4>
+    <p>Just enough to keep you logged in and remember your preferences. No tracking or advertising cookies. See our <a href="/privacy.html">Privacy Policy</a> for details.</p>
+    <button class="btn btn-primary btn-lg" id="cookie-ok" type="button">OK</button>
   </div>
 </div>
 <script>
 (function () {
   var KEY = '5ms-cookie-consent';
-  var banner = document.getElementById('cookie-banner');
-  if (!banner) return;
+  var backdrop = document.getElementById('cookie-box-backdrop');
+  if (!backdrop) return;
   try {
     if (localStorage.getItem(KEY)) return;
   } catch (e) { return; }
-  setTimeout(function () { banner.classList.add('visible'); }, 600);
-  function dismiss(value) {
-    try { localStorage.setItem(KEY, value); } catch (e) {}
-    banner.classList.remove('visible'); setTimeout(function () { banner.style.display = 'none'; }, 400);
-  }
-  var acceptBtn = document.getElementById('cookie-accept');
-  var declineBtn = document.getElementById('cookie-decline');
-  if (acceptBtn) acceptBtn.addEventListener('click', function () { dismiss('accepted'); });
-  if (declineBtn) declineBtn.addEventListener('click', function () { dismiss('declined'); });
+  setTimeout(function () { backdrop.classList.add('visible'); }, 600);
+  var okBtn = document.getElementById('cookie-ok');
+  if (okBtn) okBtn.addEventListener('click', function () {
+    try { localStorage.setItem(KEY, 'acknowledged'); } catch (e) {}
+    backdrop.classList.remove('visible');
+    setTimeout(function () { backdrop.style.display = 'none'; }, 400);
+  });
 })();
 </script>
 <script>
@@ -2113,9 +2110,5 @@ document.querySelectorAll('.faq-q').forEach(function(btn){
   });
 });
 </script>
-
-<div class="mobile-sticky-cta">
-  <a href="/onboarding.html" class="btn btn-primary btn-lg">Build My CV &mdash; Free</a>
-</div>
 </body>
 </html>
