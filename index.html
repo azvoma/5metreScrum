@@ -1867,6 +1867,12 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
     @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     .logos-scroll { overflow: hidden; mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent); }
   </style>
+  <style>
+    @media (max-width: 768px) {
+      .nav-cta > a, .nav-cta .nav-link, .nav-cta .nav-login { display: none !important; }
+      .nav-cta > .hamburger, .nav-cta > .nav-mobile-btn { display: flex !important; }
+    }
+  </style>
 </head>
 <body>
 

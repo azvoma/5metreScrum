@@ -66,6 +66,12 @@
     .nf-links a { color: var(--slate-600); text-decoration: none; }
     .nf-links a:hover { color: var(--green); }
   </style>
+  <style>
+    @media (max-width: 768px) {
+      .nav-cta > a, .nav-cta .nav-link, .nav-cta .nav-login { display: none !important; }
+      .nav-cta > .hamburger, .nav-cta > .nav-mobile-btn { display: flex !important; }
+    }
+  </style>
 </head>
 <body>
 
