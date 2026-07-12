@@ -90,31 +90,32 @@
       background: #fff;
       color: var(--navy);
       border-radius: 16px;
-      padding: 28px;
-      max-width: 340px;
+      padding: 24px;
+      max-width: 360px;
       width: 100%;
-      text-align: center;
+      text-align: left;
       box-shadow: 0 30px 80px rgba(10,22,40,0.35);
+      border: 1px solid var(--slate-100);
       transform: scale(0.94);
       transition: transform .3s ease;
     }
     .cookie-box-backdrop.visible .cookie-box { transform: scale(1); }
+    .cookie-box-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .cookie-box-icon {
-      width: 44px;
-      height: 44px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       background: var(--green-glow);
       color: var(--green);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 14px;
+      flex-shrink: 0;
     }
     .cookie-box h4 {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 800;
       color: var(--navy);
-      margin-bottom: 8px;
     }
     .cookie-box p {
       font-size: 14px;
@@ -123,7 +124,35 @@
       margin-bottom: 20px;
     }
     .cookie-box p a { color: var(--green); font-weight: 600; text-decoration: underline; }
-    .cookie-box .btn { width: 100%; }
+    .cookie-box-actions { display: flex; gap: 10px; }
+    .cookie-box-actions .btn { flex: 1; }
+    .scroll-top-btn {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: var(--green);
+      border: 1.5px solid rgba(255,255,255,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 150;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: opacity .2s, transform .2s, visibility .2s, background .15s;
+      box-shadow: 0 8px 24px rgba(10,22,40,0.25);
+    }
+    .scroll-top-btn.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+    .scroll-top-btn:hover { background: var(--green); color: var(--navy); }
+    .scroll-top-btn:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+    @media (max-width: 480px) {
+      .scroll-top-btn { right: 16px; bottom: 16px; width: 42px; height: 42px; }
+    }
   </style>
 </head>
 <body>
@@ -281,12 +310,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <div class="cookie-box-backdrop" id="cookie-box-backdrop" role="dialog" aria-modal="true" aria-label="Cookie notice">
   <div class="cookie-box">
-    <div class="cookie-box-icon" aria-hidden="true">
-      <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="8" r="1" fill="currentColor"/><circle cx="12" cy="7" r="1" fill="currentColor"/><circle cx="8" cy="12.5" r="1" fill="currentColor"/><circle cx="12.5" cy="11.5" r="1" fill="currentColor"/></svg>
+    <div class="cookie-box-head">
+      <div class="cookie-box-icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="8" r="1" fill="currentColor"/><circle cx="12" cy="7" r="1" fill="currentColor"/><circle cx="8" cy="12.5" r="1" fill="currentColor"/><circle cx="12.5" cy="11.5" r="1" fill="currentColor"/></svg>
+      </div>
+      <h4>Cookies Consent</h4>
     </div>
-    <h4>We use minimal cookies</h4>
-    <p>Just enough to keep you logged in and remember your preferences. No tracking or advertising cookies. See our <a href="/privacy.html">Privacy Policy</a> for details.</p>
-    <button class="btn btn-primary btn-lg" id="cookie-ok" type="button">OK</button>
+    <p>We use minimal cookies to keep you logged in and remember your preferences. No tracking or advertising cookies. <a href="/privacy.html">Read more</a></p>
+    <div class="cookie-box-actions">
+      <button class="btn btn-primary btn-lg" id="cookie-accept" type="button">Accept</button>
+      <button class="btn btn-outline btn-lg" id="cookie-decline" type="button">Decline</button>
+    </div>
   </div>
 </div>
 <script>
@@ -298,12 +332,15 @@ document.addEventListener('DOMContentLoaded', function () {
     if (localStorage.getItem(KEY)) return;
   } catch (e) { return; }
   setTimeout(function () { backdrop.classList.add('visible'); }, 600);
-  var okBtn = document.getElementById('cookie-ok');
-  if (okBtn) okBtn.addEventListener('click', function () {
-    try { localStorage.setItem(KEY, 'acknowledged'); } catch (e) {}
+  function dismiss(value) {
+    try { localStorage.setItem(KEY, value); } catch (e) {}
     backdrop.classList.remove('visible');
     setTimeout(function () { backdrop.style.display = 'none'; }, 400);
-  });
+  }
+  var acceptBtn = document.getElementById('cookie-accept');
+  var declineBtn = document.getElementById('cookie-decline');
+  if (acceptBtn) acceptBtn.addEventListener('click', function () { dismiss('accepted'); });
+  if (declineBtn) declineBtn.addEventListener('click', function () { dismiss('declined'); });
 })();
 </script>
 </body>

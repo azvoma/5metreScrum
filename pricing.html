@@ -506,12 +506,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <div class="cookie-box-backdrop" id="cookie-box-backdrop" role="dialog" aria-modal="true" aria-label="Cookie notice">
   <div class="cookie-box">
-    <div class="cookie-box-icon" aria-hidden="true">
-      <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="8" r="1" fill="currentColor"/><circle cx="12" cy="7" r="1" fill="currentColor"/><circle cx="8" cy="12.5" r="1" fill="currentColor"/><circle cx="12.5" cy="11.5" r="1" fill="currentColor"/></svg>
+    <div class="cookie-box-head">
+      <div class="cookie-box-icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="8" r="1" fill="currentColor"/><circle cx="12" cy="7" r="1" fill="currentColor"/><circle cx="8" cy="12.5" r="1" fill="currentColor"/><circle cx="12.5" cy="11.5" r="1" fill="currentColor"/></svg>
+      </div>
+      <h4>Cookies Consent</h4>
     </div>
-    <h4>We use minimal cookies</h4>
-    <p>Just enough to keep you logged in and remember your preferences. No tracking or advertising cookies. See our <a href="/privacy.html">Privacy Policy</a> for details.</p>
-    <button class="btn btn-primary btn-lg" id="cookie-ok" type="button">OK</button>
+    <p>We use minimal cookies to keep you logged in and remember your preferences. No tracking or advertising cookies. <a href="/privacy.html">Read more</a></p>
+    <div class="cookie-box-actions">
+      <button class="btn btn-primary btn-lg" id="cookie-accept" type="button">Accept</button>
+      <button class="btn btn-outline btn-lg" id="cookie-decline" type="button">Decline</button>
+    </div>
   </div>
 </div>
 <script>
@@ -523,12 +528,15 @@ document.addEventListener('DOMContentLoaded', function () {
     if (localStorage.getItem(KEY)) return;
   } catch (e) { return; }
   setTimeout(function () { backdrop.classList.add('visible'); }, 600);
-  var okBtn = document.getElementById('cookie-ok');
-  if (okBtn) okBtn.addEventListener('click', function () {
-    try { localStorage.setItem(KEY, 'acknowledged'); } catch (e) {}
+  function dismiss(value) {
+    try { localStorage.setItem(KEY, value); } catch (e) {}
     backdrop.classList.remove('visible');
     setTimeout(function () { backdrop.style.display = 'none'; }, 400);
-  });
+  }
+  var acceptBtn = document.getElementById('cookie-accept');
+  var declineBtn = document.getElementById('cookie-decline');
+  if (acceptBtn) acceptBtn.addEventListener('click', function () { dismiss('accepted'); });
+  if (declineBtn) declineBtn.addEventListener('click', function () { dismiss('declined'); });
 })();
 </script>
 </body>
