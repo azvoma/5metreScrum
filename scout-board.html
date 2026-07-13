@@ -2289,6 +2289,10 @@ document.addEventListener('DOMContentLoaded', () => {
   var quickTags = document.querySelectorAll('.filter-tag[data-group="video"]');
   var resultsCount = document.querySelector('.sb-results-count');
   var rows = document.querySelectorAll('.player-row-full[data-name]');
+  window.__sbRefresh = function () {
+    rows = document.querySelectorAll('.player-row-full[data-name]');
+    applyFilters();
+  };
 
   if (!rows.length) return;
 
@@ -2411,6 +2415,86 @@ document.querySelectorAll('.faq-q').forEach(function(btn){
     }
   });
 });
+</script>
+<script src="/js/supabase-config.js"></script>
+<script src="/js/db.js"></script>
+<script>
+/* ====================================================
+   LIVE PLAYERS ON THE SCOUT BOARD
+   Fetches real registrations from the database (or the
+   profile saved in this browser in demo mode) and adds
+   them to the top of the board, using the same row
+   markup so search and filters work on them too.
+   ==================================================== */
+(function () {
+  'use strict';
+  if (!window.FiveMS) return;
+
+  var esc = FiveMS.escapeHtml;
+
+  function buildRow(p, href) {
+    var name = ((p.first_name || '') + ' ' + (p.last_name || '')).trim() || 'Player';
+    var metaBits = [];
+    var place = [p.city, p.country].filter(Boolean).join(', ');
+    if (place) metaBits.push(place);
+    if (p.height_cm && p.weight_kg) metaBits.push(p.height_cm + 'cm / ' + p.weight_kg + 'kg');
+    var passport = (p.passports && p.passports.length) ? p.passports[0] : '';
+    var hasVideo = !!(p.video_url || p.video_file_url);
+
+    var row = document.createElement('div');
+    row.className = 'player-row-full';
+    row.setAttribute('role', 'listitem');
+    row.setAttribute('tabindex', '0');
+    row.dataset.name = name;
+    row.dataset.position = p.position || '';
+    row.dataset.passport = passport;
+    row.dataset.verified = 'false';
+    row.dataset.video = hasVideo ? 'true' : 'false';
+    row.setAttribute('aria-label', 'View ' + name + "'s profile");
+    row.addEventListener('click', function () { location.href = href; });
+    row.addEventListener('keypress', function (e) { if (e.key === 'Enter') location.href = href; });
+
+    var photoSrc = p.headshot_url || FiveMS.initialsAvatar(p.first_name, p.last_name);
+    row.innerHTML =
+      '<img src="' + esc(photoSrc) + '" alt="' + esc(name) + ' rugby player profile photo" loading="lazy">' +
+      '<div>' +
+        '<div class="prf-name">' + esc(name) + ' <span class="badge-pos" style="font-size:10px;padding:2px 6px;background:var(--green-glow);color:var(--green-dark);">New</span></div>' +
+        '<div class="prf-meta">' + esc(metaBits.join(' · ') || 'Registered player') + '</div>' +
+      '</div>' +
+      '<div class="prf-stat"><span class="val">' + (p.position ? '<span class="badge-pos" style="font-size:11px;padding:3px 8px;">' + esc(p.position) + '</span>' : '—') + '</span><span class="lbl">&nbsp;</span></div>' +
+      '<div class="prf-stat"><span class="val"' + (p.bronco ? ' style="color:var(--green);"' : '') + '>' + esc(p.bronco || '—') + '</span><span class="lbl">Bronco</span></div>' +
+      '<div class="prf-stat"><span class="val">' + (p.deadlift_kg ? esc(p.deadlift_kg + 'kg') : '—') + '</span><span class="lbl">Deadlift</span></div>' +
+      '<div class="prf-actions">' +
+        (passport ? '<span class="badge-eu">' + esc(passport) + '</span>' : '') +
+        '<a href="' + esc(href) + '" class="btn btn-primary btn-sm">View Profile</a>' +
+      '</div>';
+    return row;
+  }
+
+  function inject(players) {
+    if (!players.length) return;
+    var list = document.getElementById('player-list');
+    if (!list) return;
+    var frag = document.createDocumentFragment();
+    players.forEach(function (entry) { frag.appendChild(buildRow(entry.profile, entry.href)); });
+    list.insertBefore(frag, list.firstChild);
+    if (typeof window.__sbRefresh === 'function') window.__sbRefresh();
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    if (FiveMS.dbConfigured()) {
+      FiveMS.listProfiles(50).then(function (data) {
+        inject(data.map(function (p) {
+          return { profile: p, href: '/player-profile.html?id=' + encodeURIComponent(p.id) };
+        }));
+      }).catch(function () { /* board still shows the standard list */ });
+    } else {
+      /* Demo mode: show the profile created in this browser, if any */
+      var local = FiveMS.localGetProfile();
+      if (local) inject([{ profile: local, href: '/player-profile.html?local=1' }]);
+    }
+  });
+})();
 </script>
 </body>
 </html>

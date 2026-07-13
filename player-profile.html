@@ -2560,5 +2560,310 @@ document.addEventListener('DOMContentLoaded', () => {
   if (declineBtn) declineBtn.addEventListener('click', function () { dismiss('declined'); });
 })();
 </script>
+<script src="/js/supabase-config.js"></script>
+<script src="/js/db.js"></script>
+<script>
+/* ====================================================
+   DYNAMIC PROFILE RENDERER
+   With no URL parameters this page stays exactly as it
+   is — the static demo profile. With ?id=<uuid> it loads
+   that player from the database; with ?local=1 it loads
+   the profile saved in this browser by the CV wizard.
+   ==================================================== */
+(function () {
+  'use strict';
+
+  var params = new URLSearchParams(location.search);
+  var id = params.get('id');
+  var isLocal = params.get('local') === '1';
+  if (!id && !isLocal) return; // static demo profile — leave untouched
+  if (!window.FiveMS) return;
+
+  var esc = FiveMS.escapeHtml;
+
+  function fullName(p) {
+    return ((p.first_name || '') + ' ' + (p.last_name || '')).trim() || 'Player';
+  }
+
+  function ageFrom(dob) {
+    if (!dob) return null;
+    var d = new Date(dob);
+    if (isNaN(d)) return null;
+    var now = new Date();
+    var a = now.getFullYear() - d.getFullYear();
+    if (now.getMonth() < d.getMonth() || (now.getMonth() === d.getMonth() && now.getDate() < d.getDate())) a--;
+    return (a > 0 && a < 100) ? a : null;
+  }
+
+  function hideCardByHeading(text) {
+    document.querySelectorAll('.profile-card h3, .contact-card h3').forEach(function (h) {
+      if (h.textContent.indexOf(text) !== -1) {
+        var card = h.closest('.profile-card') || h.closest('.contact-card');
+        if (card) card.style.display = 'none';
+      }
+    });
+  }
+
+  function statBlock(value, label, green) {
+    return '<div>' +
+      '<div style="font-family:var(--font-display);font-size:32px;font-weight:900;color:var(--' + (green ? 'green' : 'white') + ');line-height:1;">' + esc(value) + '</div>' +
+      '<div style="font-size:12px;color:var(--slate-400);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">' + esc(label) + '</div>' +
+      '</div>';
+  }
+
+  function tableRow(label, value) {
+    return '<tr style="border-bottom:1px solid var(--slate-100);">' +
+      '<td style="padding:10px 0;font-size:14px;color:var(--slate-600);">' + esc(label) + '</td>' +
+      '<td style="padding:10px 0;font-size:14px;font-weight:700;color:var(--navy);text-align:right;">' + esc(value) + '</td>' +
+      '</tr>';
+  }
+
+  function render(p) {
+    var name = fullName(p);
+    var age = ageFrom(p.dob);
+
+    /* Page title */
+    document.title = name + (p.position ? ' | ' + p.position : '') + ' Rugby Player Profile | 5 Metre Scrum';
+
+    /* Hero: name, tags, location, photo */
+    var nameEl = document.querySelector('.profile-name');
+    if (nameEl) nameEl.textContent = name;
+
+    var tags = document.querySelector('.profile-tags');
+    if (tags) {
+      var tagHtml = '';
+      if (p.position) tagHtml += '<span class="badge-pos" style="font-size:13px;padding:5px 14px;">' + esc(p.position) + '</span>';
+      (p.passports || []).forEach(function (pp) {
+        tagHtml += '<span class="badge-eu">' + esc(pp) + ' Passport</span>';
+      });
+      tags.innerHTML = tagHtml;
+    }
+
+    var verifiedBadge = document.querySelector('.profile-verified-badge');
+    if (verifiedBadge) verifiedBadge.remove();
+
+    var loc = document.querySelector('.profile-location');
+    if (loc) {
+      var place = [p.city, p.country].filter(Boolean).join(', ');
+      var extras = [];
+      if (age) extras.push('Age ' + age);
+      if (p.height_cm && p.weight_kg) extras.push(p.height_cm + 'cm / ' + p.weight_kg + 'kg');
+      else if (p.height_cm) extras.push(p.height_cm + 'cm');
+      else if (p.weight_kg) extras.push(p.weight_kg + 'kg');
+      var line = [place, extras.join(' · ')].filter(Boolean).join(' · ');
+      loc.innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 1.5C4.515 1.5 2.5 3.515 2.5 6c0 3.5 4.5 7 4.5 7s4.5-3.5 4.5-7c0-2.485-2.015-4.5-4.5-4.5z" stroke="currentColor" stroke-width="1.25"/><circle cx="7" cy="6" r="1.5" stroke="currentColor" stroke-width="1.25"/></svg> ' + esc(line || 'Location not provided');
+    }
+
+    var photo = document.querySelector('.profile-photo');
+    if (photo) {
+      photo.onerror = null;
+      photo.src = p.headshot_url || FiveMS.initialsAvatar(p.first_name, p.last_name);
+      photo.alt = name + ' rugby player profile photo';
+    }
+
+    /* Hero key statistics */
+    var keyStats = document.querySelector('[aria-label="Key statistics"]');
+    if (keyStats) {
+      var blocks = [];
+      if (p.bronco) blocks.push(statBlock(p.bronco, 'Bronco Time', true));
+      if (p.deadlift_kg) blocks.push(statBlock(p.deadlift_kg + 'kg', 'Deadlift 1RM'));
+      if (p.sprint_10) blocks.push(statBlock(p.sprint_10 + 's', '10m Sprint'));
+      if (p.vo2max) blocks.push(statBlock(p.vo2max, 'VO2 Max'));
+      if (blocks.length) {
+        keyStats.innerHTML = blocks.join('<div style="width:1px;background:rgba(255,255,255,0.08);" aria-hidden="true"></div>');
+      } else {
+        keyStats.style.display = 'none';
+      }
+    }
+
+    /* Key Attributes stat grid */
+    var phys = document.querySelector('[aria-label="Physical measurements"]');
+    if (phys) {
+      function box(val, unit, lbl, green) {
+        return '<div class="stat-box"' + (green ? ' style="background:var(--green-glow);border:1px solid rgba(0,200,83,0.15);"' : '') + '>' +
+          '<span class="val"' + (green ? ' style="color:var(--green);"' : '') + '>' + esc(val) + '</span>' +
+          '<span class="unit">' + esc(unit) + '</span>' +
+          '<span class="lbl">' + esc(lbl) + '</span></div>';
+      }
+      var boxes = [];
+      if (p.height_cm) boxes.push(box(p.height_cm, 'cm', 'Height'));
+      if (p.weight_kg) boxes.push(box(p.weight_kg, 'kg', 'Weight'));
+      if (age) boxes.push(box(age, 'yrs', 'Age'));
+      if (p.bronco) boxes.push(box(p.bronco, 'mm:ss', 'Bronco', true));
+      if (p.sprint_10) boxes.push(box(p.sprint_10, 'sec', '10m Sprint'));
+      if (p.sprint_40) boxes.push(box(p.sprint_40, 'sec', '40m Sprint'));
+      if (boxes.length) phys.innerHTML = boxes.join('');
+      else {
+        var card = phys.closest('.profile-card');
+        if (card) card.style.display = 'none';
+      }
+    }
+
+    /* Player Bio — factual only, built from what was entered */
+    document.querySelectorAll('.profile-card h3').forEach(function (h) {
+      if (h.textContent.indexOf('Player Bio') === -1) return;
+      var card = h.closest('.profile-card');
+      if (!card) return;
+      card.querySelectorAll('p').forEach(function (para) { para.remove(); });
+      var bits = [];
+      bits.push(esc(name) + (p.position ? ' is a ' + esc(p.position) : ' is a rugby player') +
+        ([p.city, p.country].filter(Boolean).length ? ' based in ' + esc([p.city, p.country].filter(Boolean).join(', ')) : '') + '.');
+      if (p.clubs && p.clubs.length && p.clubs[0].name) {
+        bits.push('Most recent club: ' + esc(p.clubs[0].name) + (p.clubs[0].from ? ' (' + esc(p.clubs[0].from) + (p.clubs[0].to ? ' – ' + esc(p.clubs[0].to) : '') + ')' : '') + '.');
+      }
+      if ((p.passports || []).length) bits.push('Passport eligibility: ' + esc(p.passports.join(', ')) + '.');
+      var para = document.createElement('p');
+      para.style.cssText = 'font-size:15px;color:var(--slate-600);line-height:1.75;';
+      para.innerHTML = bits.join(' ');
+      card.appendChild(para);
+    });
+
+    /* Combine statistics tables */
+    var fitness = document.querySelector('[aria-label="Fitness test results"] tbody');
+    if (fitness) {
+      var fr = [];
+      if (p.bronco) fr.push(tableRow('Bronco (20-40-60)', p.bronco));
+      if (p.sprint_10) fr.push(tableRow('10m Sprint', p.sprint_10 + 's'));
+      if (p.sprint_40) fr.push(tableRow('40m Sprint', p.sprint_40 + 's'));
+      if (p.vo2max) fr.push(tableRow('VO2 Max', p.vo2max));
+      fitness.innerHTML = fr.join('') || tableRow('No fitness tests recorded yet', '—');
+    }
+    var strength = document.querySelector('[aria-label="Strength test results"] tbody');
+    if (strength) {
+      var sr = [];
+      if (p.deadlift_kg) sr.push(tableRow('Deadlift 1RM', p.deadlift_kg + 'kg'));
+      if (p.squat_kg) sr.push(tableRow('Back Squat 1RM', p.squat_kg + 'kg'));
+      if (p.bench_kg) sr.push(tableRow('Bench Press 1RM', p.bench_kg + 'kg'));
+      if (p.vjump_cm) sr.push(tableRow('Vertical Jump', p.vjump_cm + 'cm'));
+      strength.innerHTML = sr.join('') || tableRow('No strength tests recorded yet', '—');
+    }
+    document.querySelectorAll('.profile-card h3').forEach(function (h) {
+      if (h.textContent.indexOf('Combine Statistics') === -1) return;
+      var card = h.closest('.profile-card');
+      if (!card) return;
+      var sub = card.querySelector('p');
+      if (sub && p.created_at) {
+        var d = new Date(p.created_at);
+        sub.textContent = 'Self-reported by the player. Submitted ' +
+          d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }) + '.';
+      }
+    });
+
+    /* Demo-only cards that don't apply to a real registration */
+    hideCardByHeading('Radar Chart');
+    hideCardByHeading('Action Photos');
+    hideCardByHeading('Availability');
+    hideCardByHeading('Profile Views');
+
+    /* Highlight reel */
+    document.querySelectorAll('.profile-card h3').forEach(function (h) {
+      if (h.textContent.indexOf('Highlight Reels') === -1) return;
+      var card = h.closest('.profile-card');
+      if (!card) return;
+      var grid = card.querySelector('.video-grid');
+      var sub = card.querySelector('p');
+      if (p.video_file_url) {
+        if (sub) sub.textContent = p.video_title ? esc(p.video_title) : '1 video';
+        if (grid) {
+          grid.innerHTML = '<video controls preload="metadata" style="width:100%;border-radius:14px;background:#000;" src="' + esc(p.video_file_url) + '"></video>';
+          grid.style.display = 'block';
+        }
+      } else if (p.video_url) {
+        var embed = FiveMS.toEmbedUrl(p.video_url);
+        if (sub) sub.textContent = p.video_title ? p.video_title : '1 video';
+        if (grid) {
+          grid.innerHTML = '<div style="position:relative;padding-top:56.25%;border-radius:14px;overflow:hidden;background:#000;">' +
+            '<iframe src="' + esc(embed) + '" title="' + esc(name) + ' highlight reel" ' +
+            'style="position:absolute;inset:0;width:100%;height:100%;border:0;" allowfullscreen ' +
+            'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>';
+          grid.style.display = 'block';
+        }
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    /* Playing history */
+    var timeline = document.querySelector('.history-timeline');
+    if (timeline) {
+      var clubs = (p.clubs || []).filter(function (c) { return c && c.name; });
+      if (clubs.length) {
+        timeline.innerHTML = clubs.map(function (c, i) {
+          return '<div class="history-item" role="listitem">' +
+            '<div class="history-role">' + (i === 0 ? 'Most Recent' : 'Previous') + '</div>' +
+            '<div class="history-club">' + esc(c.name) + '</div>' +
+            '<div class="history-period">' + esc([c.from, c.to].filter(Boolean).join(' – ') || '—') + '</div>' +
+            (c.apps ? '<div class="history-detail">' + esc(c.apps) + ' appearances</div>' : '') +
+            '</div>';
+        }).join('');
+      } else {
+        timeline.innerHTML = '<p style="font-size:14px;color:var(--slate-600);">No playing history added yet.</p>';
+      }
+    }
+
+    /* Passport & eligibility tab */
+    var certList = document.querySelector('.cert-list');
+    var alertBox = document.querySelector('[data-profile-section="passport"] .alert');
+    if ((p.passports || []).length) {
+      if (alertBox) alertBox.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v4M8 11v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Passport eligibility as declared by the player during registration.';
+      if (certList) {
+        certList.innerHTML = p.passports.map(function (pp) {
+          return '<div class="cert-item"><div class="cert-dot" aria-hidden="true"></div>' +
+            '<div><span class="cert-label">' + esc(pp) + ' Passport</span> — <span class="cert-val">Declared by player</span></div></div>';
+        }).join('');
+      }
+    } else {
+      if (alertBox) alertBox.style.display = 'none';
+      if (certList) certList.innerHTML = '<p style="font-size:14px;color:var(--slate-600);">No passport information provided.</p>';
+    }
+
+    /* Position details sidebar */
+    document.querySelectorAll('.profile-card h3').forEach(function (h) {
+      if (h.textContent.indexOf('Position Details') === -1) return;
+      var card = h.closest('.profile-card');
+      if (!card) return;
+      var wrap = card.querySelector('div[style*="flex-direction:column"]');
+      if (wrap) {
+        wrap.innerHTML = '<div style="display:flex;justify-content:space-between;font-size:14px;">' +
+          '<span style="color:var(--slate-600);">Primary</span>' +
+          '<span style="font-weight:700;color:var(--navy);">' + esc(p.position || 'Not specified') + '</span></div>';
+      }
+    });
+
+    /* Contact card + share link */
+    var contact = document.querySelector('.contact-card');
+    if (contact) {
+      var cp = contact.querySelector('p');
+      if (cp) cp.textContent = 'Send ' + (p.first_name || 'this player') + ' a message directly through 5 Metre Scrum. Create a free account to unlock scout messaging.';
+      var shareUrl = contact.querySelector('.share-url');
+      if (shareUrl) shareUrl.textContent = location.host + location.pathname + location.search;
+      var copyBtn = contact.querySelector('.share-input button');
+      if (copyBtn) {
+        copyBtn.removeAttribute('onclick');
+        copyBtn.addEventListener('click', function () {
+          navigator.clipboard.writeText(location.href);
+        });
+      }
+    }
+  }
+
+  function showLoadError() {
+    var header = document.querySelector('main');
+    var banner = document.createElement('div');
+    banner.setAttribute('role', 'alert');
+    banner.style.cssText = 'background:#FDECEC;color:#B3261E;font-size:14px;font-weight:600;padding:14px 20px;text-align:center;';
+    banner.textContent = 'This profile could not be loaded — it may have been removed, or the link may be incorrect. The demo profile is shown below.';
+    if (header && header.parentNode) header.parentNode.insertBefore(banner, header);
+  }
+
+  if (isLocal) {
+    var localProfile = FiveMS.localGetProfile();
+    if (localProfile) render(localProfile);
+    else showLoadError();
+  } else {
+    FiveMS.getProfile(id).then(render).catch(showLoadError);
+  }
+})();
+</script>
 </body>
 </html>

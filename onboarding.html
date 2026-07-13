@@ -1754,6 +1754,12 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           <input type="email" id="email" class="form-input" placeholder="you@example.com" autocomplete="email" required>
           <p class="form-hint">We'll send your profile link here. No spam, ever.</p>
         </div>
+
+        <div class="form-group">
+          <label class="form-label" for="headshot-file">Profile Photo <span style="font-weight:400;color:var(--slate-400);">(optional)</span></label>
+          <input type="file" id="headshot-file" class="form-input" accept="image/jpeg,image/png,image/webp" aria-describedby="headshot-hint">
+          <p class="form-hint" id="headshot-hint">JPG, PNG or WebP up to 5MB. You can add one later if you skip this.</p>
+        </div>
       </div>
 
       <!-- STEP 2: Position -->
@@ -1971,7 +1977,9 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           <h4>Drag & Drop your video</h4>
           <p>MP4, MOV, or AVI up to 5GB · Or click to browse</p>
           <div style="margin-top:16px;">
-            <button class="btn btn-outline btn-sm" style="margin:0 auto;" type="button">Browse Files</button>
+            <button class="btn btn-outline btn-sm" style="margin:0 auto;" type="button" id="video-browse-btn">Browse Files</button>
+            <input type="file" id="video-file" accept="video/mp4,video/quicktime,video/x-msvideo" style="display:none;" aria-label="Choose a highlight video file">
+            <p class="form-hint" id="video-file-status" style="margin-top:10px;display:none;" aria-live="polite"></p>
           </div>
         </div>
 
@@ -2416,6 +2424,338 @@ document.addEventListener('DOMContentLoaded', () => {
   var declineBtn = document.getElementById('cookie-decline');
   if (acceptBtn) acceptBtn.addEventListener('click', function () { dismiss('accepted'); });
   if (declineBtn) declineBtn.addEventListener('click', function () { dismiss('declined'); });
+})();
+</script>
+<script src="/js/supabase-config.js"></script>
+<script src="/js/db.js"></script>
+<script>
+/* ====================================================
+   ONBOARDING — REAL DATA CAPTURE & SAVE (js kept inline
+   to match the rest of the site)
+   - Captures every step's fields into a profile object
+   - Saves a draft to localStorage after each step
+   - Validates the basics step before allowing Next
+   - On Finish: uploads photo/video and saves the profile
+     to Supabase (or to this browser in demo mode), then
+     opens the new live profile page.
+   ==================================================== */
+(function () {
+  'use strict';
+
+  var headshotFile = null;
+  var videoFile = null;
+
+  function val(id) {
+    var el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  }
+  function num(id) {
+    var v = val(id);
+    if (v === '') return null;
+    var n = parseFloat(v);
+    return isNaN(n) ? null : n;
+  }
+
+  function selectedPosition() {
+    var btn = document.querySelector('.position-btn.selected');
+    if (!btn) return '';
+    var clone = btn.cloneNode(true);
+    var numSpan = clone.querySelector('.num');
+    if (numSpan) numSpan.remove();
+    return clone.textContent.trim();
+  }
+
+  function selectedPassports() {
+    var out = [];
+    document.querySelectorAll('.passport-option input[name="passport"]:checked').forEach(function (cb) {
+      out.push(cb.value);
+    });
+    return out;
+  }
+
+  function selectedPlan() {
+    var el = document.querySelector('.plan-option.selected h4');
+    return el ? el.textContent.trim() : 'Academy';
+  }
+
+  function collectClubs() {
+    var out = [];
+    var list = document.getElementById('clubs-list');
+    if (!list) return out;
+    Array.prototype.forEach.call(list.children, function (entry) {
+      var club = { name: '', from: '', to: '', apps: '' };
+      entry.querySelectorAll('.form-group').forEach(function (fg) {
+        var label = fg.querySelector('.form-label');
+        var input = fg.querySelector('input');
+        if (!label || !input) return;
+        var key = label.textContent.trim().toLowerCase();
+        if (key.indexOf('club name') === 0) club.name = input.value.trim();
+        else if (key === 'from') club.from = input.value.trim();
+        else if (key === 'to') club.to = input.value.trim();
+        else if (key.indexOf('appearance') === 0) club.apps = input.value.trim();
+      });
+      if (club.name) out.push(club);
+    });
+    return out;
+  }
+
+  function collectAll() {
+    return {
+      first_name: val('first-name'),
+      last_name: val('last-name'),
+      dob: val('dob') || null,
+      country: val('country'),
+      city: val('city'),
+      email: val('email'),
+      position: selectedPosition(),
+      height_cm: num('height-cm'),
+      weight_kg: num('weight-kg'),
+      reach_cm: num('reach'),
+      wingspan_cm: num('wingspan'),
+      bronco: val('bronco'),
+      sprint_10: num('sprint-10'),
+      sprint_40: num('sprint-40'),
+      vo2max: num('vo2max'),
+      deadlift_kg: num('deadlift'),
+      squat_kg: num('squat'),
+      bench_kg: num('bench'),
+      vjump_cm: num('vjump'),
+      clubs: collectClubs(),
+      passports: selectedPassports(),
+      video_url: val('video-link'),
+      video_title: val('video-title'),
+      plan: selectedPlan()
+    };
+  }
+
+  /* ── Restore a saved draft on load ─────────────────────────── */
+  function restoreDraft() {
+    if (!window.FiveMS) return;
+    var d = FiveMS.getDraft();
+    if (!d) return;
+    var textIds = {
+      'first-name': d.first_name, 'last-name': d.last_name, 'dob': d.dob,
+      'country': d.country, 'city': d.city, 'email': d.email,
+      'height-cm': d.height_cm, 'weight-kg': d.weight_kg, 'reach': d.reach_cm,
+      'wingspan': d.wingspan_cm, 'bronco': d.bronco, 'sprint-10': d.sprint_10,
+      'sprint-40': d.sprint_40, 'vo2max': d.vo2max, 'deadlift': d.deadlift_kg,
+      'squat': d.squat_kg, 'bench': d.bench_kg, 'vjump': d.vjump_cm,
+      'video-link': d.video_url, 'video-title': d.video_title
+    };
+    Object.keys(textIds).forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el && textIds[id] != null && textIds[id] !== '') el.value = textIds[id];
+    });
+    if (d.position) {
+      document.querySelectorAll('.position-btn').forEach(function (btn) {
+        var clone = btn.cloneNode(true);
+        var n = clone.querySelector('.num');
+        if (n) n.remove();
+        if (clone.textContent.trim() === d.position) {
+          btn.classList.add('selected');
+          btn.setAttribute('aria-checked', 'true');
+        }
+      });
+    }
+    if (d.passports && d.passports.length) {
+      document.querySelectorAll('.passport-option input[name="passport"]').forEach(function (cb) {
+        if (d.passports.indexOf(cb.value) !== -1) {
+          cb.checked = true;
+          var opt = cb.closest('.passport-option');
+          if (opt) opt.classList.add('selected');
+        }
+      });
+    }
+    if (d.clubs && d.clubs.length) {
+      var first = d.clubs[0];
+      var ids = { 'club-name-1': first.name, 'club-from-1': first.from, 'club-to-1': first.to, 'club-apps-1': first.apps };
+      Object.keys(ids).forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el && ids[id]) el.value = ids[id];
+      });
+    }
+  }
+
+  /* ── Step 1 validation (name + valid email required) ───────── */
+  function currentVisibleStep() {
+    var el = null;
+    document.querySelectorAll('[data-step]').forEach(function (s) {
+      if (s.style.display !== 'none') el = s;
+    });
+    return el ? parseInt(el.dataset.step, 10) : 1;
+  }
+
+  function showStepError(msg) {
+    var box = document.getElementById('ob-step-error');
+    if (!box) {
+      box = document.createElement('p');
+      box.id = 'ob-step-error';
+      box.setAttribute('role', 'alert');
+      box.style.cssText = 'color:#E5484D;font-size:14px;font-weight:600;margin:12px 0 0;text-align:right;';
+      var nextBtn = document.getElementById('next-btn');
+      if (nextBtn && nextBtn.parentNode) nextBtn.parentNode.appendChild(box);
+      else document.body.appendChild(box);
+    }
+    box.textContent = msg;
+    box.style.display = msg ? 'block' : 'none';
+  }
+
+  function validateStep(n) {
+    if (n !== 1) return '';
+    if (!val('first-name') || !val('last-name')) return 'Please enter your first and last name.';
+    var email = val('email');
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Please enter a valid email address.';
+    return '';
+  }
+
+  /* Capture-phase listener runs before the wizard's own Next
+     handlers, so invalid steps never advance. */
+  document.addEventListener('click', function (e) {
+    var nextBtn = e.target.closest ? e.target.closest('[data-next-step]') : null;
+    if (!nextBtn) return;
+    var err = validateStep(currentVisibleStep());
+    if (err) {
+      e.preventDefault();
+      e.stopPropagation();
+      showStepError(err);
+    } else {
+      showStepError('');
+    }
+  }, true);
+
+  /* After each successful step change, persist the draft. */
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest) return;
+    if (e.target.closest('[data-next-step]') || e.target.closest('[data-prev-step]')) {
+      if (window.FiveMS) FiveMS.saveDraft(collectAll());
+    }
+  });
+
+  /* ── File pickers: headshot + highlight video ──────────────── */
+  document.addEventListener('DOMContentLoaded', function () {
+    restoreDraft();
+
+    var headshotInput = document.getElementById('headshot-file');
+    if (headshotInput) {
+      headshotInput.addEventListener('change', function () {
+        headshotFile = headshotInput.files && headshotInput.files[0] ? headshotInput.files[0] : null;
+        if (headshotFile && headshotFile.size > 5 * 1024 * 1024) {
+          headshotInput.value = '';
+          headshotFile = null;
+          alert('That photo is over 5MB. Please choose a smaller image.');
+        }
+      });
+    }
+
+    var videoInput = document.getElementById('video-file');
+    var browseBtn = document.getElementById('video-browse-btn');
+    var zone = document.querySelector('.upload-zone');
+    var status = document.getElementById('video-file-status');
+
+    function setVideo(file) {
+      if (!file) return;
+      if (file.size > 200 * 1024 * 1024) {
+        alert('That video is over 200MB. Please trim or compress it, or paste a YouTube/Hudl link below instead.');
+        return;
+      }
+      videoFile = file;
+      if (status) {
+        status.style.display = 'block';
+        status.textContent = 'Selected: ' + file.name + ' (' + (file.size / (1024 * 1024)).toFixed(1) + 'MB)';
+      }
+    }
+
+    if (videoInput) {
+      videoInput.addEventListener('change', function () {
+        setVideo(videoInput.files && videoInput.files[0]);
+      });
+    }
+    if (browseBtn && videoInput) {
+      browseBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        videoInput.click();
+      });
+    }
+    if (zone && videoInput) {
+      zone.addEventListener('click', function () { videoInput.click(); });
+      zone.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); videoInput.click(); }
+      });
+      zone.addEventListener('dragover', function (e) { e.preventDefault(); });
+      zone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) setVideo(e.dataTransfer.files[0]);
+      });
+    }
+  });
+
+  /* ── Finish: save the profile and open it ──────────────────── */
+  document.addEventListener('click', function (e) {
+    var finishBtn = e.target.closest ? e.target.closest('#finish-btn') : null;
+    if (!finishBtn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (finishBtn.dataset.saving === 'true') return;
+
+    var profile = collectAll();
+    var err = validateStep(1);
+    if (err) {
+      alert('Before finishing, go back to Step 1 — ' + err.charAt(0).toLowerCase() + err.slice(1));
+      return;
+    }
+
+    finishBtn.dataset.saving = 'true';
+    var originalText = finishBtn.innerHTML;
+    finishBtn.innerHTML = 'Saving your profile…';
+    finishBtn.style.pointerEvents = 'none';
+
+    function fail(message) {
+      finishBtn.dataset.saving = 'false';
+      finishBtn.innerHTML = originalText;
+      finishBtn.style.pointerEvents = '';
+      alert(message + ' Your answers are still here — nothing has been lost.');
+    }
+
+    if (window.FiveMS && FiveMS.dbConfigured()) {
+      var uploads = Promise.resolve();
+      if (headshotFile) {
+        uploads = uploads
+          .then(function () { return FiveMS.uploadFile('headshots', headshotFile); })
+          .then(function (url) { profile.headshot_url = url; });
+      }
+      if (videoFile) {
+        uploads = uploads
+          .then(function () { finishBtn.innerHTML = 'Uploading video…'; })
+          .then(function () { return FiveMS.uploadFile('highlight-videos', videoFile); })
+          .then(function (url) { profile.video_file_url = url; });
+      }
+      uploads
+        .then(function () {
+          finishBtn.innerHTML = 'Saving your profile…';
+          return FiveMS.saveProfile(profile);
+        })
+        .then(function (row) {
+          FiveMS.clearDraft();
+          location.href = '/player-profile.html?id=' + encodeURIComponent(row.id);
+        })
+        .catch(function (error) {
+          fail('We couldn\'t save your profile right now (' + (error && error.message ? error.message : 'connection problem') + ').');
+        });
+    } else if (window.FiveMS) {
+      /* Demo mode: no database configured yet. Save in this browser. */
+      profile.id = 'local';
+      profile.created_at = new Date().toISOString();
+      var ok = FiveMS.localSaveProfile(profile);
+      if (ok) {
+        FiveMS.clearDraft();
+        location.href = '/player-profile.html?local=1';
+      } else {
+        fail('Your browser blocked local saving (this can happen in private browsing).');
+      }
+    } else {
+      fail('The profile system didn\'t load.');
+    }
+  }, true);
 })();
 </script>
 </body>
