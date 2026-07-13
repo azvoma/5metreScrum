@@ -1464,8 +1464,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
     .popular-cat { font-size: 11px; color: var(--slate-400); margin-top: 2px; }
 
     .topic-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .topic-tag { font-size: 12px; font-weight: 600; padding: 6px 12px; border: 1px solid var(--slate-200); border-radius: var(--r-full); color: var(--slate-600); cursor: pointer; transition: all var(--t-fast); }
-    .topic-tag:hover { border-color: var(--green); color: var(--green); }
+    .topic-tag { font-size: 12px; font-weight: 600; padding: 6px 12px; border: 1px solid var(--slate-200); border-radius: var(--r-full); color: var(--slate-600); }
   
 .faq-wrap { display:flex;flex-direction:column;border:1px solid rgba(255,255,255,0.12);border-radius:16px;overflow:hidden; }
 .faq-item { border-bottom:1px solid rgba(255,255,255,0.08); }
@@ -1477,7 +1476,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 .faq-a { max-height:0;overflow:hidden;transition:max-height .35s ease,padding .15s;font-size:15px;color:var(--slate-400);line-height:1.75;padding:0 24px; }
 .faq-a.open { max-height:400px;padding:0 24px 20px; }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.5metrescrum.com/"},{"@type":"ListItem","position":2,"name":"Rugby Blog","item":"https://www.5metrescrum.com/blog.html"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How often is new content published?", "acceptedAnswer": {"@type": "Answer", "text": "We publish new guides and articles regularly, covering training standards, recruitment advice, and rugby career pathways."}}, {"@type": "Question", "name": "Who writes the articles?", "acceptedAnswer": {"@type": "Answer", "text": "Content is produced by the 5 Metre Scrum recruitment team, drawing on data and standards from professional academy scouts."}}, {"@type": "Question", "name": "Can I suggest a topic?", "acceptedAnswer": {"@type": "Answer", "text": "Yes \u2014 email hello@5metrescrum.com with your suggestion. We prioritise topics players and scouts ask about most."}}, {"@type": "Question", "name": "Can I share or reference your articles elsewhere?", "acceptedAnswer": {"@type": "Answer", "text": "You're welcome to link to our articles. Please contact us before reproducing full content elsewhere."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.5metrescrum.com/"},{"@type":"ListItem","position":2,"name":"Rugby Blog","item":"https://www.5metrescrum.com/blog.html"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How often is new content published?", "acceptedAnswer": {"@type": "Answer", "text": "We publish new guides and articles regularly, covering training standards, recruitment advice, and rugby career pathways."}}, {"@type": "Question", "name": "Who writes the articles?", "acceptedAnswer": {"@type": "Answer", "text": "Content is produced by the 5 Metre Scrum recruitment team, drawing on data and standards from professional academy scouts."}}, {"@type": "Question", "name": "Can I suggest a topic?", "acceptedAnswer": {"@type": "Answer", "text": "Yes \u2014 email andrew@5metrescrum.com with your suggestion. We prioritise topics players and scouts ask about most."}}, {"@type": "Question", "name": "Can I share or reference your articles elsewhere?", "acceptedAnswer": {"@type": "Answer", "text": "You're welcome to link to our articles. Please contact us before reproducing full content elsewhere."}}]}</script>
   <style>
     @media (max-width: 768px) {
       .nav-cta > a, .nav-cta .nav-link, .nav-cta .nav-login { display: none !important; }
@@ -1670,14 +1669,14 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
     </nav>
     <h1>Rugby Knowledge.<br><span style="color:var(--green);">By Experts.</span></h1>
     <p style="font-size:16px;color:var(--slate-400);margin-top:12px;max-width:520px;margin-left:auto;margin-right:auto;">Training guides, recruitment tips, Bronco test prep and rugby news — written by professional coaches, players and rugby recruitment specialists.</p>
-    <div class="blog-cats" role="group" aria-label="Filter articles by category">
-      <button class="cat-pill active">All Articles</button>
-      <button class="cat-pill">Training</button>
-      <button class="cat-pill">Recruitment</button>
-      <button class="cat-pill">Agents</button>
-      <button class="cat-pill">Passports</button>
-      <button class="cat-pill">News</button>
-      <button class="cat-pill">Scholarships</button>
+    <div class="blog-cats" aria-label="Article categories">
+      <span class="cat-pill active">All Articles</span>
+      <span class="cat-pill">Training</span>
+      <span class="cat-pill">Recruitment</span>
+      <span class="cat-pill">Agents</span>
+      <span class="cat-pill">Passports</span>
+      <span class="cat-pill">News</span>
+      <span class="cat-pill">Scholarships</span>
     </div>
   </div>
   </div>
@@ -1690,6 +1689,54 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
       <div>
         <!-- Article Grid -->
         <div class="blog-grid">
+
+          <div class="blog-card" style="cursor:pointer;" onclick="window.location='/blog/rugby-union-players.html'" tabindex="0" role="article" aria-label="Article: Rugby Union Players — How to Get Seen and Signed">
+            <div class="blog-card-img">
+              <img src="/assets/images/blog/lineout-jump.jpg" alt="Rugby union player lifted at a lineout during a competitive match" loading="lazy" onerror="this.onerror=null;this.style.display='none'">
+            </div>
+            <div class="blog-card-body">
+              <p class="blog-card-cat">Recruitment</p>
+              <h3 class="blog-card-title"><a href="/blog/rugby-union-players.html" style="color:inherit;text-decoration:none;">Rugby Union Players: How to Get Seen and Signed</a></h3>
+              <p style="font-size:14px;color:var(--slate-600);margin-bottom:var(--space-md);flex:1;">Where recruiters look, the combine numbers and video that matter, and how to make your profile findable.</p>
+              <div class="blog-card-meta">
+                <span>5MS Editorial Team</span>
+                <span class="dot"></span>
+                <span>9 min read</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="blog-card" style="cursor:pointer;" onclick="window.location='/blog/rugby-team-numbers.html'" tabindex="0" role="article" aria-label="Article: Rugby Team Numbers Explained">
+            <div class="blog-card-img">
+              <img src="/assets/images/blog/rugby-scrum.webp" alt="Rugby forwards numbered 1 to 8 binding in a scrum" loading="lazy" onerror="this.onerror=null;this.style.display='none'">
+            </div>
+            <div class="blog-card-body">
+              <p class="blog-card-cat">Rugby Basics</p>
+              <h3 class="blog-card-title"><a href="/blog/rugby-team-numbers.html" style="color:inherit;text-decoration:none;">Rugby Team Numbers: What Every Shirt from 1 to 15 Means</a></h3>
+              <p style="font-size:14px;color:var(--slate-600);margin-bottom:var(--space-md);flex:1;">Forwards, backs and the bench — what each number does and why positions matter to scouts.</p>
+              <div class="blog-card-meta">
+                <span>5MS Editorial Team</span>
+                <span class="dot"></span>
+                <span>8 min read</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="blog-card" style="cursor:pointer;" onclick="window.location='/blog/world-rugby-jobs.html'" tabindex="0" role="article" aria-label="Article: World Rugby Jobs — Careers Beyond Playing">
+            <div class="blog-card-img">
+              <img src="/assets/images/blog/rugby-coaching-session.jpg" alt="Rugby coaching session showing careers in rugby beyond playing" loading="lazy" onerror="this.onerror=null;this.style.display='none'">
+            </div>
+            <div class="blog-card-body">
+              <p class="blog-card-cat">Careers</p>
+              <h3 class="blog-card-title"><a href="/blog/world-rugby-jobs.html" style="color:inherit;text-decoration:none;">World Rugby Jobs: Building a Career in Rugby Beyond Playing</a></h3>
+              <p style="font-size:14px;color:var(--slate-600);margin-bottom:var(--space-md);flex:1;">Coaching, analysis, refereeing, media and governance — the realistic routes into working in rugby.</p>
+              <div class="blog-card-meta">
+                <span>5MS Editorial Team</span>
+                <span class="dot"></span>
+                <span>9 min read</span>
+              </div>
+            </div>
+          </div>
 
           <div class="blog-card" style="cursor:pointer;" onclick="window.location='/blog/rugby-union-101.html'" tabindex="0" role="article" aria-label="Article: Rugby Union 101">
             <div class="blog-card-img">
@@ -1725,9 +1772,6 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 
         </div>
 
-        <div style="text-align:center;margin-top:var(--space-2xl);">
-          <a href="/blog.html" class="btn btn-outline btn-lg">Load More Articles →</a>
-        </div>
       </div>
 
       <!-- SIDEBAR -->
@@ -1750,6 +1794,69 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
               <div>
                 <a href="/blog/rugby-coaching-guide.html" style="text-decoration:none;color:inherit;"><div class="popular-title">Mastering Rugby Coaching</div></a>
                 <div class="popular-cat">Coaching · 10 min</div>
+                <div class="popular-item">
+              <div class="popular-num">3</div>
+              <div>
+                <a href="/blog/rugby-union-players.html" style="text-decoration:none;color:inherit;"><div class="popular-title">How Rugby Union Players Get Scouted</div></a>
+                <div class="popular-cat">Recruitment · 9 min</div>
+              </div>
+            </div>
+            <div class="popular-item">
+              <div class="popular-num">4</div>
+              <div>
+                <a href="/blog/rugby-team-numbers.html" style="text-decoration:none;color:inherit;"><div class="popular-title">Rugby Team Numbers Explained</div></a>
+                <div class="popular-cat">Rugby Basics · 8 min</div>
+              </div>
+            </div>
+            <div class="popular-item">
+              <div class="popular-num">5</div>
+              <div>
+                <a href="/blog/world-rugby-jobs.html" style="text-decoration:none;color:inherit;"><div class="popular-title">World Rugby Jobs &amp; Careers</div></a>
+                <div class="popular-cat">Careers · 9 min</div>
+              </div>
+            </div>
+          </div>
+              <div class="popular-item">
+              <div class="popular-num">3</div>
+              <div>
+                <a href="/blog/rugby-union-players.html" style="text-decoration:none;color:inherit;"><div class="popular-title">How Rugby Union Players Get Scouted</div></a>
+                <div class="popular-cat">Recruitment · 9 min</div>
+              </div>
+            </div>
+            <div class="popular-item">
+              <div class="popular-num">4</div>
+              <div>
+                <a href="/blog/rugby-team-numbers.html" style="text-decoration:none;color:inherit;"><div class="popular-title">Rugby Team Numbers Explained</div></a>
+                <div class="popular-cat">Rugby Basics · 8 min</div>
+              </div>
+            </div>
+            <div class="popular-item">
+              <div class="popular-num">5</div>
+              <div>
+                <a href="/blog/world-rugby-jobs.html" style="text-decoration:none;color:inherit;"><div class="popular-title">World Rugby Jobs &amp; Careers</div></a>
+                <div class="popular-cat">Careers · 9 min</div>
+              </div>
+            </div>
+          </div>
+            <div class="popular-item">
+              <div class="popular-num">3</div>
+              <div>
+                <a href="/blog/rugby-union-players.html" style="text-decoration:none;color:inherit;"><div class="popular-title">How Rugby Union Players Get Scouted</div></a>
+                <div class="popular-cat">Recruitment · 9 min</div>
+              </div>
+            </div>
+            <div class="popular-item">
+              <div class="popular-num">4</div>
+              <div>
+                <a href="/blog/rugby-team-numbers.html" style="text-decoration:none;color:inherit;"><div class="popular-title">Rugby Team Numbers Explained</div></a>
+                <div class="popular-cat">Rugby Basics · 8 min</div>
+              </div>
+            </div>
+            <div class="popular-item">
+              <div class="popular-num">5</div>
+              <div>
+                <a href="/blog/world-rugby-jobs.html" style="text-decoration:none;color:inherit;"><div class="popular-title">World Rugby Jobs &amp; Careers</div></a>
+                <div class="popular-cat">Careers · 9 min</div>
               </div>
             </div>
           </div>
@@ -1783,7 +1890,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 
     </div>
   </div>
-<section class="section section-dark"><div class="container" style="max-width:760px;"><div style="text-align:center;margin-bottom:40px;"><span class="eyebrow">Blog FAQs</span><h2 class="section-title wht">FAQs</h2></div><div class="faq-wrap"><div class="faq-item"><button class="faq-q">How often is new content published?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">We publish new guides and articles regularly, covering training standards, recruitment advice, and rugby career pathways.</div></div><div class="faq-item"><button class="faq-q">Who writes the articles?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Content is produced by the 5 Metre Scrum recruitment team, drawing on data and standards from professional academy scouts.</div></div><div class="faq-item"><button class="faq-q">Can I suggest a topic?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Yes — email hello@5metrescrum.com with your suggestion. We prioritise topics players and scouts ask about most.</div></div><div class="faq-item"><button class="faq-q">Can I share or reference your articles elsewhere?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">You're welcome to link to our articles. Please contact us before reproducing full content elsewhere.</div></div></div></div></section></main>
+<section class="section section-dark"><div class="container" style="max-width:760px;"><div style="text-align:center;margin-bottom:40px;"><span class="eyebrow">Blog FAQs</span><h2 class="section-title wht">FAQs</h2></div><div class="faq-wrap"><div class="faq-item"><button class="faq-q">How often is new content published?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">We publish new guides and articles regularly, covering training standards, recruitment advice, and rugby career pathways.</div></div><div class="faq-item"><button class="faq-q">Who writes the articles?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Content is produced by the 5 Metre Scrum recruitment team, drawing on data and standards from professional academy scouts.</div></div><div class="faq-item"><button class="faq-q">Can I suggest a topic?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Yes — email andrew@5metrescrum.com with your suggestion. We prioritise topics players and scouts ask about most.</div></div><div class="faq-item"><button class="faq-q">Can I share or reference your articles elsewhere?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">You're welcome to link to our articles. Please contact us before reproducing full content elsewhere.</div></div></div></div></section></main>
 
 <footer class="footer" role="contentinfo">
   <div class="container">
@@ -1820,6 +1927,9 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
         <nav class="footer-links" aria-label="Resources navigation">
           <a href="/blog/rugby-union-101.html" class="footer-link">Rugby Union 101</a>
           <a href="/blog/rugby-coaching-guide.html" class="footer-link">Rugby Coaching Guide</a>
+          <a href="/blog/rugby-team-numbers.html" class="footer-link">Rugby Team Numbers</a>
+          <a href="/blog/world-rugby-jobs.html" class="footer-link">World Rugby Jobs</a>
+          <a href="/blog/rugby-union-players.html" class="footer-link">Get Scouted Guide</a>
         </nav>
       </div>
       <div class="footer-col">

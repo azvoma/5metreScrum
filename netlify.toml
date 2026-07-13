@@ -7,7 +7,7 @@
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.pexels.com https://randomuser.me https://ui-avatars.com data: blob:; frame-src https://www.youtube.com https://player.vimeo.com; connect-src 'self';"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://identity.netlify.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.pexels.com https://randomuser.me https://ui-avatars.com data: blob:; frame-src https://www.youtube.com https://player.vimeo.com; connect-src 'self' https://identity.netlify.com https://*.supabase.co;"
 
 [[headers]]
   for = "/*.html"
