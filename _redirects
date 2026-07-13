@@ -19,8 +19,5 @@
 /player          /player-profile.html  301
 
 # Blog article routes
-/blog/bronco-test-guide       /blog/bronco-test-guide.html    301
-/blog/rugby-cv-guide          /blog/rugby-cv-guide.html       301
-/blog/deadlift-standards      /blog/deadlift-standards.html   301
-/blog/highlight-reel-guide    /blog/highlight-reel-guide.html 301
-/blog/premiership-salaries    /blog/premiership-salaries.html 301
+/blog/rugby-union-101         /blog/rugby-union-101.html      301
+/blog/rugby-coaching-guide    /blog/rugby-coaching-guide.html 301
