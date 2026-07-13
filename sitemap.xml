@@ -139,34 +139,6 @@
   </url>
 
   <!-- BLOG ARTICLES -->
-  <url>
-    <loc>https://www.5metrescrum.com/blog/bronco-test-guide.html</loc>
-    <lastmod>2026-06-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>  <url>
-    <loc>https://www.5metrescrum.com/blog/rugby-cv-guide.html</loc>
-    <lastmod>2026-06-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>  <url>
-    <loc>https://www.5metrescrum.com/blog/deadlift-standards.html</loc>
-    <lastmod>2026-06-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.5metrescrum.com/blog/highlight-reel-guide.html</loc>
-    <lastmod>2026-06-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.5metrescrum.com/blog/premiership-salaries.html</loc>
-    <lastmod>2026-06-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
   <url><loc>https://www.5metrescrum.com/blog/rugby-union-101.html</loc><lastmod>2026-07-13</lastmod></url>
   <url><loc>https://www.5metrescrum.com/blog/rugby-coaching-guide.html</loc><lastmod>2026-07-13</lastmod></url>
 </urlset>
