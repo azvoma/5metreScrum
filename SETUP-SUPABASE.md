@@ -66,3 +66,29 @@ every player who signs up appears on the Scout Board for everyone.
 - Registration doesn't yet require login. Once Netlify Identity is
   enabled and tested, the insert policy can be tightened to
   authenticated users only — flag it when you're ready.
+
+## Agent & staff logins (Supabase Auth)
+Agents (`/agent-dashboard.html`) and coaches/staff (`/staff-onboarding.html`)
+sign in at `/account.html` using Supabase Auth. To switch it on:
+
+1. Re-run `supabase-schema.sql` (it adds the `accounts` and
+   `staff_profiles` tables, agent ownership on `players`, and the
+   security rules).
+2. **Authentication → URL Configuration:** set **Site URL** to
+   `https://5metrescrum.com` and add
+   `https://5metrescrum.com/account.html` under **Redirect URLs**
+   (email confirmation and password-reset links land there).
+3. **Authentication → Providers → Email:** keep "Confirm email" on.
+4. **Authentication → Emails → SMTP settings:** before launch, connect
+   your own email sender (e.g. Resend, Postmark, SendGrid). Supabase's
+   built-in sender is for testing only and heavily rate-limited.
+5. New agents/staff appear under **Authentication → Users** and in the
+   `accounts` table. To make someone a club account, change their
+   `account_type` to `club` in the Table Editor (this can't be done from
+   the browser).
+
+Security rules in plain English:
+- Agents can add players to their own roster and edit only those players.
+- Nobody signed out can attach a player to an agent.
+- Staff can create and edit only their own staff profile.
+- Clubs and scouts still see every published player and staff profile.

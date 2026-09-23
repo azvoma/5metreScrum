@@ -1616,6 +1616,26 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
   border-bottom: none;
 }
 </style>
+  <style>
+    .sb-type-toggle { display:inline-flex; background:var(--slate-100); border-radius:999px; padding:3px; flex-shrink:0; }
+    .sb-type-toggle button { border:0; background:none; font:inherit; font-size:13px; font-weight:700; color:var(--slate-600); padding:7px 16px; border-radius:999px; cursor:pointer; }
+    .sb-type-toggle button[aria-pressed="true"] { background:var(--navy); color:#fff; }
+    .sb-type-toggle button:focus-visible { outline:2px solid var(--green); outline-offset:2px; }
+    .staff-head { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:var(--space-lg); }
+    .staff-count { font-size:14px; color:var(--slate-600); }
+    .staff-list { display:grid; gap:12px; }
+    .staff-card { background:var(--white, #fff); border:1px solid var(--slate-100); border-radius:var(--r-xl); padding:20px; display:grid; grid-template-columns:56px 1fr auto; gap:16px; align-items:start; }
+    @media (max-width: 640px) { .staff-card { grid-template-columns:48px 1fr; } .staff-card .staff-actions { grid-column:1 / -1; } }
+    .staff-avatar { width:56px; height:56px; border-radius:50%; background:var(--navy); color:var(--green); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:20px; }
+    @media (max-width: 640px) { .staff-avatar { width:48px; height:48px; font-size:17px; } }
+    .staff-name { font-weight:800; color:var(--navy); font-size:17px; }
+    .staff-role { display:inline-block; font-size:11px; font-weight:700; padding:3px 8px; border-radius:999px; background:var(--green); color:var(--navy); margin-left:6px; vertical-align:2px; }
+    .staff-meta { font-size:13px; color:var(--slate-600); margin-top:4px; }
+    .staff-quals { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+    .staff-quals span { font-size:11px; font-weight:600; padding:3px 8px; border-radius:999px; background:var(--slate-100); color:var(--navy); }
+    .staff-bio { font-size:13px; color:var(--slate-600); margin-top:10px; line-height:1.55; }
+    .staff-note { font-size:12px; color:var(--slate-400); margin-top:12px; }
+  </style>
 </head>
 <body>
 
@@ -1693,6 +1713,10 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 <div class="sb-filters-bar" role="search" aria-label="Quick filters">
   <div class="container">
     <div class="sb-filters-inner">
+      <div class="sb-type-toggle" role="group" aria-label="Search for">
+        <button type="button" data-sb-type="players" aria-pressed="true">Players</button>
+        <button type="button" data-sb-type="staff" aria-pressed="false">Staff</button>
+      </div>
       <input type="text" id="sb-search" class="filter-search" placeholder="Search by name, club or location..." aria-label="Search players" style="min-width:260px;">
       <select id="sb-position" class="filter-select" aria-label="Filter by position">
         <option value="">All Positions</option>
@@ -1979,6 +2003,28 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
       </div>
 
     </div>
+
+    <!-- STAFF RESULTS (shown by the Players / Staff toggle) -->
+    <section id="staff-panel" aria-label="Staff profiles" hidden>
+      <div class="staff-head">
+        <p class="staff-count" id="staff-count" aria-live="polite">Loading staff…</p>
+        <select id="staff-role" class="filter-select" aria-label="Filter by role" style="width:auto;">
+          <option value="">All roles</option>
+          <option>Head Coach</option>
+          <option>Assistant Coach</option>
+          <option>S&amp;C Coach</option>
+          <option>Physio</option>
+          <option>Analyst</option>
+        </select>
+      </div>
+      <div class="staff-list" id="staff-list" role="list"></div>
+      <p class="staff-note" id="staff-demo-note" hidden>Demo mode: sample staff profiles for preview.</p>
+      <div style="margin-top:var(--space-2xl);background:var(--navy);border-radius:var(--r-xl);padding:var(--space-2xl);text-align:center;">
+        <p style="font-size:13px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Coach, S&amp;C, physio or analyst?</p>
+        <h3 style="font-size:24px;font-weight:800;color:var(--white);margin-bottom:var(--space-xl);">Put your profile in front of clubs</h3>
+        <a href="/account.html?mode=signup" class="btn btn-primary btn-lg">Create a Staff Profile</a>
+      </div>
+    </section>
   </div>
 <section class="section section-dark"><div class="container" style="max-width:760px;"><div style="text-align:center;margin-bottom:40px;"><span class="eyebrow">Scout Board FAQs</span><h2 class="section-title wht">FAQs</h2></div><div class="faq-wrap"><div class="faq-item"><button class="faq-q">How current is the player data shown here?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Players update their own combine stats and playing history directly, so profiles reflect what each player has most recently entered.</div></div><div class="faq-item"><button class="faq-q">What does the verified badge mean?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">A verified badge means the player's identity and key stats have been checked against supporting evidence, such as club or academy confirmation.</div></div><div class="faq-item"><button class="faq-q">Can I filter players by passport eligibility?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Yes. Use the passport filter to narrow results by EU, UK, or other eligibility — useful for checking overseas quota implications.</div></div><div class="faq-item"><button class="faq-q">How do I get in touch with a player?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Open their profile and use the contact option. You'll need a verified scout account to message players directly.</div></div></div></div></section></main>
 
@@ -2418,6 +2464,7 @@ document.querySelectorAll('.faq-q').forEach(function(btn){
 </script>
 <script src="/js/supabase-config.js"></script>
 <script src="/js/db.js"></script>
+<script src="/js/auth.js"></script>
 <script>
 /* ====================================================
    LIVE PLAYERS ON THE SCOUT BOARD
@@ -2494,6 +2541,120 @@ document.querySelectorAll('.faq-q').forEach(function(btn){
       if (local) inject([{ profile: local, href: '/player-profile.html?local=1' }]);
     }
   });
+})();
+</script>
+<script>
+/* ====================================================
+   PLAYERS / STAFF TOGGLE
+   Staff mode hides the player filters and list and
+   shows published staff profiles (coaches, S&C,
+   physios, analysts), filtered by role and search.
+   ==================================================== */
+(function () {
+  'use strict';
+  var panel = document.getElementById('staff-panel');
+  var layout = document.querySelector('.sb-layout');
+  var search = document.getElementById('sb-search');
+  var roleSel = document.getElementById('staff-role');
+  var list = document.getElementById('staff-list');
+  var count = document.getElementById('staff-count');
+  if (!panel || !layout || !list) return;
+
+  var A = window.FiveMSAuth;
+  var esc = A ? A.escapeHtml : function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; }); };
+  var live = !!(A && A.isLive());
+  var staff = null;
+  var mode = 'players';
+  var playerOnly = [document.getElementById('sb-position'), document.getElementById('sb-passport')]
+    .concat(Array.prototype.slice.call(document.querySelectorAll('.filter-tag[data-group="video"]')))
+    .filter(Boolean);
+
+  var DEMO_STAFF = [
+    { id: 'd1', first_name: 'Ruan', last_name: 'Botha', role: 'Head Coach', country: 'South Africa', city: 'Stellenbosch', years_experience: 14, qualifications: ['World Rugby Level 3 Coaching'], previous_clubs: [{ name: 'Varsity Cup side', role: 'Head Coach' }], bio: 'Attack-minded head coach with a background in developing academy players into senior squads.' },
+    { id: 'd2', first_name: 'Megan', last_name: 'Clarke', role: 'Physio', country: 'England', city: 'Bristol', years_experience: 7, qualifications: ['HCPC Registered Physiotherapist', 'World Rugby Immediate Care in Rugby (ICIR)'], previous_clubs: [{ name: 'Championship club', role: 'Lead Physio' }], bio: 'Return-to-play and pitch-side care specialist.' },
+    { id: 'd3', first_name: 'Luca', last_name: 'Moretti', role: 'S&C Coach', country: 'Italy', city: 'Treviso', years_experience: 9, qualifications: ['UKSCA Accredited S&C Coach (ASCC)', 'World Rugby Level 2 Strength & Conditioning'], previous_clubs: [], bio: 'Speed and power development for forwards; fluent in Italian, English and French.' },
+    { id: 'd4', first_name: 'Aroha', last_name: 'Ngata', role: 'Analyst', country: 'New Zealand', city: 'Hamilton', years_experience: 5, qualifications: ['Hudl Sportscode Certified'], previous_clubs: [{ name: 'NPC province', role: 'Performance Analyst' }], bio: 'Opposition and set-piece analysis, live coding and GPS reporting.' }
+  ];
+
+  function load() {
+    if (staff) return Promise.resolve(staff);
+    if (!live) {
+      document.getElementById('staff-demo-note').hidden = false;
+      staff = DEMO_STAFF;
+      return Promise.resolve(staff);
+    }
+    var cols = 'id,first_name,last_name,country,city,role,qualifications,years_experience,previous_clubs,bio';
+    return A.api('staff_profiles?select=' + cols + '&published=eq.true&order=created_at.desc&limit=200').then(function (rows) {
+      staff = rows || [];
+      return staff;
+    });
+  }
+
+  function card(p) {
+    var name = ((p.first_name || '') + ' ' + (p.last_name || '')).trim();
+    var initials = ((p.first_name || '?').charAt(0) + (p.last_name || '').charAt(0)).toUpperCase();
+    var place = [p.city, p.country].filter(Boolean).join(', ');
+    var years = p.years_experience != null ? p.years_experience + (p.years_experience === 1 ? ' year' : ' years') + ' experience' : '';
+    var clubs = (p.previous_clubs || []).slice(0, 3).map(function (c) { return c.name + (c.role ? ' (' + c.role + ')' : ''); }).join(' · ');
+    var mail = 'mailto:andrew@5metrescrum.com?subject=' + encodeURIComponent('Staff enquiry: ' + name + ' (' + (p.role || '') + ')');
+    return '<article class="staff-card" role="listitem">' +
+      '<div class="staff-avatar" aria-hidden="true">' + esc(initials) + '</div>' +
+      '<div>' +
+        '<div class="staff-name">' + esc(name) + '<span class="staff-role">' + esc(p.role) + '</span></div>' +
+        '<div class="staff-meta">' + esc([place, years].filter(Boolean).join(' · ')) + '</div>' +
+        (clubs ? '<div class="staff-meta">Previously: ' + esc(clubs) + '</div>' : '') +
+        ((p.qualifications || []).length ? '<div class="staff-quals">' + p.qualifications.map(function (q) { return '<span>' + esc(q) + '</span>'; }).join('') + '</div>' : '') +
+        (p.bio ? '<p class="staff-bio">' + esc(p.bio) + '</p>' : '') +
+      '</div>' +
+      '<div class="staff-actions"><a class="btn btn-primary btn-sm" href="' + esc(mail) + '">Enquire</a></div>' +
+    '</article>';
+  }
+
+  function render() {
+    if (!staff) return;
+    var q = (search ? search.value : '').trim().toLowerCase();
+    var role = roleSel ? roleSel.value : '';
+    var shown = staff.filter(function (p) {
+      if (role && p.role !== role) return false;
+      if (!q) return true;
+      var hay = [p.first_name, p.last_name, p.role, p.city, p.country, (p.qualifications || []).join(' '),
+        (p.previous_clubs || []).map(function (c) { return c.name; }).join(' ')].join(' ').toLowerCase();
+      return hay.indexOf(q) !== -1;
+    });
+    list.innerHTML = shown.length ? shown.map(card).join('') : '<p class="staff-count">No staff match these filters yet.</p>';
+    count.innerHTML = 'Showing <strong>' + shown.length + '</strong> of <strong>' + staff.length + '</strong> staff';
+  }
+
+  function setMode(next) {
+    mode = next;
+    var isStaff = mode === 'staff';
+    document.querySelectorAll('[data-sb-type]').forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-sb-type') === mode ? 'true' : 'false');
+    });
+    layout.style.display = isStaff ? 'none' : '';
+    panel.hidden = !isStaff;
+    playerOnly.forEach(function (el) { el.style.display = isStaff ? 'none' : ''; });
+    if (search) {
+      search.placeholder = isStaff ? 'Search staff by name, role, qualification or club...' : 'Search by name, club or location...';
+      search.setAttribute('aria-label', isStaff ? 'Search staff' : 'Search players');
+    }
+    if (isStaff) {
+      load().then(render).catch(function (err) {
+        count.textContent = 'Couldn\'t load staff profiles right now.';
+        list.innerHTML = '';
+      });
+    }
+  }
+
+  document.querySelectorAll('[data-sb-type]').forEach(function (b) {
+    b.addEventListener('click', function () { setMode(b.getAttribute('data-sb-type')); });
+  });
+  if (search) search.addEventListener('input', function () { if (mode === 'staff') render(); });
+  if (roleSel) roleSel.addEventListener('change', render);
+
+  if (new URLSearchParams(location.search).get('type') === 'staff') {
+    document.addEventListener('DOMContentLoaded', function () { setMode('staff'); });
+  }
 })();
 </script>
 </body>

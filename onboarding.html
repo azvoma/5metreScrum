@@ -1633,6 +1633,17 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
   border-bottom: none;
 }
 </style>
+  <style>
+    .cv-zone { border:2px dashed var(--slate-200); border-radius:var(--r-lg); padding:20px; text-align:center; cursor:pointer; transition:border-color .15s, background .15s; margin-bottom:var(--space-lg); background:var(--white, #fff); }
+    .cv-zone:hover, .cv-zone:focus-visible, .cv-zone.dragging { border-color:var(--green); background:rgba(0,200,83,0.03); outline:none; }
+    .cv-zone.busy { cursor:progress; opacity:.75; }
+    .cv-zone h4 { font-size:15px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+    .cv-zone p { font-size:13px; color:var(--slate-600); margin:0; }
+    .cv-status { font-size:13px; margin-top:10px; min-height:0; }
+    .cv-status.ok { color:var(--green-dark, #009624); }
+    .cv-status.err { color:#C62828; }
+    .cv-filled { box-shadow:0 0 0 2px rgba(0,200,83,.35); }
+  </style>
 </head>
 <body>
 
@@ -1712,6 +1723,13 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           <div class="ob-step-num">Step 1 of 8</div>
           <h1 class="ob-step-title">Let's start with the basics</h1>
           <p class="ob-step-sub">Your name and location help scouts find players from specific regions and countries.</p>
+        </div>
+
+        <div class="cv-zone" id="cv-zone" role="button" tabindex="0" aria-describedby="cv-zone-hint">
+          <h4>Have a rugby CV? Let us fill this in for you</h4>
+          <p id="cv-zone-hint">Drop a PDF or Word (.docx) CV here, or click to browse · Max 4 MB</p>
+          <input type="file" id="cv-file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" style="display:none;" aria-label="Choose your CV file">
+          <p class="cv-status" id="cv-status" role="status" aria-live="polite"></p>
         </div>
 
         <div class="form-group">
@@ -1878,6 +1896,16 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           <div class="ob-step-num">Step 5 of 8</div>
           <h1 class="ob-step-title">Playing history</h1>
           <p class="ob-step-sub">Add your current and most recent clubs. Scouts value experience at each level — be thorough.</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="playing-level">Current playing level</label>
+          <select id="playing-level" class="form-select">
+            <option value="">Select your level</option>
+            <option value="Professional">Professional</option>
+            <option value="Semi-Pro">Semi-Pro</option>
+            <option value="Amateur">Amateur</option>
+          </select>
         </div>
 
         <div id="clubs-list">
@@ -2521,6 +2549,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bench_kg: num('bench'),
       vjump_cm: num('vjump'),
       clubs: collectClubs(),
+      playing_level: val('playing-level') || null,
       passports: selectedPassports(),
       video_url: val('video-link'),
       video_title: val('video-title'),
@@ -2540,7 +2569,8 @@ document.addEventListener('DOMContentLoaded', () => {
       'wingspan': d.wingspan_cm, 'bronco': d.bronco, 'sprint-10': d.sprint_10,
       'sprint-40': d.sprint_40, 'vo2max': d.vo2max, 'deadlift': d.deadlift_kg,
       'squat': d.squat_kg, 'bench': d.bench_kg, 'vjump': d.vjump_cm,
-      'video-link': d.video_url, 'video-title': d.video_title
+      'video-link': d.video_url, 'video-title': d.video_title,
+      'playing-level': d.playing_level
     };
     Object.keys(textIds).forEach(function (id) {
       var el = document.getElementById(id);
@@ -2756,6 +2786,198 @@ document.addEventListener('DOMContentLoaded', () => {
       fail('The profile system didn\'t load.');
     }
   }, true);
+})();
+</script>
+<script>
+/* ====================================================
+   AI CV PARSING — reads an uploaded CV via
+   /api/parse-cv (Netlify Function) and fills any
+   empty fields in the wizard. Never overwrites what
+   the player has already typed.
+   ==================================================== */
+(function () {
+  'use strict';
+  var MAX_BYTES = 4 * 1024 * 1024;
+  var zone = document.getElementById('cv-zone');
+  var input = document.getElementById('cv-file');
+  var status = document.getElementById('cv-status');
+  if (!zone || !input || !status) return;
+  var busy = false;
+
+  function setStatus(text, kind) {
+    status.textContent = text || '';
+    status.className = 'cv-status' + (kind ? ' ' + kind : '');
+  }
+
+  function toBase64(file) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload = function () { resolve(String(reader.result).split(',')[1] || ''); };
+      reader.onerror = function () { reject(new Error('Could not read that file.')); };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function fillIfEmpty(el, value) {
+    if (!el || value == null || value === '') return false;
+    if (String(el.value).trim() !== '') return false;
+    el.value = value;
+    el.classList.add('cv-filled');
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+    return true;
+  }
+
+  function fillById(id, value) {
+    return fillIfEmpty(document.getElementById(id), value);
+  }
+
+  function positionLabel(btn) {
+    var clone = btn.cloneNode(true);
+    var n = clone.querySelector('.num');
+    if (n) n.remove();
+    return clone.textContent.trim();
+  }
+
+  function fillPosition(value) {
+    if (!value || typeof window.selectPosition !== 'function') return false;
+    var buttons = Array.prototype.slice.call(document.querySelectorAll('.position-btn'));
+    var target = buttons.filter(function (b) { return positionLabel(b) === value; })[0];
+    if (!target) return false;
+    window.selectPosition(target);
+    return true;
+  }
+
+  function fillPassports(list) {
+    var count = 0;
+    (list || []).forEach(function (value) {
+      var cb = document.querySelector('.passport-option input[name="passport"][value="' + value + '"]');
+      if (cb && !cb.checked) {
+        cb.checked = true;
+        var opt = cb.closest('.passport-option');
+        if (opt) opt.classList.add('selected');
+        count++;
+      }
+    });
+    return count > 0;
+  }
+
+  function clubIsEmpty(entry) {
+    return Array.prototype.every.call(entry.querySelectorAll('input'), function (i) { return String(i.value).trim() === ''; });
+  }
+
+  function fillClubs(clubs) {
+    var list = document.getElementById('clubs-list');
+    if (!list || !clubs || !clubs.length) return 0;
+    var filled = 0;
+    clubs.forEach(function (club) {
+      var entries = Array.prototype.slice.call(list.children);
+      var entry = entries.filter(clubIsEmpty)[0];
+      if (!entry && typeof window.addClub === 'function') {
+        window.addClub();
+        entry = list.lastElementChild;
+      }
+      if (!entry) return;
+      var inputs = entry.querySelectorAll('input');
+      /* Entry inputs are in order: name, from, to, (apps on the first entry) */
+      fillIfEmpty(inputs[0], club.name);
+      fillIfEmpty(inputs[1], club.from);
+      fillIfEmpty(inputs[2], club.to);
+      if (inputs[3]) fillIfEmpty(inputs[3], club.apps);
+      filled++;
+    });
+    return filled;
+  }
+
+  function applyProfile(p) {
+    var n = 0;
+    var fields = {
+      'first-name': p.first_name, 'last-name': p.last_name, 'dob': p.dob,
+      'city': p.city, 'email': p.email,
+      'height-cm': p.height_cm, 'weight-kg': p.weight_kg,
+      'bronco': p.bronco, 'sprint-10': p.sprint_10, 'sprint-40': p.sprint_40,
+      'vo2max': p.vo2max, 'deadlift': p.deadlift_kg, 'squat': p.squat_kg,
+      'bench': p.bench_kg, 'vjump': p.vjump_cm, 'video-link': p.video_url,
+      'playing-level': p.playing_level
+    };
+    Object.keys(fields).forEach(function (id) { if (fillById(id, fields[id])) n++; });
+
+    /* Country is a dropdown: only fill if the CV country is one of its options */
+    var country = document.getElementById('country');
+    if (country && p.country && !country.value) {
+      var match = Array.prototype.filter.call(country.options, function (o) {
+        return o.value && (o.value.toLowerCase() === p.country.toLowerCase() || o.textContent.trim().toLowerCase() === p.country.toLowerCase());
+      })[0];
+      if (match && fillIfEmpty(country, match.value)) n++;
+    }
+
+    /* Position: the wizard pre-selects Number 8, so the CV value wins */
+    if (fillPosition(p.position)) n++;
+    if (fillPassports(p.passports)) n++;
+    n += fillClubs(p.clubs);
+    return n;
+  }
+
+  function handleFile(file) {
+    if (busy || !file) return;
+    var name = (file.name || '').toLowerCase();
+    if (!/\.(pdf|docx|txt)$/.test(name)) {
+      setStatus('Please choose a PDF, Word (.docx) or text file. Older .doc files: save as .docx or PDF first.', 'err');
+      return;
+    }
+    if (file.size > MAX_BYTES) {
+      setStatus('That file is over 4 MB. Try exporting a smaller PDF.', 'err');
+      return;
+    }
+    busy = true;
+    zone.classList.add('busy');
+    zone.setAttribute('aria-busy', 'true');
+    setStatus('Reading your CV… this takes about 10 seconds.');
+
+    toBase64(file).then(function (data) {
+      return fetch('/api/parse-cv', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename: file.name, mimeType: file.type, data: data })
+      });
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (body) {
+        if (!res.ok) throw new Error(body.error || 'The CV reader is unavailable. Please fill in the form manually.');
+        return body;
+      });
+    }).then(function (body) {
+      var n = applyProfile(body.profile || {});
+      if (n) setStatus('Done. We filled in ' + n + ' field' + (n === 1 ? '' : 's') + ' (highlighted). Please check them on each step before you finish.', 'ok');
+      else setStatus("We read your CV but couldn't find anything new to fill in.", 'err');
+    }).catch(function (err) {
+      setStatus(err.message || 'Something went wrong. Please fill in the form manually.', 'err');
+    }).then(function () {
+      busy = false;
+      zone.classList.remove('busy');
+      zone.removeAttribute('aria-busy');
+      input.value = '';
+    });
+  }
+
+  zone.addEventListener('click', function (e) {
+    if (e.target === input) return;
+    if (!busy) input.click();
+  });
+  zone.addEventListener('keydown', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && !busy) { e.preventDefault(); input.click(); }
+  });
+  input.addEventListener('change', function () { handleFile(input.files && input.files[0]); });
+  zone.addEventListener('dragover', function (e) { e.preventDefault(); zone.classList.add('dragging'); });
+  zone.addEventListener('dragleave', function () { zone.classList.remove('dragging'); });
+  zone.addEventListener('drop', function (e) {
+    e.preventDefault();
+    zone.classList.remove('dragging');
+    handleFile(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]);
+  });
+  /* Clear the highlight once the player edits a filled field */
+  document.addEventListener('input', function (e) {
+    if (e.isTrusted && e.target.classList && e.target.classList.contains('cv-filled')) e.target.classList.remove('cv-filled');
+  });
 })();
 </script>
 </body>
