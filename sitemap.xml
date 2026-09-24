@@ -7,7 +7,7 @@
   <!-- HOMEPAGE -->
   <url>
     <loc>https://www.5metrescrum.com/</loc>
-    <lastmod>2026-06-28</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -15,37 +15,37 @@
   <!-- MAIN PLATFORM PAGES -->
   <url>
     <loc>https://www.5metrescrum.com/scout-board.html</loc>
-    <lastmod>2026-06-28</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.5metrescrum.com/trials.html</loc>
-    <lastmod>2026-06-28</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.5metrescrum.com/coaches.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.5metrescrum.com/clubs.html</loc>
-    <lastmod>2026-06-28</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.5metrescrum.com/pricing.html</loc>
-    <lastmod>2026-06-28</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.5metrescrum.com/blog.html</loc>
-    <lastmod>2026-06-28</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -53,61 +53,61 @@
   <!-- PLAYER PROFILES -->
   <url>
     <loc>https://www.5metrescrum.com/player-profile.html</loc>
-    <lastmod>2026-07-10</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.5metrescrum.com/player-profile-1.html</loc>
-    <lastmod>2026-07-10</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.5metrescrum.com/player-profile-3.html</loc>
-    <lastmod>2026-07-10</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.5metrescrum.com/player-profile-4.html</loc>
-    <lastmod>2026-07-10</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.5metrescrum.com/player-profile-5.html</loc>
-    <lastmod>2026-07-10</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.5metrescrum.com/player-profile-6.html</loc>
-    <lastmod>2026-07-10</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.5metrescrum.com/player-profile-7.html</loc>
-    <lastmod>2026-07-10</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.5metrescrum.com/player-profile-8.html</loc>
-    <lastmod>2026-07-10</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.5metrescrum.com/player-profile-9.html</loc>
-    <lastmod>2026-07-10</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.5metrescrum.com/player-profile-10.html</loc>
-    <lastmod>2026-07-10</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -115,33 +115,38 @@
   <!-- COMPANY PAGES -->
   <url>
     <loc>https://www.5metrescrum.com/about.html</loc>
-    <lastmod>2026-06-28</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.5metrescrum.com/contact.html</loc>
-    <lastmod>2026-06-28</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.5metrescrum.com/privacy.html</loc>
-    <lastmod>2026-06-28</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.5metrescrum.com/terms.html</loc>
-    <lastmod>2026-06-28</lastmod>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <!-- BLOG ARTICLES -->
-  <url><loc>https://www.5metrescrum.com/blog/rugby-union-101.html</loc><lastmod>2026-07-13</lastmod></url>
-  <url><loc>https://www.5metrescrum.com/blog/rugby-coaching-guide.html</loc><lastmod>2026-07-13</lastmod></url>
-  <url><loc>https://www.5metrescrum.com/blog/rugby-team-numbers.html</loc><lastmod>2026-07-13</lastmod></url>
-  <url><loc>https://www.5metrescrum.com/blog/world-rugby-jobs.html</loc><lastmod>2026-07-13</lastmod></url>
-  <url><loc>https://www.5metrescrum.com/blog/rugby-union-players.html</loc><lastmod>2026-07-13</lastmod></url>
+  <url><loc>https://www.5metrescrum.com/blog/rugby-union-101.html</loc><lastmod>2026-09-24</lastmod></url>
+  <url><loc>https://www.5metrescrum.com/blog/rugby-coaching-guide.html</loc><lastmod>2026-09-24</lastmod></url>
+  <url><loc>https://www.5metrescrum.com/blog/rugby-team-numbers.html</loc><lastmod>2026-09-24</lastmod></url>
+  <url><loc>https://www.5metrescrum.com/blog/world-rugby-jobs.html</loc><lastmod>2026-09-24</lastmod></url>
+  <url><loc>https://www.5metrescrum.com/blog/rugby-union-players.html</loc><lastmod>2026-09-24</lastmod></url>
+  <url><loc>https://www.5metrescrum.com/blog/bronco-test-guide.html</loc><lastmod>2026-09-24</lastmod></url>
+  <url><loc>https://www.5metrescrum.com/blog/deadlift-standards.html</loc><lastmod>2026-09-24</lastmod></url>
+  <url><loc>https://www.5metrescrum.com/blog/highlight-reel-guide.html</loc><lastmod>2026-09-24</lastmod></url>
+  <url><loc>https://www.5metrescrum.com/blog/premiership-salaries.html</loc><lastmod>2026-09-24</lastmod></url>
+  <url><loc>https://www.5metrescrum.com/blog/rugby-cv-guide.html</loc><lastmod>2026-09-24</lastmod></url>
 </urlset>
