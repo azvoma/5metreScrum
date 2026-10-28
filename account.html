@@ -1871,7 +1871,9 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
       return;
     }
     if (fromEmail && fromEmail.type === 'recovery') { show('panel-reset'); return; }
-    if (new URLSearchParams(location.search).get('mode') === 'signup') show('panel-signup');
+    var mode = new URLSearchParams(location.search).get('mode');
+    if (mode === 'signup') show('panel-signup');
+    if (mode === 'forgot') show('panel-forgot');
     A.getSession().then(function (s) { if (s) goHome(); });
   });
 })();

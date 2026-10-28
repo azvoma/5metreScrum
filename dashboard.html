@@ -1455,7 +1455,8 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
     .trial-mini-title { font-size: 13px; font-weight: 700; color: var(--navy); }
     .trial-mini-meta { font-size: 12px; color: var(--slate-400); margin-top: 2px; }
   </style>
-<script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script src="/js/supabase-config.js"></script>
+<script src="/js/auth.js"></script>
   <style>
     @media (max-width: 768px) {
       .nav-cta > a, .nav-cta .nav-link, .nav-cta .nav-login { display: none !important; }
@@ -2076,10 +2077,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function handleLogout() {
-  if (typeof netlifyIdentity !== 'undefined' && netlifyIdentity.currentUser()) {
-    netlifyIdentity.logout();
-  }
-  location.href = '/login.html';
+  var done = function () { location.href = '/login.html'; };
+  if (window.FiveMSAuth && FiveMSAuth.isLive()) FiveMSAuth.signOut().then(done, done);
+  else done();
 }
 
 </script>
