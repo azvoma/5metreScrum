@@ -61,7 +61,9 @@
   function call(path, options) {
     options = options || {};
     var headers = { 'apikey': window.SUPABASE_ANON_KEY, 'Content-Type': 'application/json' };
-    headers['Authorization'] = 'Bearer ' + (options.token || window.SUPABASE_ANON_KEY);
+    // Publishable keys (sb_publishable_…) go only in the apikey header;
+    // Authorization carries the signed-in user's token when there is one.
+    if (options.token) headers['Authorization'] = 'Bearer ' + options.token;
     if (options.prefer) headers['Prefer'] = options.prefer;
     return fetch(base() + path, {
       method: options.method || 'GET',

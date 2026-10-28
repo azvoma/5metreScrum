@@ -22,7 +22,9 @@ every player who signs up appears on the Scout Board for everyone.
 ## Step 3 — Connect the site
 1. In the Supabase sidebar go to **Settings → API**.
 2. Copy the **Project URL** (looks like `https://abcdefgh.supabase.co`).
-3. Copy the **anon public** key (a long string starting `eyJ...`).
+3. Copy the **publishable** key (starts `sb_publishable_`; older projects
+   show an **anon public** key starting `eyJ...` — either works).
+   Never use the secret / `service_role` key here.
 4. Open `js/supabase-config.js` in the site folder and paste them in:
 
    ```js

@@ -44,8 +44,7 @@
 
   function headers(extra) {
     var h = {
-      'apikey': window.SUPABASE_ANON_KEY,
-      'Authorization': 'Bearer ' + window.SUPABASE_ANON_KEY
+      'apikey': window.SUPABASE_ANON_KEY
     };
     for (var k in extra) h[k] = extra[k];
     return h;

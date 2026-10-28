@@ -37,7 +37,6 @@
     var base = window.SUPABASE_URL.replace(/\/$/, '');
     var headers = {
       'apikey': window.SUPABASE_ANON_KEY,
-      'Authorization': 'Bearer ' + window.SUPABASE_ANON_KEY,
       'Content-Type': 'application/json'
     };
     if (options.prefer) headers['Prefer'] = options.prefer;

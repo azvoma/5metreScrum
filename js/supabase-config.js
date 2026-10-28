@@ -11,5 +11,5 @@
    sign-ups, rosters, vacancies and staff profiles are saved in the
    visitor's own browser only.
    ================================================================ */
-window.SUPABASE_URL = '';
-window.SUPABASE_ANON_KEY = '';
+window.SUPABASE_URL = 'https://kxdmeimwveccgggwvsnw.supabase.co';
+window.SUPABASE_ANON_KEY = 'sb_publishable_bUEGsweSwSMZ2d-GdmbJMw_SaTjVYuT';
