@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Build Your Rugby CV | Free 8-Step Setup | 5 Metre Scrum</title>
-  <meta name="description" content="Create your professional digital rugby CV in 8 easy steps. Add combine stats, highlight videos, passport eligibility and get discovered by scouts at 340+ clubs. Free to start.">
+  <meta name="description" content="Create your professional digital rugby CV in 8 easy steps. Add combine stats, highlight videos, passport eligibility and get discovered by club scouts and recruiters. Free to start.">
   <meta name="robots" content="noindex, nofollow">
   <link rel="canonical" href="https://www.5metrescrum.com/onboarding.html">
   <style>
@@ -1644,6 +1644,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
     .cv-status.err { color:#C62828; }
     .cv-filled { box-shadow:0 0 0 2px rgba(0,200,83,.35); }
   </style>
+  <script src="/js/analytics.js" defer></script>
 </head>
 <body>
 
@@ -1703,7 +1704,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
     </div>
 
     <div class="ob-trust">
-      <p>Trusted by players across</p>
+      <p>Built for players targeting</p>
       <div class="ob-trust-badges">
         <span class="ob-trust-badge">Premiership</span>
         <span class="ob-trust-badge">URC</span>
@@ -2261,7 +2262,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('[data-next-step]').forEach(btn => {
     btn.addEventListener('click', () => {
-      if (currentStep < totalSteps) { currentStep++; showStep(currentStep); }
+      if (currentStep < totalSteps) { if (currentStep === 1 && !window.__cvStarted) { window.__cvStarted = true; window.FiveMSTrack && FiveMSTrack('CV Started'); } currentStep++; showStep(currentStep); }
     });
   });
   document.querySelectorAll('[data-prev-step]').forEach(btn => {
@@ -2395,7 +2396,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.querySelector('[data-next-step]')?.addEventListener('click', () => {
-    if (currentStep < totalSteps) { currentStep++; showStep(currentStep); }
+    if (currentStep < totalSteps) { if (currentStep === 1 && !window.__cvStarted) { window.__cvStarted = true; window.FiveMSTrack && FiveMSTrack('CV Started'); } currentStep++; showStep(currentStep); }
   });
   document.querySelector('[data-prev-step]')?.addEventListener('click', () => {
     if (currentStep > 1) { currentStep--; showStep(currentStep); }
@@ -2766,6 +2767,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(function (row) {
           FiveMS.clearDraft();
+          window.FiveMSTrack && FiveMSTrack('CV Completed');
           location.href = '/player-profile.html?id=' + encodeURIComponent(row.id);
         })
         .catch(function (error) {

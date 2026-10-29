@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Log In or Sign Up | 5 Metre Scrum</title>
-  <meta name="description" content="Create your professional digital rugby CV in 8 easy steps. Add combine stats, highlight videos, passport eligibility and get discovered by scouts at 340+ clubs. Free to start.">
+  <meta name="description" content="Create your professional digital rugby CV in 8 easy steps. Add combine stats, highlight videos, passport eligibility and get discovered by club scouts and recruiters. Free to start.">
   <meta name="robots" content="noindex, nofollow">
   <link rel="canonical" href="https://www.5metrescrum.com/login.html">
   <style>
@@ -1749,6 +1749,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
   border-bottom: none;
 }
 </style>
+  <script src="/js/analytics.js" defer></script>
 </head>
 <body>
 
@@ -1764,17 +1765,16 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 
     <div class="login-tagline">
       <h2>Your Digital<br>Rugby Passport.</h2>
-      <p>Join players already discoverable by scouts at 340+ professional clubs worldwide.</p>
+      <p>Build a profile that club scouts and recruiters can find.</p>
     </div>
 
     <div class="login-proof" style="margin-top:40px;">
       <p class="login-proof-label">Why players choose 5MS</p>
-      <p style="font-size:13px;color:var(--slate-400);line-height:1.55;font-style:italic;">&ldquo;Within 3 weeks of building my profile, a Championship club's recruitment manager contacted me directly.&rdquo;</p>
-      <p style="font-size:12px;color:var(--slate-600);margin-top:8px;">— Jamie K., Openside Flanker · Doncaster Knights</p>
+      <p style="font-size:13px;color:var(--slate-400);line-height:1.55;font-style:italic;">One shareable link with your combine stats, highlight video and passport eligibility &mdash; built in about 10 minutes.</p>
       <div class="login-stat-row">
-        <div class="login-stat"><span class="n">340+</span><span class="l">Clubs Scouting</span></div>
-        <div class="login-stat"><span class="n">31</span><span class="l">Countries</span></div>
-        <div class="login-stat"><span class="n">186</span><span class="l">Placements</span></div>
+        <div class="login-stat"><span class="n">£0</span><span class="l">To Start</span></div>
+        <div class="login-stat"><span class="n">1 Link</span><span class="l">To Share</span></div>
+        <div class="login-stat"><span class="n">10 min</span><span class="l">To Build</span></div>
       </div>
     </div>
 
@@ -1881,7 +1881,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
       tabSignup.classList.add('active'); tabSignup.setAttribute('aria-selected', 'true');
       tabLogin.classList.remove('active'); tabLogin.setAttribute('aria-selected', 'false');
       title.textContent = 'Create Your Profile';
-      sub.textContent = 'Join players being discovered by 340+ clubs.';
+      sub.textContent = 'Build a profile that club scouts and recruiters can find.';
       toggleText.innerHTML = 'Already have an account? <a href="#" onclick="switchTab(\'login\');return false;">Log in</a>';
     }
   }
@@ -1953,6 +1953,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
     busy('signup-submit-btn', true, 'Creating account…');
     FiveMSAuth.signUp({ email: email, password: password, account_type: 'player', display_name: name })
       .then(function (r) {
+        window.FiveMSTrack && FiveMSTrack('Account Created');
         busy('signup-submit-btn', false);
         if (r.session) return goHome();
         showAuthStatus('Account created! Check your email to confirm, then log in.', false);
