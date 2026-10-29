@@ -2004,7 +2004,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
             <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/><path d="M24 32V20M18 26l6-6 6 6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <h4>Drag & Drop your video</h4>
-          <p>MP4, MOV, or AVI up to 5GB · Or click to browse</p>
+          <p>MP4, MOV, or AVI up to 200MB · Or click to browse</p>
           <div style="margin-top:16px;">
             <button class="btn btn-outline btn-sm" style="margin:0 auto;" type="button" id="video-browse-btn">Browse Files</button>
             <input type="file" id="video-file" accept="video/mp4,video/quicktime,video/x-msvideo" style="display:none;" aria-label="Choose a highlight video file">
@@ -2054,7 +2054,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
             <p style="font-size:13px;color:var(--slate-600);">Serious players targeting contracts.</p>
             <ul>
               <li>Everything in Academy</li>
-              <li>Unlimited videos (5GB)</li>
+              <li>Unlimited video uploads (200MB each)</li>
               <li>PDF export</li>
               <li>Profile view analytics</li>
               <li>Priority in searches</li>
@@ -2603,6 +2603,27 @@ document.addEventListener('DOMContentLoaded', () => {
       Object.keys(ids).forEach(function (id) {
         var el = document.getElementById(id);
         if (el && ids[id]) el.value = ids[id];
+      });
+      /* Extra club spells: add an entry for each and fill it by its
+         labels, the same way collectClubs() reads them. */
+      var list = document.getElementById('clubs-list');
+      d.clubs.slice(1).forEach(function (club) {
+        if (!list || typeof window.addClub !== 'function') return;
+        window.addClub();
+        var entry = list.lastElementChild;
+        if (!entry) return;
+        entry.querySelectorAll('.form-group').forEach(function (fg) {
+          var label = fg.querySelector('.form-label');
+          var input = fg.querySelector('input');
+          if (!label || !input) return;
+          var key = label.textContent.trim().toLowerCase();
+          var value = '';
+          if (key.indexOf('club name') === 0) value = club.name;
+          else if (key === 'from') value = club.from;
+          else if (key === 'to') value = club.to;
+          else if (key.indexOf('appearance') === 0) value = club.apps;
+          if (value) input.value = value;
+        });
       });
     }
   }

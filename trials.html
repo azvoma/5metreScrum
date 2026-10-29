@@ -1596,6 +1596,19 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 }
 </style>
   <script src="/js/analytics.js" defer></script>
+<style>
+  /* Mobile menu: hidden until the menu button opens it */
+  .mobile-menu {
+    display: none; position: fixed;
+    top: 68px; left: 0; right: 0; bottom: 0;
+    background: var(--navy); z-index: 99;
+    padding: var(--space-xl);
+    flex-direction: column; gap: var(--space-md);
+    overflow-y: auto;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu .nav-link { font-size: 22px; padding: var(--space-md) 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+</style>
 </head>
 <body>
 
@@ -1914,6 +1927,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           <a href="/scout-board.html" class="footer-link">Scout Board</a>
           <a href="/trials.html" class="footer-link">Trials &amp; Tours</a>
           <a href="/coaches.html" class="footer-link">Coaches</a>
+          <a href="/account.html" class="footer-link">Agents &amp; Staff Login</a>
           <a href="/clubs.html" class="footer-link">Club Profiles</a>
           <a href="/pricing.html" class="footer-link">Pricing</a>
           <a href="/blog.html" class="footer-link">Blog</a>

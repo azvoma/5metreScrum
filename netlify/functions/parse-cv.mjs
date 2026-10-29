@@ -234,12 +234,44 @@ export function cleanProfile(raw) {
 }
 
 /* ── Handler ──────────────────────────────────────────────────── */
-export default async (req) => {
+/* ── Rate limiting ────────────────────────────────────────────── */
+/* Best-effort limits kept in memory. They reset when Netlify starts a
+   fresh instance, so they slow down abuse rather than stop it. Keep a
+   monthly spend limit set in the Anthropic Console as the hard cap. */
+const PER_IP_LIMIT = 5;            // CVs per visitor
+const PER_IP_WINDOW_MS = 10 * 60 * 1000;
+const GLOBAL_LIMIT = 60;           // CVs per instance
+const GLOBAL_WINDOW_MS = 60 * 60 * 1000;
+const hitsByIp = new Map();
+let globalHits = [];
+
+function rateLimited(ip, now = Date.now()) {
+  globalHits = globalHits.filter((t) => now - t < GLOBAL_WINDOW_MS);
+  if (globalHits.length >= GLOBAL_LIMIT) return true;
+  const key = ip || 'unknown';
+  const recent = (hitsByIp.get(key) || []).filter((t) => now - t < PER_IP_WINDOW_MS);
+  if (recent.length >= PER_IP_LIMIT) {
+    hitsByIp.set(key, recent);
+    return true;
+  }
+  recent.push(now);
+  hitsByIp.set(key, recent);
+  globalHits.push(now);
+  if (hitsByIp.size > 5000) hitsByIp.clear();
+  return false;
+}
+
+export default async (req, context) => {
   if (req.method !== 'POST') return json(405, { error: 'Use POST.' });
 
   const allowed = process.env.ALLOWED_ORIGIN;
   const origin = req.headers.get('origin');
   if (allowed && origin && origin !== allowed) return json(403, { error: 'Not allowed.' });
+
+  const ip = (context && context.ip) || req.headers.get('x-nf-client-connection-ip') || '';
+  if (rateLimited(ip)) {
+    return json(429, { error: "You've uploaded several CVs in a short time. Please wait a few minutes or fill in the form manually." });
+  }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) return json(503, { error: 'CV reading is not switched on yet.' });

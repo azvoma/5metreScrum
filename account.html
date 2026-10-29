@@ -1875,6 +1875,12 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
     var mode = new URLSearchParams(location.search).get('mode');
     if (mode === 'signup') show('panel-signup');
     if (mode === 'forgot') show('panel-forgot');
+    /* ?type=staff or ?type=agent pre-selects the account type */
+    var preType = new URLSearchParams(location.search).get('type');
+    if (preType === 'staff' || preType === 'agent') {
+      var radio = document.querySelector('input[name="account_type"][value="' + preType + '"]');
+      if (radio) { radio.checked = true; radio.dispatchEvent(new Event('change')); }
+    }
     A.getSession().then(function (s) { if (s) goHome(); });
   });
 })();

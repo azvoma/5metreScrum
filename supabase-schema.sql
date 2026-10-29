@@ -323,3 +323,40 @@ create policy "Staff can edit their profile"
   to authenticated
   using (account_id = auth.uid())
   with check (account_id = auth.uid());
+
+-- ================================================================
+-- EMAIL PRIVACY (added Oct 2026)
+-- Players' email addresses are no longer readable through the public
+-- API. The "read published players" policy above controls WHICH rows
+-- are visible; these column grants control WHICH columns. Everything
+-- except email stays readable, so the Scout Board and profiles work
+-- as before. Agents still see their own roster's emails through the
+-- agent_roster_emails() function below.
+--
+-- If you add a new column to players later, add it to the grant list
+-- below too, or the public pages won't be able to read it.
+-- ================================================================
+revoke select on public.players from anon, authenticated;
+grant select (
+  id, created_at, first_name, last_name, dob, country, city, position,
+  height_cm, weight_kg, reach_cm, wingspan_cm, bronco, sprint_10, sprint_40,
+  vo2max, deadlift_kg, squat_kg, bench_kg, vjump_cm, clubs, passports,
+  video_url, video_title, video_file_url, headshot_url, plan, published,
+  playing_level, agent_id, updated_at
+) on public.players to anon, authenticated;
+
+create or replace function public.agent_roster_emails()
+returns table (id uuid, email text)
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select p.id, p.email
+  from public.players p
+  where p.agent_id = auth.uid()
+    and public.is_account_type('agent');
+$$;
+
+revoke all on function public.agent_roster_emails() from public, anon;
+grant execute on function public.agent_roster_emails() to authenticated;

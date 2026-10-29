@@ -1773,7 +1773,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 
   var POSITIONS = ['Loosehead Prop', 'Hooker', 'Tighthead Prop', 'Lock', 'Blindside Flanker', 'Openside Flanker', 'Number 8',
     'Scrum-Half', 'Fly-Half', 'Left Wing', 'Inside Centre', 'Outside Centre', 'Right Wing', 'Fullback'];
-  var COLS = 'id,first_name,last_name,dob,email,country,city,position,playing_level,passports,height_cm,weight_kg,bronco,sprint_10,deadlift_kg,bench_kg,video_url,headshot_url,published,created_at';
+  var COLS = 'id,first_name,last_name,dob,country,city,position,playing_level,passports,height_cm,weight_kg,bronco,sprint_10,deadlift_kg,bench_kg,video_url,headshot_url,published,created_at';
   var DEMO_KEY = '5ms-demo-roster';
   var DEMO_SEED = [
     { id: 'demo-a', first_name: 'Tomás', last_name: 'Albornoz', position: 'Tighthead Prop', playing_level: 'Professional', passports: ['EU'], country: 'Argentina', height_cm: 185, weight_kg: 124, bronco: '5:02', sprint_10: 1.98, deadlift_kg: 260, bench_kg: 170, published: true },
@@ -1799,7 +1799,19 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 
   function loadRoster() {
     if (!live) return Promise.resolve(demoRead());
-    return A.api('players?agent_id=eq.' + encodeURIComponent(agent.id) + '&select=' + COLS + '&order=created_at.desc');
+    /* Emails aren't readable through the public players API, so they
+       come from agent_roster_emails(), which only returns this agent's
+       own roster. If that call fails, the roster still loads. */
+    var rows = A.api('players?agent_id=eq.' + encodeURIComponent(agent.id) + '&select=' + COLS + '&order=created_at.desc');
+    var emails = A.api('rpc/agent_roster_emails', { method: 'POST', body: {} }).catch(function () { return []; });
+    return Promise.all([rows, emails]).then(function (r) {
+      var byId = {};
+      (r[1] || []).forEach(function (e) { byId[e.id] = e.email; });
+      return (r[0] || []).map(function (p) {
+        p.email = byId[p.id] || '';
+        return p;
+      });
+    });
   }
 
   function savePlayer(data) {

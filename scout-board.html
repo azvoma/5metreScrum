@@ -478,6 +478,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
   border: 1px solid rgba(0,200,83,0.25);
   display: flex; align-items: center; gap: 4px;
 }
+.prf-name .badge-verified { display: inline-flex; vertical-align: middle; }
 .pcm-stats-grid {
   display: grid; grid-template-columns: repeat(4, 1fr);
   gap: 1px; background: rgba(255,255,255,0.06);
@@ -1421,7 +1422,12 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 
     .sb-body { background: var(--off-white); min-height: 60vh; padding: 40px 0; }
     .sb-layout { display: grid; grid-template-columns: 260px 1fr; gap: var(--space-xl); align-items: start; }
-    @media (max-width: 900px) { .sb-layout { grid-template-columns: 1fr; } }
+    @media (max-width: 900px) {
+      .sb-layout { grid-template-columns: minmax(0, 1fr); }
+      .sb-layout > * { min-width: 0; }
+      .sb-sidebar { position: static; width: auto; max-width: 100%; }
+    }
+    .range-input { min-width: 0; }
 
     .sb-sidebar {
       background: var(--white);
@@ -1470,6 +1476,13 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
     .prf-stat .val { font-size: 15px; font-weight: 700; color: var(--navy); display: block; }
     .prf-stat .lbl { font-size: 11px; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.4px; }
     .prf-actions { display: flex; gap: 8px; align-items: center; justify-content: flex-end; }
+    /* Phones: name, position and Bronco on top, actions underneath */
+    @media (max-width: 640px) {
+      .player-row-full { grid-template-columns: 48px minmax(0, 1fr) auto auto; row-gap: 10px; padding: 14px 16px; }
+      .player-row-full > :nth-child(5) { display: none; }
+      .player-row-full > .prf-actions { grid-column: 1 / -1; justify-content: space-between; }
+      .sb-results-header + div[aria-hidden="true"] { display: none !important; }
+    }
 
     .sb-pagination { display: flex; gap: 4px; justify-content: center; margin-top: var(--space-2xl); }
     .page-btn {
@@ -1708,6 +1721,19 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 }
   </script>
   <script src="/js/analytics.js" defer></script>
+<style>
+  /* Mobile menu: hidden until the menu button opens it */
+  .mobile-menu {
+    display: none; position: fixed;
+    top: 68px; left: 0; right: 0; bottom: 0;
+    background: var(--navy); z-index: 99;
+    padding: var(--space-xl);
+    flex-direction: column; gap: var(--space-md);
+    overflow-y: auto;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu .nav-link { font-size: 22px; padding: var(--space-md) 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+</style>
 </head>
 <body>
 
@@ -1813,7 +1839,6 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
       <button class="filter-tag active" data-group="video">All Players</button>
       <button class="filter-tag" data-group="video">With Video</button>
       <button class="filter-tag" data-group="video">Verified Only</button>
-      <button class="filter-tag" data-group="video">Available Now</button>
     </div>
   </div>
 </div>
@@ -1825,60 +1850,64 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 
       <!-- SIDEBAR FILTERS -->
       <aside class="sb-sidebar" aria-label="Advanced filters">
+        <form id="sb-advanced" novalidate>
         <div class="sb-sidebar-section">
           <h3>Age Range</h3>
           <div class="range-inputs">
-            <input type="number" class="range-input" placeholder="Min" min="16" max="45" value="16" aria-label="Minimum age">
-            <input type="number" class="range-input" placeholder="Max" min="16" max="45" value="35" aria-label="Maximum age">
+            <input type="number" id="sb-age-min" class="range-input" placeholder="Min" min="16" max="45" aria-label="Minimum age">
+            <input type="number" id="sb-age-max" class="range-input" placeholder="Max" min="16" max="45" aria-label="Maximum age">
           </div>
         </div>
 
         <div class="sb-sidebar-section">
           <h3>Height (cm)</h3>
           <div class="range-inputs">
-            <input type="number" class="range-input" placeholder="Min" value="160" aria-label="Minimum height">
-            <input type="number" class="range-input" placeholder="Max" value="220" aria-label="Maximum height">
+            <input type="number" id="sb-height-min" class="range-input" placeholder="Min" min="140" max="230" aria-label="Minimum height in centimetres">
+            <input type="number" id="sb-height-max" class="range-input" placeholder="Max" min="140" max="230" aria-label="Maximum height in centimetres">
           </div>
         </div>
 
         <div class="sb-sidebar-section">
           <h3>Bronco Time</h3>
           <div class="range-inputs">
-            <input type="text" class="range-input" placeholder="Best" value="3:30" aria-label="Best Bronco time">
-            <input type="text" class="range-input" placeholder="Max" value="5:30" aria-label="Maximum Bronco time">
+            <input type="text" id="sb-bronco-min" class="range-input" placeholder="Best e.g. 3:30" inputmode="numeric" aria-label="Fastest Bronco time, minutes and seconds">
+            <input type="text" id="sb-bronco-max" class="range-input" placeholder="Slowest e.g. 5:00" inputmode="numeric" aria-label="Slowest Bronco time, minutes and seconds">
           </div>
         </div>
 
         <div class="sb-sidebar-section">
           <h3>Passport</h3>
-          <label class="filter-checkbox"><input type="checkbox" checked> EU Passport</label>
-          <label class="filter-checkbox"><input type="checkbox"> UK Passport</label>
-          <label class="filter-checkbox"><input type="checkbox"> Irish Passport</label>
-          <label class="filter-checkbox"><input type="checkbox"> Australian Passport</label>
-          <label class="filter-checkbox"><input type="checkbox"> Overseas Only</label>
+          <label class="filter-checkbox"><input type="checkbox" name="sb-pass" value="EU"> EU Passport</label>
+          <label class="filter-checkbox"><input type="checkbox" name="sb-pass" value="UK"> UK Passport</label>
+          <label class="filter-checkbox"><input type="checkbox" name="sb-pass" value="IRE"> Irish Passport</label>
+          <label class="filter-checkbox"><input type="checkbox" name="sb-pass" value="AUS"> Australian Passport</label>
+          <label class="filter-checkbox"><input type="checkbox" name="sb-pass" value="overseas"> Overseas Only</label>
         </div>
 
         <div class="sb-sidebar-section">
           <h3>Profile</h3>
-          <label class="filter-checkbox"><input type="checkbox" checked> Verified</label>
-          <label class="filter-checkbox"><input type="checkbox" checked> Has Video</label>
-          <label class="filter-checkbox"><input type="checkbox"> Available Now</label>
-          <label class="filter-checkbox"><input type="checkbox"> Has Combine Data</label>
+          <label class="filter-checkbox"><input type="checkbox" name="sb-profile" value="verified"> Verified</label>
+          <label class="filter-checkbox"><input type="checkbox" name="sb-profile" value="video"> Has Video</label>
+          <label class="filter-checkbox"><input type="checkbox" name="sb-profile" value="combine"> Has Combine Data</label>
         </div>
 
         <div class="sb-sidebar-section">
           <h3>Country</h3>
-          <label class="filter-checkbox"><input type="checkbox"> South Africa</label>
-          <label class="filter-checkbox"><input type="checkbox"> England</label>
-          <label class="filter-checkbox"><input type="checkbox"> Ireland</label>
-          <label class="filter-checkbox"><input type="checkbox"> France</label>
-          <label class="filter-checkbox"><input type="checkbox"> Australia</label>
-          <label class="filter-checkbox"><input type="checkbox"> New Zealand</label>
-          <label class="filter-checkbox"><input type="checkbox"> Argentina</label>
+          <label class="filter-checkbox"><input type="checkbox" name="sb-country" value="England"> England</label>
+          <label class="filter-checkbox"><input type="checkbox" name="sb-country" value="Ireland"> Ireland</label>
+          <label class="filter-checkbox"><input type="checkbox" name="sb-country" value="Scotland"> Scotland</label>
+          <label class="filter-checkbox"><input type="checkbox" name="sb-country" value="Wales"> Wales</label>
+          <label class="filter-checkbox"><input type="checkbox" name="sb-country" value="France"> France</label>
+          <label class="filter-checkbox"><input type="checkbox" name="sb-country" value="South Africa"> South Africa</label>
+          <label class="filter-checkbox"><input type="checkbox" name="sb-country" value="Australia"> Australia</label>
+          <label class="filter-checkbox"><input type="checkbox" name="sb-country" value="New Zealand"> New Zealand</label>
+          <label class="filter-checkbox"><input type="checkbox" name="sb-country" value="Argentina"> Argentina</label>
         </div>
 
-        <button class="btn btn-outline" style="width:100%;font-size:13px;">Apply Filters</button>
-        <button class="btn btn-dark" style="width:100%;font-size:13px;margin-top:8px;">Reset</button>
+        <p id="sb-filter-error" role="alert" style="display:none;font-size:13px;color:#DC2626;margin:0 0 10px;"></p>
+        <button type="submit" class="btn btn-outline" style="width:100%;font-size:13px;">Apply Filters</button>
+        <button type="reset" class="btn btn-dark" style="width:100%;font-size:13px;margin-top:8px;">Reset</button>
+        </form>
       </aside>
 
       <!-- RESULTS -->
@@ -1888,10 +1917,10 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           <div class="sb-sort">
             <label for="sb-sort">Sort by:</label>
             <select id="sb-sort" class="filter-select" style="width:auto;" aria-label="Sort players">
-              <option>Best Bronco</option>
-              <option>Newest Profile</option>
-              <option>Most Views</option>
-              <option>Alphabetical</option>
+              <option value="">Featured</option>
+              <option value="bronco">Best Bronco</option>
+              <option value="newest">Newest Profile</option>
+              <option value="name">Alphabetical</option>
             </select>
           </div>
         </div>
@@ -2070,7 +2099,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           <p style="font-size:13px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Are you a scout or club?</p>
           <h3 style="font-size:24px;font-weight:800;color:var(--white);margin-bottom:8px;">Get Unlimited Scout Access</h3>
           <p style="font-size:15px;color:var(--slate-400);margin-bottom:var(--space-xl);max-width:480px;margin-left:auto;margin-right:auto;">Contact players directly, save shortlists, export reports, and set up automated alerts for new players matching your criteria.</p>
-          <a href="/onboarding.html" class="btn btn-primary btn-lg">Request Scout Access</a>
+          <a href="/contact.html" class="btn btn-primary btn-lg">Request Scout Access</a>
         </div>
       </div>
 
@@ -2127,6 +2156,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           <a href="/scout-board.html" class="footer-link">Scout Board</a>
           <a href="/trials.html" class="footer-link">Trials &amp; Tours</a>
           <a href="/coaches.html" class="footer-link">Coaches</a>
+          <a href="/account.html" class="footer-link">Agents &amp; Staff Login</a>
           <a href="/clubs.html" class="footer-link">Club Profiles</a>
           <a href="/pricing.html" class="footer-link">Pricing</a>
           <a href="/blog.html" class="footer-link">Blog</a>
@@ -2402,58 +2432,263 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 <script>
 (function () {
+  /* ====================================================
+     SCOUT BOARD FILTERS
+     Quick bar (search, position, passport, tags) applies
+     as you type. The sidebar applies on "Apply Filters".
+     Works on the standard rows and on live rows added by
+     the database script below (via window.__sbRefresh).
+     ==================================================== */
   var searchInput = document.getElementById('sb-search');
   var positionSelect = document.getElementById('sb-position');
   var passportSelect = document.getElementById('sb-passport');
+  var sortSelect = document.getElementById('sb-sort');
   var quickTags = document.querySelectorAll('.filter-tag[data-group="video"]');
   var resultsCount = document.querySelector('.sb-results-count');
-  var rows = document.querySelectorAll('.player-row-full[data-name]');
-  window.__sbRefresh = function () {
-    rows = document.querySelectorAll('.player-row-full[data-name]');
-    applyFilters();
-  };
-
-  if (!rows.length) return;
-
+  var form = document.getElementById('sb-advanced');
+  var errorBox = document.getElementById('sb-filter-error');
+  var list = document.getElementById('player-list');
+  var rows = [];
   var activeQuickFilter = 'All Players';
+  var advanced = emptyAdvanced();
+  var firstRun = true;
+
+  function emptyAdvanced() {
+    return { ageMin: null, ageMax: null, heightMin: null, heightMax: null, broncoMin: null, broncoMax: null, passports: [], profile: [], countries: [] };
+  }
+
+  /* ── Normalising values ─────────────────────────────── */
+  /* Onboarding saves detailed positions ("Tighthead Prop");
+     the filter offers groups ("Prop"). */
+  function positionGroup(value) {
+    var v = String(value || '').toLowerCase();
+    if (!v) return '';
+    if (v.indexOf('prop') > -1) return 'Prop';
+    if (v.indexOf('hooker') > -1) return 'Hooker';
+    if (v.indexOf('lock') > -1 || v.indexOf('second row') > -1) return 'Lock';
+    if (v.indexOf('flanker') > -1 || v.indexOf('openside') > -1 || v.indexOf('blindside') > -1) return 'Flanker';
+    if (v.indexOf('8') > -1 || v.indexOf('eight') > -1) return 'No. 8';
+    if (v.indexOf('scrum') > -1) return 'Scrum-Half';
+    if (v.indexOf('fly') > -1 || v.indexOf('out-half') > -1) return 'Fly-Half';
+    if (v.indexOf('centre') > -1 || v.indexOf('center') > -1) return 'Centre';
+    if (v.indexOf('wing') > -1) return 'Wing';
+    if (v.indexOf('full') > -1) return 'Fullback';
+    return value;
+  }
+
+  /* Onboarding saves codes (EU, UK, IRE, AUS, other); the
+     quick filter shows labels. */
+  var PASSPORT_LABELS = { 'EU Passport': 'EU', 'UK Passport': 'UK', 'Irish Passport': 'IRE', 'Australian Passport': 'AUS' };
+  function passportCode(value) {
+    var v = String(value || '').trim();
+    if (PASSPORT_LABELS[v]) return PASSPORT_LABELS[v];
+    var u = v.toUpperCase();
+    if (u === 'IRISH' || u === 'IRELAND') return 'IRE';
+    if (u === 'AUSTRALIAN' || u === 'AUSTRALIA') return 'AUS';
+    return u;
+  }
+  /* An Irish passport is also an EU passport and gives UK rights,
+     matching how the club Fit Score treats it. */
+  function hasPassport(codes, wanted) {
+    if (codes.indexOf(wanted) > -1) return true;
+    if ((wanted === 'EU' || wanted === 'UK') && codes.indexOf('IRE') > -1) return true;
+    return false;
+  }
+
+  function broncoSeconds(text) {
+    var m = String(text || '').match(/(\d{1,2})\s*[:.]\s*(\d{2})/);
+    return m ? parseInt(m[1], 10) * 60 + parseInt(m[2], 10) : null;
+  }
+
+  function num(v) {
+    if (v === null || v === undefined || v === '') return null;
+    var n = parseFloat(v);
+    return isNaN(n) ? null : n;
+  }
+
+  /* Reads everything a row needs for filtering, from its data
+     attributes first and its visible text as a fallback. */
+  function rowInfo(row, index) {
+    var meta = row.querySelector('.prf-meta') ? row.querySelector('.prf-meta').textContent : '';
+    var stats = row.querySelectorAll('.prf-stat .val');
+    var ds = row.dataset;
+
+    var age = num(ds.age);
+    if (age === null) { var a = meta.match(/(\d{2})\s*yrs/); age = a ? parseInt(a[1], 10) : null; }
+
+    var height = num(ds.height);
+    if (height === null) {
+      var ft = meta.match(/(\d)'\s*(\d{1,2})"/);
+      var cm = meta.match(/(\d{3})\s*cm/);
+      if (ft) height = Math.round((parseInt(ft[1], 10) * 12 + parseInt(ft[2], 10)) * 2.54);
+      else if (cm) height = parseInt(cm[1], 10);
+    }
+
+    var bronco = broncoSeconds(ds.bronco || (stats[1] ? stats[1].textContent : ''));
+    var deadlift = num(ds.deadlift);
+    if (deadlift === null && stats[2]) deadlift = num(stats[2].textContent.replace(/[^\d.]/g, ''));
+
+    var country = ds.country || '';
+    if (!country) {
+      var place = meta.split('·')[0] || '';
+      var parts = place.split(',');
+      country = parts.length > 1 ? parts[parts.length - 1].trim() : '';
+    }
+
+    var codes = String(ds.passports || ds.passport || '').split(',')
+      .map(passportCode).filter(function (c) { return c; });
+
+    return {
+      row: row,
+      index: index,
+      name: (ds.name || '').toLowerCase(),
+      meta: meta.toLowerCase(),
+      position: positionGroup(ds.position),
+      passports: codes,
+      verified: ds.verified === 'true',
+      video: ds.video === 'true',
+      combine: ds.combine ? ds.combine === 'true' : (bronco !== null || deadlift !== null),
+      age: age,
+      height: height,
+      bronco: bronco,
+      country: country,
+      created: ds.created ? Date.parse(ds.created) || 0 : 0
+    };
+  }
+
+  function inRange(value, min, max) {
+    if (min === null && max === null) return true;
+    if (value === null) return false;
+    if (min !== null && value < min) return false;
+    if (max !== null && value > max) return false;
+    return true;
+  }
+
+  function matches(p) {
+    var q = (searchInput ? searchInput.value : '').toLowerCase().trim();
+    if (q && p.name.indexOf(q) === -1 && p.meta.indexOf(q) === -1) return false;
+
+    var pos = positionSelect ? positionSelect.value : '';
+    if (pos && p.position !== positionGroup(pos)) return false;
+
+    var pass = passportSelect ? passportSelect.value : '';
+    if (pass && !hasPassport(p.passports, passportCode(pass))) return false;
+
+    if (activeQuickFilter === 'With Video' && !p.video) return false;
+    if (activeQuickFilter === 'Verified Only' && !p.verified) return false;
+
+    var f = advanced;
+    if (!inRange(p.age, f.ageMin, f.ageMax)) return false;
+    if (!inRange(p.height, f.heightMin, f.heightMax)) return false;
+    if (!inRange(p.bronco, f.broncoMin, f.broncoMax)) return false;
+
+    if (f.passports.length) {
+      var anyPass = f.passports.some(function (code) {
+        if (code === 'overseas') {
+          return !hasPassport(p.passports, 'EU') && !hasPassport(p.passports, 'UK');
+        }
+        return hasPassport(p.passports, code);
+      });
+      if (!anyPass) return false;
+    }
+
+    if (f.profile.indexOf('verified') > -1 && !p.verified) return false;
+    if (f.profile.indexOf('video') > -1 && !p.video) return false;
+    if (f.profile.indexOf('combine') > -1 && !p.combine) return false;
+
+    if (f.countries.length && f.countries.indexOf(p.country) === -1) return false;
+    return true;
+  }
+
+  function sortInfos(infos) {
+    var mode = sortSelect ? sortSelect.value : '';
+    var sorted = infos.slice();
+    if (mode === 'bronco') {
+      sorted.sort(function (a, b) {
+        if (a.bronco === null && b.bronco === null) return a.index - b.index;
+        if (a.bronco === null) return 1;
+        if (b.bronco === null) return -1;
+        return a.bronco - b.bronco;
+      });
+    } else if (mode === 'newest') {
+      sorted.sort(function (a, b) { return (b.created - a.created) || (a.index - b.index); });
+    } else if (mode === 'name') {
+      sorted.sort(function (a, b) { return a.name.localeCompare(b.name); });
+    }
+    return sorted;
+  }
 
   function applyFilters() {
-    var q = (searchInput ? searchInput.value : '').toLowerCase().trim();
-    var pos = positionSelect ? positionSelect.value : '';
-    var passport = passportSelect ? passportSelect.value : '';
+    rows = Array.prototype.slice.call(document.querySelectorAll('.player-row-full[data-name]'));
+    /* Rows keep their original order for "Featured". Rows added
+       later (new registrations) are placed ahead of the standard list. */
+    var infos = rows.map(function (row, i) {
+      if (row.dataset.order === undefined) row.dataset.order = String(firstRun ? i : i - 100000);
+      return rowInfo(row, parseInt(row.dataset.order, 10));
+    });
+    infos.sort(function (a, b) { return a.index - b.index; });
 
     var visibleCount = 0;
-
-    rows.forEach(function (row) {
-      var name = (row.dataset.name || '').toLowerCase();
-      var meta = (row.querySelector('.prf-meta') ? row.querySelector('.prf-meta').textContent : '').toLowerCase();
-      var rowPos = row.dataset.position || '';
-      var rowPassport = row.dataset.passport || '';
-      var rowVerified = row.dataset.verified === 'true';
-      var rowVideo = row.dataset.video === 'true';
-
-      var matchesSearch = !q || name.includes(q) || meta.includes(q);
-      var matchesPosition = !pos || rowPos === pos;
-      var matchesPassport = !passport || (passport.indexOf(rowPassport) === 0 && rowPassport !== '');
-
-      var matchesQuick = true;
-      if (activeQuickFilter === 'With Video') matchesQuick = rowVideo;
-      else if (activeQuickFilter === 'Verified Only') matchesQuick = rowVerified;
-      else if (activeQuickFilter === 'Available Now') matchesQuick = true;
-
-      var visible = matchesSearch && matchesPosition && matchesPassport && matchesQuick;
-      row.style.display = visible ? '' : 'none';
+    sortInfos(infos).forEach(function (p) {
+      var visible = matches(p);
+      p.row.style.display = visible ? '' : 'none';
       if (visible) visibleCount++;
+      if (list) list.appendChild(p.row);
     });
 
     if (resultsCount) {
       resultsCount.innerHTML = 'Showing <strong>' + visibleCount + '</strong> of <strong>' + rows.length + '</strong> players';
     }
+    var empty = document.getElementById('sb-no-results');
+    if (!empty && list) {
+      empty = document.createElement('p');
+      empty.id = 'sb-no-results';
+      empty.setAttribute('role', 'status');
+      empty.style.cssText = 'display:none;padding:32px 20px;text-align:center;color:var(--slate-600);font-size:15px;';
+      empty.textContent = 'No players match these filters. Try widening your search or press Reset.';
+      list.parentNode.insertBefore(empty, list.nextSibling);
+    }
+    if (empty) empty.style.display = visibleCount ? 'none' : '';
+    firstRun = false;
   }
+
+  function checkedValues(name) {
+    return Array.prototype.map.call(form.querySelectorAll('input[name="' + name + '"]:checked'), function (cb) { return cb.value; });
+  }
+
+  function readAdvanced() {
+    var f = emptyAdvanced();
+    var problems = [];
+    f.ageMin = num(document.getElementById('sb-age-min').value);
+    f.ageMax = num(document.getElementById('sb-age-max').value);
+    f.heightMin = num(document.getElementById('sb-height-min').value);
+    f.heightMax = num(document.getElementById('sb-height-max').value);
+    var bMin = document.getElementById('sb-bronco-min').value.trim();
+    var bMax = document.getElementById('sb-bronco-max').value.trim();
+    f.broncoMin = bMin ? broncoSeconds(bMin) : null;
+    f.broncoMax = bMax ? broncoSeconds(bMax) : null;
+    if ((bMin && f.broncoMin === null) || (bMax && f.broncoMax === null)) problems.push('Enter Bronco times as minutes and seconds, e.g. 4:30.');
+    if (f.ageMin !== null && f.ageMax !== null && f.ageMin > f.ageMax) problems.push('Minimum age is higher than maximum age.');
+    if (f.heightMin !== null && f.heightMax !== null && f.heightMin > f.heightMax) problems.push('Minimum height is higher than maximum height.');
+    if (f.broncoMin !== null && f.broncoMax !== null && f.broncoMin > f.broncoMax) problems.push('The best Bronco time should be faster than the slowest.');
+    f.passports = checkedValues('sb-pass');
+    f.profile = checkedValues('sb-profile');
+    f.countries = checkedValues('sb-country');
+    return { filters: f, problems: problems };
+  }
+
+  function showError(text) {
+    if (!errorBox) return;
+    errorBox.textContent = text || '';
+    errorBox.style.display = text ? '' : 'none';
+  }
+
+  window.__sbRefresh = applyFilters;
 
   if (searchInput) searchInput.addEventListener('input', applyFilters);
   if (positionSelect) positionSelect.addEventListener('change', applyFilters);
   if (passportSelect) passportSelect.addEventListener('change', applyFilters);
+  if (sortSelect) sortSelect.addEventListener('change', applyFilters);
 
   quickTags.forEach(function (tag) {
     tag.addEventListener('click', function () {
@@ -2463,6 +2698,30 @@ document.addEventListener('DOMContentLoaded', () => {
       applyFilters();
     });
   });
+
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var result = readAdvanced();
+      if (result.problems.length) { showError(result.problems[0]); return; }
+      showError('');
+      advanced = result.filters;
+      applyFilters();
+      if (window.innerWidth < 900 && resultsCount) resultsCount.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    form.addEventListener('reset', function () {
+      showError('');
+      advanced = emptyAdvanced();
+      if (searchInput) searchInput.value = '';
+      if (positionSelect) positionSelect.value = '';
+      if (passportSelect) passportSelect.value = '';
+      quickTags.forEach(function (t, i) { t.classList.toggle('active', i === 0); });
+      activeQuickFilter = 'All Players';
+      setTimeout(applyFilters, 0);
+    });
+  }
+
+  applyFilters();
 })();
 </script>
 
@@ -2568,8 +2827,24 @@ document.querySelectorAll('.faq-q').forEach(function(btn){
     row.dataset.name = name;
     row.dataset.position = p.position || '';
     row.dataset.passport = passport;
+    row.dataset.passports = (p.passports || []).join(',');
     row.dataset.verified = 'false';
     row.dataset.video = hasVideo ? 'true' : 'false';
+    row.dataset.country = p.country || '';
+    row.dataset.created = p.created_at || '';
+    row.dataset.bronco = p.bronco || '';
+    if (p.height_cm) row.dataset.height = String(p.height_cm);
+    if (p.deadlift_kg) row.dataset.deadlift = String(p.deadlift_kg);
+    row.dataset.combine = (p.bronco || p.sprint_10 || p.sprint_40 || p.deadlift_kg || p.squat_kg || p.bench_kg) ? 'true' : 'false';
+    if (p.dob) {
+      var born = new Date(p.dob);
+      if (!isNaN(born)) {
+        var now = new Date();
+        var age = now.getFullYear() - born.getFullYear();
+        if (now.getMonth() < born.getMonth() || (now.getMonth() === born.getMonth() && now.getDate() < born.getDate())) age--;
+        row.dataset.age = String(age);
+      }
+    }
     row.setAttribute('aria-label', 'View ' + name + "'s profile");
     row.addEventListener('click', function () { location.href = href; });
     row.addEventListener('keypress', function (e) { if (e.key === 'Enter') location.href = href; });

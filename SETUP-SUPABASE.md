@@ -94,3 +94,9 @@ Security rules in plain English:
 - Nobody signed out can attach a player to an agent.
 - Staff can create and edit only their own staff profile.
 - Clubs and scouts still see every published player and staff profile.
+
+## Oct 2026: email privacy update (re-run required)
+
+`supabase-schema.sql` now hides the `players.email` column from the public API and adds an `agent_roster_emails()` function so agents still see their own players' emails. Re-run the whole file in the Supabase SQL Editor (it's safe to run more than once). Until you do, anyone with the site's public key can read every published player's email.
+
+If you add a new column to `players` later, also add it to the `grant select (...)` list near the end of the file, or the public pages won't be able to read it.
