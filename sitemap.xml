@@ -45,7 +45,7 @@
   </url>
   <url>
     <loc>https://www.5metrescrum.com/blog.html</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -54,7 +54,7 @@
   <!-- COMPANY PAGES -->
   <url>
     <loc>https://www.5metrescrum.com/about.html</loc>
-    <lastmod>2026-09-24</lastmod>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -78,6 +78,7 @@
   </url>
 
   <!-- BLOG ARTICLES -->
+  <url><loc>https://www.5metrescrum.com/blog/5-metre-scrum.html</loc><lastmod>2026-10-29</lastmod></url>
   <url><loc>https://www.5metrescrum.com/blog/agent-guide.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://www.5metrescrum.com/blog/bronco-test-guide.html</loc><lastmod>2026-09-24</lastmod></url>
   <url><loc>https://www.5metrescrum.com/blog/deadlift-standards.html</loc><lastmod>2026-09-24</lastmod></url>
@@ -86,8 +87,8 @@
   <url><loc>https://www.5metrescrum.com/blog/premiership-salaries.html</loc><lastmod>2026-09-24</lastmod></url>
   <url><loc>https://www.5metrescrum.com/blog/rugby-coaching-guide.html</loc><lastmod>2026-09-24</lastmod></url>
   <url><loc>https://www.5metrescrum.com/blog/rugby-cv-guide.html</loc><lastmod>2026-09-24</lastmod></url>
-  <url><loc>https://www.5metrescrum.com/blog/rugby-team-numbers.html</loc><lastmod>2026-09-24</lastmod></url>
-  <url><loc>https://www.5metrescrum.com/blog/rugby-union-101.html</loc><lastmod>2026-09-24</lastmod></url>
+  <url><loc>https://www.5metrescrum.com/blog/rugby-team-numbers.html</loc><lastmod>2026-10-29</lastmod></url>
+  <url><loc>https://www.5metrescrum.com/blog/rugby-union-101.html</loc><lastmod>2026-10-29</lastmod></url>
   <url><loc>https://www.5metrescrum.com/blog/rugby-union-players.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://www.5metrescrum.com/blog/scholarship-pathways.html</loc><lastmod>2026-10-28</lastmod></url>
   <url><loc>https://www.5metrescrum.com/blog/world-rugby-jobs.html</loc><lastmod>2026-09-24</lastmod></url>
