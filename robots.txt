@@ -7,4 +7,4 @@ Disallow: /dashboard.html
 Disallow: /onboarding.html
 
 # Sitemap location
-Sitemap: https://www.5metrescrum.com/sitemap.xml
+Sitemap: https://5metrescrum.com/sitemap.xml
