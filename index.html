@@ -118,7 +118,7 @@
         "name": "How do I create a professional rugby player CV online?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Sign up free, complete the 8-step onboarding wizard with your combine stats (Bronco time, sprint splits, strength data), playing history and a highlight video clip. Your shareable URL is live within 10 minutes. Scouts at Premiership and URC clubs can find you immediately through the Scout Board."
+          "text": "Sign up free, complete the 8-step onboarding wizard with your combine stats (Bronco time, sprint splits, strength data), playing history and a highlight video clip. Your shareable URL is live within 10 minutes. Once your profile is live it appears on the Scout Board, where clubs and recruiters can search for you."
         }
       },
       {
@@ -142,7 +142,7 @@
         "name": "Is a digital rugby passport the same as a rugby CV?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "A digital rugby passport goes further than a traditional PDF CV. It includes a verified, shareable URL, live combine stats, an embedded video reel, passport and visa eligibility chips, and real-time analytics showing who has viewed your profile."
+          "text": "A digital rugby passport goes further than a traditional PDF CV. It includes a verified, shareable URL, live combine stats, an embedded video reel, passport and visa eligibility chips, and, on the First XV plan, analytics showing who has viewed your profile. Note that \"passport\" has a second meaning on the site: passport eligibility refers to the nationality passports a player holds, which matters for overseas player quotas."
         }
       },
       {
@@ -151,6 +151,14 @@
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "EU passport eligibility is one of the most commercially valuable attributes in European club rugby. Top 14, URC and Premiership clubs are bound by overseas player quotas — an EU-eligible player does not count against these limits, making them significantly more attractive to European clubs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does \"Verified\" mean on 5 Metre Scrum?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A verified badge means a player's identity and key stats have been checked against supporting evidence, such as club or academy confirmation. Profiles without the badge are still listed, but show details the player entered themselves. Scouts can use the Verified Only filter on the Scout Board."
         }
       },
       {
@@ -615,6 +623,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
   padding: 24px;
   box-shadow: var(--shadow-lg), 0 0 60px rgba(0,200,83,0.06);
 }
+.pcm-sample-label { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--slate-400); margin-bottom: 8px; }
 .pcm-header {
   display: flex;
   gap: var(--space-md);
@@ -1573,6 +1582,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 }
 .nav-cta .nav-link { display: inline-flex; }
 
+.skip-link{position:absolute;left:12px;top:-60px;z-index:1000;background:#00C853;color:#0A1628;padding:10px 16px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;transition:top .15s;}.skip-link:focus{top:12px;}
 </style>
   <style>
   /* ── HERO PHOTO BACKGROUND (HooperHunter style) ── */
@@ -1916,33 +1926,38 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
     }
     .cookie-box-backdrop {
       position: fixed;
-      inset: 0;
-      background: rgba(10,22,40,0.55);
+      left: 0;
+      right: 0;
+      bottom: 0;
       z-index: 300;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+      align-items: flex-end;
+      justify-content: flex-start;
+      padding: 16px;
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
       transition: opacity .3s ease, visibility .3s;
     }
-    .cookie-box-backdrop.visible { opacity: 1; visibility: visible; pointer-events: auto; }
+    .cookie-box-backdrop.visible { opacity: 1; visibility: visible; }
     .cookie-box {
       background: #fff;
       color: var(--navy);
       border-radius: 16px;
-      padding: 24px;
-      max-width: 360px;
+      padding: 20px 24px;
+      max-width: 400px;
       width: 100%;
       text-align: left;
-      box-shadow: 0 30px 80px rgba(10,22,40,0.35);
+      box-shadow: 0 12px 40px rgba(10,22,40,0.28);
       border: 1px solid var(--slate-100);
-      transform: scale(0.94);
+      transform: translateY(12px);
       transition: transform .3s ease;
     }
-    .cookie-box-backdrop.visible .cookie-box { transform: scale(1); }
+    .cookie-box-backdrop.visible .cookie-box { transform: translateY(0); pointer-events: auto; }
+    @media (max-width: 600px) {
+      .cookie-box-backdrop { padding: 10px; }
+      .cookie-box { max-width: none; padding: 16px 18px; }
+    }
     .cookie-box-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .cookie-box-icon {
       width: 36px;
@@ -1964,7 +1979,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
       font-size: 14px;
       line-height: 1.6;
       color: var(--slate-600);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
     .cookie-box p a { color: var(--green); font-weight: 600; text-decoration: underline; }
     .cookie-box-actions { display: flex; gap: 10px; }
@@ -2000,6 +2015,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
   <script src="/js/analytics.js" defer></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
 <!-- ── NAVIGATION ──────────────────────────────────────────────────── -->
 <nav class="nav" id="main-nav" role="navigation" aria-label="Main navigation">
@@ -2054,7 +2070,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 </div>
 
 <!-- ── HERO ─────────────────────────────────────────────────────────── -->
-<main>
+<main id="main-content">
 <section class="hero" aria-labelledby="hero-heading">
   <!-- Full-width rugby photo background - HooperHunter style -->
   <div class="hero-photo-bg" aria-hidden="true">
@@ -2107,6 +2123,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
       <div class="hero-visual" aria-hidden="true">
         <div class="hero-card-stack">
           <div class="player-card-main">
+            <div class="pcm-sample-label">Sample profile</div>
             <div class="pcm-header">
               <img onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSIwIiB5Mj0iMSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMEYyMDQwIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMEExNjI4Ii8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSI3MiIgcj0iMzAiIGZpbGw9IiMxQzM1NjAiLz48cGF0aCBkPSJNNTIgMTY4YzAtMjggMjItNDggNDgtNDhzNDggMjAgNDggNDh6IiBmaWxsPSIjMUMzNTYwIi8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iNzIiIHI9IjMwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMEM4NTMiIHN0cm9rZS1vcGFjaXR5PSIwLjI1IiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4='" src="/assets/images/players/player-2.jpg" alt="Sione Taufa, No.8, rugby player CV profile photo" class="pcm-photo" loading="eager">
               <div class="pcm-info">
@@ -2587,7 +2604,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           How do I create a professional rugby player CV online?
           <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <div class="faq-answer">Sign up free, complete the 8-step onboarding wizard with your combine stats (Bronco time, sprint splits, strength data), playing history and a highlight video clip. Your shareable URL is live within 10 minutes. Scouts at Premiership and URC clubs can find you immediately through the Scout Board.</div>
+        <div class="faq-answer">Sign up free, complete the 8-step onboarding wizard with your combine stats (Bronco time, sprint splits, strength data), playing history and a highlight video clip. Your shareable URL is live within 10 minutes. Once your profile is live it appears on the Scout Board, where clubs and recruiters can search for you.</div>
       </div>
 
       <div class="faq-item" role="listitem">
@@ -2611,7 +2628,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           Is a digital rugby passport the same as a rugby CV?
           <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <div class="faq-answer">A digital rugby passport goes further than a traditional PDF CV. It includes a verified, shareable URL that works on any device, live combine stats, an embedded video reel, passport and visa eligibility chips, and real-time analytics showing who has viewed your profile. Clubs can see everything without downloading anything.</div>
+        <div class="faq-answer">A digital rugby passport goes further than a traditional PDF CV. It includes a verified, shareable URL that works on any device, live combine stats, an embedded video reel, passport and visa eligibility chips, and, on the First XV plan, analytics showing who has viewed your profile. Clubs can see everything without downloading anything. Note that &ldquo;passport&rdquo; has a second meaning on the site: passport eligibility refers to the nationality passports a player holds, which matters for overseas player quotas.</div>
       </div>
 
       <div class="faq-item" role="listitem">
@@ -2620,6 +2637,14 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
           <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <div class="faq-answer">EU passport eligibility is one of the most commercially valuable attributes in European club rugby. Top 14, URC and Premiership clubs are bound by overseas player quotas — an EU-eligible player does not count against these limits. Players who clearly display their passport eligibility on their profile receive significantly more enquiries from European clubs.</div>
+      </div>
+
+      <div class="faq-item" role="listitem">
+        <button class="faq-question" aria-expanded="false" onclick="this.parentElement.classList.toggle('open'); this.setAttribute('aria-expanded', this.parentElement.classList.contains('open'))">
+          What does &ldquo;Verified&rdquo; mean on 5 Metre Scrum?
+          <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="faq-answer">A verified badge means a player's identity and key stats have been checked against supporting evidence, such as club or academy confirmation. Profiles without the badge are still listed, but show details the player entered themselves. Scouts can use the Verified Only filter on the Scout Board.</div>
       </div>
 
       <div class="faq-item" role="listitem">
@@ -2990,7 +3015,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 </script>
 
-<div class="cookie-box-backdrop" id="cookie-box-backdrop" role="dialog" aria-modal="true" aria-label="Cookie notice">
+<div class="cookie-box-backdrop" id="cookie-box-backdrop" role="region" aria-label="Cookie notice">
   <div class="cookie-box">
     <div class="cookie-box-head">
       <div class="cookie-box-icon" aria-hidden="true">

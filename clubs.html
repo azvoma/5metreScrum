@@ -1383,6 +1383,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 }
 .nav-cta .nav-link { display: inline-flex; }
 
+.skip-link{position:absolute;left:12px;top:-60px;z-index:1000;background:#00C853;color:#0A1628;padding:10px 16px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;transition:top .15s;}.skip-link:focus{top:12px;}
 </style>
   <style>
     .clubs-hero { background: var(--navy); padding: 100px 0 60px; }
@@ -1431,7 +1432,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 .faq-a { max-height:0;overflow:hidden;transition:max-height .35s ease,padding .15s;font-size:15px;color:var(--slate-400);line-height:1.75;padding:0 24px; }
 .faq-a.open { max-height:400px;padding:0 24px 20px; }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.5metrescrum.com/"},{"@type":"ListItem","position":2,"name":"Club Profiles","item":"https://www.5metrescrum.com/clubs.html"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How does a club get access to the scout board?", "acceptedAnswer": {"@type": "Answer", "text": "Email andrew@5metrescrum.com with your club name and role. Verified clubs get free scout accounts, typically within 24 hours."}}, {"@type": "Question", "name": "Is there a cost for clubs to use the platform?", "acceptedAnswer": {"@type": "Answer", "text": "Scout board access is free for verified clubs during our growth phase. Optional club CRM and messaging tools are available under a separate subscription."}}, {"@type": "Question", "name": "Can more than one scout from our club have an account?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Each scout or coach at a verified club can have their own login, so your recruitment team can search and shortlist independently."}}, {"@type": "Question", "name": "How do we contact a player we're interested in?", "acceptedAnswer": {"@type": "Answer", "text": "Every player profile has a direct contact option once you're logged in as a verified scout. Messages go straight to the player."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.5metrescrum.com/"},{"@type":"ListItem","position":2,"name":"Club Profiles","item":"https://www.5metrescrum.com/clubs.html"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How does a club get access to the scout board?", "acceptedAnswer": {"@type": "Answer", "text": "Use the club and scout access form on the Contact page with your club name, role and a link to your club staff page. Verified clubs get free scout accounts, typically within 24 hours."}}, {"@type": "Question", "name": "Is there a cost for clubs to use the platform?", "acceptedAnswer": {"@type": "Answer", "text": "Scout board access is free for verified clubs during our growth phase. Optional club CRM and messaging tools are available under a separate subscription."}}, {"@type": "Question", "name": "Can more than one scout from our club have an account?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Each scout or coach at a verified club can have their own login, so your recruitment team can search and shortlist independently."}}, {"@type": "Question", "name": "How do we contact a player we're interested in?", "acceptedAnswer": {"@type": "Answer", "text": "Every player profile has a direct contact option once you're logged in as a verified scout. Messages go straight to the player."}}]}</script>
   <style>
     @media (max-width: 768px) {
       .nav-cta > a, .nav-cta .nav-link, .nav-cta .nav-login { display: none !important; }
@@ -1439,33 +1440,38 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
     }
     .cookie-box-backdrop {
       position: fixed;
-      inset: 0;
-      background: rgba(10,22,40,0.55);
+      left: 0;
+      right: 0;
+      bottom: 0;
       z-index: 300;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+      align-items: flex-end;
+      justify-content: flex-start;
+      padding: 16px;
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
       transition: opacity .3s ease, visibility .3s;
     }
-    .cookie-box-backdrop.visible { opacity: 1; visibility: visible; pointer-events: auto; }
+    .cookie-box-backdrop.visible { opacity: 1; visibility: visible; }
     .cookie-box {
       background: #fff;
       color: var(--navy);
       border-radius: 16px;
-      padding: 24px;
-      max-width: 360px;
+      padding: 20px 24px;
+      max-width: 400px;
       width: 100%;
       text-align: left;
-      box-shadow: 0 30px 80px rgba(10,22,40,0.35);
+      box-shadow: 0 12px 40px rgba(10,22,40,0.28);
       border: 1px solid var(--slate-100);
-      transform: scale(0.94);
+      transform: translateY(12px);
       transition: transform .3s ease;
     }
-    .cookie-box-backdrop.visible .cookie-box { transform: scale(1); }
+    .cookie-box-backdrop.visible .cookie-box { transform: translateY(0); pointer-events: auto; }
+    @media (max-width: 600px) {
+      .cookie-box-backdrop { padding: 10px; }
+      .cookie-box { max-width: none; padding: 16px 18px; }
+    }
     .cookie-box-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .cookie-box-icon {
       width: 36px;
@@ -1487,7 +1493,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
       font-size: 14px;
       line-height: 1.6;
       color: var(--slate-600);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
     .cookie-box p a { color: var(--green); font-weight: 600; text-decoration: underline; }
     .cookie-box-actions { display: flex; gap: 10px; }
@@ -1691,6 +1697,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
 <nav class="nav scrolled" id="main-nav" role="navigation" aria-label="Main navigation">
   <div class="container">
@@ -1769,19 +1776,21 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
   </div>
 </div>
 
-<main class="section section-light">
+<main id="main-content" class="section section-light">
   <div class="container">
 
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-xl);flex-wrap:wrap;gap:12px;">
-      <p style="font-size:14px;color:var(--slate-600);">Showing <strong style="color:var(--navy);">24</strong> clubs</p>
-      <input type="text" class="filter-search" placeholder="Search clubs..." style="max-width:280px;" aria-label="Search clubs">
+      <p style="font-size:14px;color:var(--slate-600);" id="club-count" aria-live="polite">Showing <strong style="color:var(--navy);">12</strong> of <strong style="color:var(--navy);">24</strong> clubs</p>
+      <input type="text" class="filter-search" id="club-search" placeholder="Search by club, league, country or position..." style="max-width:340px;" aria-label="Search clubs">
     </div>
+    <p style="margin:0 0 var(--space-lg);font-size:13px;color:var(--slate-600);line-height:1.6;"><strong>Actively Recruiting</strong>: open to approaches for the positions listed. <strong>Quota Full</strong>: not taking new approaches right now. Positions: SH scrum-half, FH fly-half, FB full-back.</p>
+    <p id="club-empty" role="status" style="display:none;font-size:15px;color:var(--slate-600);margin:0 0 var(--space-lg);">No clubs match that search. Try a league (e.g. &ldquo;URC&rdquo;) or a position (e.g. &ldquo;Lock&rdquo;).</p>
 
     <p style="margin:0 0 var(--space-xl);padding:14px 18px;border-radius:10px;background:var(--white);border-left:4px solid var(--green);font-size:14px;color:var(--slate-600);">Looking for a community or grassroots side near you? Browse more than 600 clubs by region on the <a href="https://ukrugbyclubdirectory.co.uk/" style="color:var(--green);font-weight:600;">UK Rugby Club Directory</a>.</p>
 
     <div class="clubs-grid" role="list" aria-label="Club profiles">
 
-      <div class="club-card" role="listitem" tabindex="0" onclick="location.href='/player-profile.html'">
+      <div class="club-card" role="listitem" tabindex="0">
         <div class="club-logo">BRI</div>
         <div>
           <div class="club-name">Bristol Bears</div>
@@ -1950,7 +1959,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 
     <!-- View More -->
     <div style="text-align:center;margin-top:var(--space-2xl);">
-      <p style="font-size:14px;color:var(--slate-600);margin-bottom:var(--space-md);">Showing 12 clubs</p>
+      <p style="font-size:14px;color:var(--slate-600);margin-bottom:var(--space-md);">Sign in with a free scout account to see the other 12 clubs.</p>
       <a href="/login.html" class="btn btn-outline btn-lg">Sign In to View All Clubs →</a>
     </div>
 
@@ -1961,10 +1970,10 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
         <h3 style="font-size:22px;font-weight:800;color:var(--white);margin-bottom:6px;">Add Your Club Profile</h3>
         <p style="font-size:14px;color:var(--slate-400);max-width:480px;">List your club's recruitment criteria, what positions you need, and receive profile suggestions from our growing database of verified players.</p>
       </div>
-      <a href="mailto:andrew@5metrescrum.com" class="btn btn-primary btn-lg" style="white-space:nowrap;flex-shrink:0;">List Your Club</a>
+      <a href="/contact.html?type=club-scout-access#enquiry" class="btn btn-primary btn-lg" style="white-space:nowrap;flex-shrink:0;">List Your Club</a>
     </div>
   </div>
-<section class="section section-dark"><div class="container" style="max-width:760px;"><div style="text-align:center;margin-bottom:40px;"><span class="eyebrow">Got Questions</span><h2 class="section-title wht">How Do Club Profiles Work?</h2></div><div class="faq-wrap"><div class="faq-item"><button class="faq-q">How does a club get access to the scout board?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Email andrew@5metrescrum.com with your club name and role. Verified clubs get free scout accounts, typically within 24 hours.</div></div><div class="faq-item"><button class="faq-q">Is there a cost for clubs to use the platform?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Scout board access is free for verified clubs during our growth phase. Optional club CRM and messaging tools are available under a separate subscription.</div></div><div class="faq-item"><button class="faq-q">Can more than one scout from our club have an account?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Yes. Each scout or coach at a verified club can have their own login, so your recruitment team can search and shortlist independently.</div></div><div class="faq-item"><button class="faq-q">How do we contact a player we're interested in?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Every player profile has a direct contact option once you're logged in as a verified scout. Messages go straight to the player.</div></div></div></div></section></main>
+<section class="section section-dark"><div class="container" style="max-width:760px;"><div style="text-align:center;margin-bottom:40px;"><span class="eyebrow">Got Questions</span><h2 class="section-title wht">How Do Club Profiles Work?</h2></div><div class="faq-wrap"><div class="faq-item"><button class="faq-q">How does a club get access to the scout board?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Use the club and scout access form on the Contact page with your club name, role and a link to your club staff page. Verified clubs get free scout accounts, typically within 24 hours.</div></div><div class="faq-item"><button class="faq-q">Is there a cost for clubs to use the platform?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Scout board access is free for verified clubs during our growth phase. Optional club CRM and messaging tools are available under a separate subscription.</div></div><div class="faq-item"><button class="faq-q">Can more than one scout from our club have an account?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Yes. Each scout or coach at a verified club can have their own login, so your recruitment team can search and shortlist independently.</div></div><div class="faq-item"><button class="faq-q">How do we contact a player we're interested in?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Every player profile has a direct contact option once you're logged in as a verified scout. Messages go straight to the player.</div></div></div></div></section></main>
 
 <footer class="footer" role="contentinfo">
   <div class="container">
@@ -2084,6 +2093,27 @@ document.addEventListener('DOMContentLoaded', () => {
       tag.classList.toggle('active');
     });
   });
+
+
+  /* ── CLUB SEARCH (filters the cards on this page) ───────────── */
+  (function () {
+    var input = document.getElementById('club-search');
+    if (!input) return;
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.clubs-grid .club-card'));
+    var count = document.getElementById('club-count');
+    var empty = document.getElementById('club-empty');
+    input.addEventListener('input', function () {
+      var q = input.value.trim().toLowerCase();
+      var shown = 0;
+      cards.forEach(function (c) {
+        var hit = !q || c.textContent.toLowerCase().indexOf(q) > -1;
+        c.style.display = hit ? '' : 'none';
+        if (hit) shown++;
+      });
+      if (count) count.innerHTML = 'Showing <strong style="color:var(--navy);">' + shown + '</strong> of <strong style="color:var(--navy);">24</strong> clubs';
+      if (empty) empty.style.display = shown ? 'none' : 'block';
+    });
+  })();
 
   /* ── ANIMATE BARS ON SCROLL ──────────────────────────────────── */
   const bars = document.querySelectorAll('.pcm-bar-fill, .attr-bar-fill, .completion-bar-fill');
@@ -2284,7 +2314,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 </script>
 
-<div class="cookie-box-backdrop" id="cookie-box-backdrop" role="dialog" aria-modal="true" aria-label="Cookie notice">
+<div class="cookie-box-backdrop" id="cookie-box-backdrop" role="region" aria-label="Cookie notice">
   <div class="cookie-box">
     <div class="cookie-box-head">
       <div class="cookie-box-icon" aria-hidden="true">

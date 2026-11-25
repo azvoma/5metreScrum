@@ -1498,6 +1498,8 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 }
 .nav-cta .nav-link { display: inline-flex; }
 
+.cf-field{margin-bottom:16px;}.cf-field label{display:block;font-size:13px;font-weight:600;color:var(--navy);margin-bottom:6px;}.cf-field input,.cf-field select,.cf-field textarea{width:100%;padding:12px 14px;border:1.5px solid var(--slate-200);border-radius:10px;font-size:15px;font-family:inherit;color:var(--navy);background:#fff;min-height:44px;}.cf-field textarea{resize:vertical;}.cf-field input:focus,.cf-field select:focus,.cf-field textarea:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(0,200,83,.12);}.cf-field .invalid{border-color:#E5484D;}.cf-hint{font-size:12px;color:var(--slate-400);margin-top:6px;}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+.skip-link{position:absolute;left:12px;top:-60px;z-index:1000;background:#00C853;color:#0A1628;padding:10px 16px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;transition:top .15s;}.skip-link:focus{top:12px;}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.5metrescrum.com/"},{"@type":"ListItem","position":2,"name":"Contact","item":"https://www.5metrescrum.com/contact.html"}]}</script>
   <style>
@@ -1507,33 +1509,38 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
     }
     .cookie-box-backdrop {
       position: fixed;
-      inset: 0;
-      background: rgba(10,22,40,0.55);
+      left: 0;
+      right: 0;
+      bottom: 0;
       z-index: 300;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+      align-items: flex-end;
+      justify-content: flex-start;
+      padding: 16px;
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
       transition: opacity .3s ease, visibility .3s;
     }
-    .cookie-box-backdrop.visible { opacity: 1; visibility: visible; pointer-events: auto; }
+    .cookie-box-backdrop.visible { opacity: 1; visibility: visible; }
     .cookie-box {
       background: #fff;
       color: var(--navy);
       border-radius: 16px;
-      padding: 24px;
-      max-width: 360px;
+      padding: 20px 24px;
+      max-width: 400px;
       width: 100%;
       text-align: left;
-      box-shadow: 0 30px 80px rgba(10,22,40,0.35);
+      box-shadow: 0 12px 40px rgba(10,22,40,0.28);
       border: 1px solid var(--slate-100);
-      transform: scale(0.94);
+      transform: translateY(12px);
       transition: transform .3s ease;
     }
-    .cookie-box-backdrop.visible .cookie-box { transform: scale(1); }
+    .cookie-box-backdrop.visible .cookie-box { transform: translateY(0); pointer-events: auto; }
+    @media (max-width: 600px) {
+      .cookie-box-backdrop { padding: 10px; }
+      .cookie-box { max-width: none; padding: 16px 18px; }
+    }
     .cookie-box-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .cookie-box-icon {
       width: 36px;
@@ -1555,7 +1562,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
       font-size: 14px;
       line-height: 1.6;
       color: var(--slate-600);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
     .cookie-box p a { color: var(--green); font-weight: 600; text-decoration: underline; }
     .cookie-box-actions { display: flex; gap: 10px; }
@@ -1673,7 +1680,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
       "name": "How does a club get free scout access?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Email andrew@5metrescrum.com with your club name and role. We verify and issue free scout accounts within 24 hours."
+        "text": "Use the \"Club or scout access\" option in the contact form with your club name, role and a link to your club staff page (or use your club email address). We reply within 4 hours on weekdays, 9am-6pm UK time, and issue free scout accounts within 24 hours of verifying you."
       }
     },
     {
@@ -1681,7 +1688,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
       "name": "How do I register as an agent?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Email andrew@5metrescrum.com with your World Rugby registration number. We maintain a verified agent directory for players seeking representation."
+        "text": "Choose \"Agent registration\" in the contact form and include your World Rugby registration number. We maintain a verified agent directory for players seeking representation."
       }
     },
     {
@@ -1689,7 +1696,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
       "name": "I have a technical problem with my profile.",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Email andrew@5metrescrum.com and describe the issue, including your profile URL. Technical issues are typically resolved same day."
+        "text": "Choose \"Technical problem with my profile\" in the contact form and describe the issue. Include your profile URL if you can find it; if you cannot log in, tell us the email address you signed up with. Technical issues are typically resolved same day."
       }
     }
   ]
@@ -1698,6 +1705,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
   <script src="/js/analytics.js" defer></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <nav class="nav" id="main-nav" role="navigation" aria-label="Main navigation"><div class="container"><div class="nav-inner"><a href="/" class="nav-logo" aria-label="5 Metre Scrum home"><img src="/assets/logo-v2.png" alt="5 Metre Scrum" width="480" height="82" style="height:36px;width:auto;display:block;" loading="eager"></a><div class="nav-cta">
         <a href="/" class="nav-link">Home</a>
   <a href="/about.html" class="nav-link">About Us</a>
@@ -1721,7 +1729,21 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 <a href="/pricing.html" class="nav-link">Pricing</a>
 <a href="/contact.html" class="nav-link">Contact Us</a>
 <div class="mob-cta"><a href="/login.html" class="btn btn-secondary btn-lg">Log In</a><a href="/onboarding.html" class="btn btn-primary btn-lg">Build My CV &mdash; Free</a></div></div>
-<main><div class="page-hero"><div class="ph-bg"><img src="https://images.pexels.com/photos/3618162/pexels-photo-3618162.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Rugby training session on field, contact the 5 Metre Scrum team" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjgwMCIgdmlld0JveD0iMCAwIDEyMDAgODAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwRjIwNDAiLz48c3RvcCBvZmZzZXQ9IjAuNiIgc3RvcC1jb2xvcj0iIzBBMTYyOCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzA2MjAxNSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjgwMCIgZmlsbD0idXJsKCNiKSIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYwMCA0MDApIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMEM4NTMiIHN0cm9rZS1vcGFjaXR5PSIwLjI4IiBzdHJva2Utd2lkdGg9IjYiPjxlbGxpcHNlIHJ4PSIxNTAiIHJ5PSI5MiIgdHJhbnNmb3JtPSJyb3RhdGUoLTI4KSIvPjxsaW5lIHgxPSItMTE4IiB5MT0iNjMiIHgyPSIxMTgiIHkyPSItNjMiLz48bGluZSB4MT0iLTcwIiB5MT0iNTIiIHgyPSItNDAiIHkyPSIzMCIvPjxsaW5lIHgxPSItNDAiIHkxPSI3MCIgeDI9Ii0xMCIgeTI9IjQ4Ii8+PGxpbmUgeDE9IjQwIiB5MT0iLTUyIiB4Mj0iNzAiIHkyPSItMzAiLz48bGluZSB4MT0iMTAiIHkxPSItNzAiIHgyPSI0MCIgeTI9Ii00OCIvPjwvZz48dGV4dCB4PSI2MDAiIHk9IjY0MCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjYiIGZvbnQtd2VpZ2h0PSI3MDAiIGxldHRlci1zcGFjaW5nPSIzIiBmaWxsPSIjM0Q1QTgyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj41IE1FVFJFIFNDUlVNPC90ZXh0Pjwvc3ZnPg=='"></div><div class="container ph-inner"><nav class="breadcrumb"><a href="/">Home</a><span>&#8250;</span><span>Contact Us</span></nav><h1 style="text-align:center;">Get In Touch</h1><p style="text-align:center;">Questions, partnerships, scout access or press enquiries &mdash; we reply within 24 hours.</p></div></div><section class="section section-light"><div class="container"><div class="cg"><div><span class="eyebrow">Contact 5 Metre Scrum</span><h2 class="section-title" style="margin-bottom:14px;">We&rsquo;d love to<br>hear from you.</h2><p style="font-size:16px;color:var(--slate-600);line-height:1.75;margin-bottom:32px;">Whether you're a player with a question, a club looking for recruitment solutions, or a journalist &mdash; get in touch and we'll come back to you promptly.</p><div class="irow"><div class="iicon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5.5A1.5 1.5 0 013.5 4h13A1.5 1.5 0 0118 5.5v9a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 012 14.5v-9zM2 6l8 5.5L18 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><h4>General Enquiries</h4><a href="mailto:andrew@5metrescrum.com">andrew@5metrescrum.com</a></div></div><div class="irow"><div class="iicon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L19 7v6l-9 5-9-5V7l9-5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></div><div><h4>Club &amp; Scout Access</h4><a href="mailto:andrew@5metrescrum.com">andrew@5metrescrum.com</a><p>Free scout accounts for verified clubs</p></div></div><div style="background:var(--navy);border-radius:14px;padding:22px;margin-top:8px;"><p style="font-size:12px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Response Times</p><p style="font-size:14px;color:var(--slate-400);line-height:1.8;">General: within 24h &nbsp;&middot;&nbsp; Club / Scout: within 4h<br>Technical support: same day &nbsp;&middot;&nbsp; Partnerships: 48h</p></div></div><div><div class="cf"><h3 style="font-size:22px;font-weight:800;color:var(--navy);margin-bottom:6px;">Email Us Directly</h3><p style="font-size:15px;color:var(--slate-600);margin-bottom:22px;">Click below to open your email app &mdash; we reply within 24 hours.</p><a href="mailto:andrew@5metrescrum.com" class="btn btn-primary btn-lg" style="width:100%;display:inline-flex;align-items:center;justify-content:center;gap:10px;"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 013.5 4h13A1.5 1.5 0 0118 5.5v9a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 012 14.5v-9zM2 6l8 5.5L18 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>andrew@5metrescrum.com</a><p style="font-size:13px;color:var(--slate-400);margin-top:14px;text-align:center;">Or copy the address into your preferred email client.</p></div><div style="margin-top:32px;"><div class="irow"><div class="iicon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M6 2v4M14 2v4M3 9h14M7 13h6M7 16h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><h4>Press &amp; Media</h4><a href="mailto:andrew@5metrescrum.com">andrew@5metrescrum.com</a><p>Press kit available on request</p></div></div><div class="irow"><div class="iicon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M3 18c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><h4>Agent Directory</h4><a href="mailto:andrew@5metrescrum.com">andrew@5metrescrum.com</a><p>Register as a verified agent</p></div></div></div></div></div></div></section><section class="section section-dark"><div class="container" style="max-width:760px;"><div style="text-align:center;margin-bottom:40px;"><span class="eyebrow">Quick Answers</span><h2 class="section-title wht">How Can We Help?</h2></div><div class="faq-wrap"><div class="faq-item"><button class="faq-q">How quickly do you respond?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">General enquiries within 24 hours. Club and scout requests within 4 hours on weekdays (9am&ndash;6pm GMT).</div></div><div class="faq-item"><button class="faq-q">How does a club get free scout access?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Email andrew@5metrescrum.com with your club name and role. We verify and issue free scout accounts within 24 hours.</div></div><div class="faq-item"><button class="faq-q">How do I register as an agent?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Email andrew@5metrescrum.com with your World Rugby registration number. We maintain a verified agent directory for players seeking representation.</div></div><div class="faq-item"><button class="faq-q">I have a technical problem with my profile.<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Email andrew@5metrescrum.com and describe the issue, including your profile URL. Technical issues are typically resolved same day.</div></div></div></div></section></main>
+<main id="main-content"><div class="page-hero"><div class="ph-bg"><img src="https://images.pexels.com/photos/3618162/pexels-photo-3618162.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Rugby training session on field, contact the 5 Metre Scrum team" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjgwMCIgdmlld0JveD0iMCAwIDEyMDAgODAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwRjIwNDAiLz48c3RvcCBvZmZzZXQ9IjAuNiIgc3RvcC1jb2xvcj0iIzBBMTYyOCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzA2MjAxNSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjgwMCIgZmlsbD0idXJsKCNiKSIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYwMCA0MDApIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMEM4NTMiIHN0cm9rZS1vcGFjaXR5PSIwLjI4IiBzdHJva2Utd2lkdGg9IjYiPjxlbGxpcHNlIHJ4PSIxNTAiIHJ5PSI5MiIgdHJhbnNmb3JtPSJyb3RhdGUoLTI4KSIvPjxsaW5lIHgxPSItMTE4IiB5MT0iNjMiIHgyPSIxMTgiIHkyPSItNjMiLz48bGluZSB4MT0iLTcwIiB5MT0iNTIiIHgyPSItNDAiIHkyPSIzMCIvPjxsaW5lIHgxPSItNDAiIHkxPSI3MCIgeDI9Ii0xMCIgeTI9IjQ4Ii8+PGxpbmUgeDE9IjQwIiB5MT0iLTUyIiB4Mj0iNzAiIHkyPSItMzAiLz48bGluZSB4MT0iMTAiIHkxPSItNzAiIHgyPSI0MCIgeTI9Ii00OCIvPjwvZz48dGV4dCB4PSI2MDAiIHk9IjY0MCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjYiIGZvbnQtd2VpZ2h0PSI3MDAiIGxldHRlci1zcGFjaW5nPSIzIiBmaWxsPSIjM0Q1QTgyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj41IE1FVFJFIFNDUlVNPC90ZXh0Pjwvc3ZnPg=='"></div><div class="container ph-inner"><nav class="breadcrumb"><a href="/">Home</a><span>&#8250;</span><span>Contact Us</span></nav><h1 style="text-align:center;">Get In Touch</h1><p style="text-align:center;">Questions, partnerships, scout access or press enquiries &mdash; we reply within 24 hours.</p></div></div><section class="section section-light"><div class="container"><div class="cg"><div><span class="eyebrow">Contact 5 Metre Scrum</span><h2 class="section-title" style="margin-bottom:14px;">We&rsquo;d love to<br>hear from you.</h2><p style="font-size:16px;color:var(--slate-600);line-height:1.75;margin-bottom:32px;">Whether you're a player with a question, a club looking for recruitment solutions, or a journalist &mdash; get in touch and we'll come back to you promptly.</p><div class="irow"><div class="iicon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 5.5A1.5 1.5 0 013.5 4h13A1.5 1.5 0 0118 5.5v9a1.5 1.5 0 01-1.5 1.5h-13A1.5 1.5 0 012 14.5v-9zM2 6l8 5.5L18 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><h4>General Enquiries</h4><a href="mailto:andrew@5metrescrum.com">andrew@5metrescrum.com</a></div></div><div class="irow"><div class="iicon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L19 7v6l-9 5-9-5V7l9-5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></div><div id="scout-access"><h4>Club &amp; Scout Access</h4><a href="/contact.html?type=club-scout-access#enquiry">Request scout access</a><p>Free scout accounts for verified clubs</p></div></div><div style="background:var(--navy);border-radius:14px;padding:22px;margin-top:8px;"><p style="font-size:12px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Response Times</p><p style="font-size:14px;color:var(--slate-400);line-height:1.8;">General questions: within 24 hours<br>Club and scout requests: within 4 hours, weekdays 9am&ndash;6pm UK time<br>Technical problems: same day &nbsp;&middot;&nbsp; Partnerships: within 48 hours</p></div></div><div><div class="cf" id="enquiry"><h3 style="font-size:22px;font-weight:800;color:var(--navy);margin-bottom:6px;">Send Us a Message</h3><p style="font-size:15px;color:var(--slate-600);margin-bottom:22px;">Choose what it&rsquo;s about so it reaches the right place. Fields marked <span aria-hidden="true" style="color:#E5484D;">*</span><span class="sr-only"> required</span> are required.</p>
+<form name="contact-enquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="contact-form" novalidate>
+<input type="hidden" name="form-name" value="contact-enquiry">
+<p style="position:absolute;left:-9999px;" aria-hidden="true"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+<div class="cf-field"><label for="cf-type">What is this about? <span aria-hidden="true" style="color:#E5484D;">*</span></label>
+<select id="cf-type" name="enquiry-type" required><option value="">Select&hellip;</option><option value="general">General question</option><option value="club-scout-access">Club or scout access</option><option value="agent-registration">Agent registration</option><option value="technical-support">Technical problem with my profile</option><option value="press">Press and media</option><option value="partnership">Partnership</option></select></div>
+<div class="cf-field"><label for="cf-name">Your name <span aria-hidden="true" style="color:#E5484D;">*</span></label><input id="cf-name" name="name" type="text" autocomplete="name" required></div>
+<div class="cf-field"><label for="cf-email">Email address <span aria-hidden="true" style="color:#E5484D;">*</span></label><input id="cf-email" name="email" type="email" autocomplete="email" required></div>
+<div class="cf-field" id="cf-org-wrap"><label for="cf-org">Club, agency or organisation <span style="font-weight:400;color:var(--slate-400);">(for club, agent and press requests)</span></label><input id="cf-org" name="organisation" type="text" autocomplete="organization"></div>
+<div class="cf-field" id="cf-verify-wrap" hidden><label for="cf-verify">Your role, and a link to your club staff page</label><input id="cf-verify" name="role-and-link" type="text" placeholder="e.g. Academy recruitment manager, club.com/staff"><p class="cf-hint">Using your club email address also helps us verify you quickly.</p></div>
+<div class="cf-field"><label for="cf-message">Message <span aria-hidden="true" style="color:#E5484D;">*</span></label><textarea id="cf-message" name="message" rows="5" required></textarea></div>
+<p id="cf-msg" role="status" aria-live="polite" style="font-size:14px;font-weight:600;margin:0 0 12px;"></p>
+<button type="submit" class="btn btn-primary btn-lg" id="cf-submit" style="width:100%;">Send message</button>
+</form>
+<p style="font-size:13px;color:var(--slate-400);margin-top:14px;text-align:center;">Prefer email? <a href="mailto:andrew@5metrescrum.com" style="color:var(--green);font-weight:600;">andrew@5metrescrum.com</a></p></div><div style="margin-top:32px;"><div class="irow"><div class="iicon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="13" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M6 2v4M14 2v4M3 9h14M7 13h6M7 16h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><h4>Press &amp; Media</h4><a href="mailto:andrew@5metrescrum.com">andrew@5metrescrum.com</a><p>Press kit available on request</p></div></div><div class="irow"><div class="iicon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M3 18c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div><h4>Agent Directory</h4><a href="mailto:andrew@5metrescrum.com">andrew@5metrescrum.com</a><p>Register as a verified agent</p></div></div></div></div></div></div></section><section class="section section-dark"><div class="container" style="max-width:760px;"><div style="text-align:center;margin-bottom:40px;"><span class="eyebrow">Quick Answers</span><h2 class="section-title wht">How Can We Help?</h2></div><div class="faq-wrap"><div class="faq-item"><button class="faq-q">How quickly do you respond?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">General enquiries within 24 hours. Club and scout requests within 4 hours on weekdays (9am&ndash;6pm GMT).</div></div><div class="faq-item"><button class="faq-q">How does a club get free scout access?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Use the &ldquo;Club or scout access&rdquo; option in the form above with your club name, role and a link to your club staff page (or use your club email address). We reply within 4 hours on weekdays, 9am&ndash;6pm UK time, and issue free scout accounts within 24 hours of verifying you.</div></div><div class="faq-item"><button class="faq-q">How do I register as an agent?<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Choose &ldquo;Agent registration&rdquo; in the form above and include your World Rugby registration number. We maintain a verified agent directory for players seeking representation.</div></div><div class="faq-item"><button class="faq-q">I have a technical problem with my profile.<svg class="faq-icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button><div class="faq-a">Choose &ldquo;Technical problem with my profile&rdquo; in the form above and describe the issue. Include your profile URL if you can find it; if you can&rsquo;t log in, tell us the email address you signed up with. Technical issues are typically resolved same day.</div></div></div></div></section></main>
 
 
 <footer class="footer" role="contentinfo">
@@ -2074,7 +2096,7 @@ document.querySelectorAll('.faq-q').forEach(function(btn){
 })();
 </script>
 
-<div class="cookie-box-backdrop" id="cookie-box-backdrop" role="dialog" aria-modal="true" aria-label="Cookie notice">
+<div class="cookie-box-backdrop" id="cookie-box-backdrop" role="region" aria-label="Cookie notice">
   <div class="cookie-box">
     <div class="cookie-box-head">
       <div class="cookie-box-icon" aria-hidden="true">
@@ -2107,6 +2129,31 @@ document.querySelectorAll('.faq-q').forEach(function(btn){
   var declineBtn = document.getElementById('cookie-decline');
   if (acceptBtn) acceptBtn.addEventListener('click', function () { dismiss('accepted'); });
   if (declineBtn) declineBtn.addEventListener('click', function () { dismiss('declined'); });
+})();
+</script>
+<script>
+(function(){
+  var form=document.getElementById('contact-form'); if(!form) return;
+  var type=document.getElementById('cf-type'), verify=document.getElementById('cf-verify-wrap');
+  function sync(){ verify.hidden = type.value !== 'club-scout-access'; }
+  type.addEventListener('change',sync);
+  var q=new URLSearchParams(location.search).get('type');
+  if(q){ for(var i=0;i<type.options.length;i++){ if(type.options[i].value===q){ type.value=q; break; } } }
+  sync();
+  var msg=document.getElementById('cf-msg'), btn=document.getElementById('cf-submit');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var bad=[]; ['cf-type','cf-name','cf-email','cf-message'].forEach(function(id){
+      var el=document.getElementById(id); var ok=el.value.trim()!=='' && (id!=='cf-email'||/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim()));
+      el.classList.toggle('invalid',!ok); if(!ok){ el.setAttribute('aria-invalid','true'); bad.push(el); } else el.removeAttribute('aria-invalid');
+    });
+    if(bad.length){ msg.style.color='#C5282D'; msg.textContent='Please complete the '+(bad.length===1?'highlighted field':bad.length+' highlighted fields')+'.'; bad[0].focus(); return; }
+    btn.disabled=true; btn.textContent='Sending\u2026'; msg.textContent='';
+    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form)).toString()})
+      .then(function(r){ if(!r.ok) throw new Error(); form.reset(); sync(); msg.style.color='var(--green)'; msg.textContent="Thanks \u2014 we've got your message and will reply as set out under Response Times."; window.FiveMSTrack&&FiveMSTrack('Contact Form Sent'); })
+      .catch(function(){ msg.style.color='#C5282D'; msg.innerHTML='Something went wrong. Please try again or email <a href="mailto:andrew@5metrescrum.com">andrew@5metrescrum.com</a>.'; })
+      .then(function(){ btn.disabled=false; btn.textContent='Send message'; });
+  });
 })();
 </script>
 </body>

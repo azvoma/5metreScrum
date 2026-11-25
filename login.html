@@ -1371,6 +1371,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 }
 .nav-cta .nav-link { display: inline-flex; }
 
+.skip-link{position:absolute;left:12px;top:-60px;z-index:1000;background:#00C853;color:#0A1628;padding:10px 16px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;transition:top .15s;}.skip-link:focus{top:12px;}
 </style>
   <style>
     body { background: var(--navy); }
@@ -1630,33 +1631,38 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
     }
     .cookie-box-backdrop {
       position: fixed;
-      inset: 0;
-      background: rgba(10,22,40,0.55);
+      left: 0;
+      right: 0;
+      bottom: 0;
       z-index: 300;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+      align-items: flex-end;
+      justify-content: flex-start;
+      padding: 16px;
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
       transition: opacity .3s ease, visibility .3s;
     }
-    .cookie-box-backdrop.visible { opacity: 1; visibility: visible; pointer-events: auto; }
+    .cookie-box-backdrop.visible { opacity: 1; visibility: visible; }
     .cookie-box {
       background: #fff;
       color: var(--navy);
       border-radius: 16px;
-      padding: 24px;
-      max-width: 360px;
+      padding: 20px 24px;
+      max-width: 400px;
       width: 100%;
       text-align: left;
-      box-shadow: 0 30px 80px rgba(10,22,40,0.35);
+      box-shadow: 0 12px 40px rgba(10,22,40,0.28);
       border: 1px solid var(--slate-100);
-      transform: scale(0.94);
+      transform: translateY(12px);
       transition: transform .3s ease;
     }
-    .cookie-box-backdrop.visible .cookie-box { transform: scale(1); }
+    .cookie-box-backdrop.visible .cookie-box { transform: translateY(0); pointer-events: auto; }
+    @media (max-width: 600px) {
+      .cookie-box-backdrop { padding: 10px; }
+      .cookie-box { max-width: none; padding: 16px 18px; }
+    }
     .cookie-box-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .cookie-box-icon {
       width: 36px;
@@ -1678,7 +1684,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
       font-size: 14px;
       line-height: 1.6;
       color: var(--slate-600);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
     .cookie-box p a { color: var(--green); font-weight: 600; text-decoration: underline; }
     .cookie-box-actions { display: flex; gap: 10px; }
@@ -1752,6 +1758,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
   <script src="/js/analytics.js" defer></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
 <div class="onboard-wrap">
 
@@ -1786,7 +1793,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
   </aside>
 
   <!-- RIGHT PANEL -->
-  <div class="onboard-right">
+  <div class="onboard-right" id="main-content" tabindex="-1">
     <div class="login-right-inner">
 
       <p class="login-page-title" id="form-title">Welcome Back</p>
@@ -1824,7 +1831,8 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
         <a href="/onboarding.html" class="btn btn-primary btn-lg" style="width:100%;margin-bottom:16px;display:block;text-align:center;">
           Build My CV — 8-Step Wizard →
         </a>
-        <div class="auth-divider"><span>or quick sign up</span></div>
+        <p style="font-size:12px;color:var(--slate-600);text-align:center;margin:-4px 0 16px;">Recommended: build your full profile in about 10 minutes.</p>
+        <div class="auth-divider"><span>or just create an account</span></div>
         <div class="form-group">
           <label class="form-label" for="signup-name">Full Name</label>
           <input type="text" id="signup-name" class="form-input" placeholder="Jamie Kruger" autocomplete="name" required>
@@ -1848,6 +1856,8 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
         </label>
         <button class="btn btn-primary btn-lg" style="width:100%;" type="button" onclick="handleSignup()" id="signup-submit-btn">Create Free Account</button>
       </div>
+
+      <p style="font-size:13px;color:var(--slate-600);text-align:center;line-height:1.7;margin:20px 0 0;">Scout or club recruiter? <a href="/contact.html?type=club-scout-access#enquiry" style="color:var(--green);font-weight:600;">Request scout access</a><br>Agent or staff member? <a href="/account.html" style="color:var(--green);font-weight:600;">Agent &amp; staff login</a></p>
 
       <div class="auth-footer">
         <span id="auth-toggle-text">Don't have an account? <a href="#" onclick="switchTab('signup');return false;">Sign up free</a></span>
@@ -1997,7 +2007,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
 })();
 </script>
 
-<div class="cookie-box-backdrop" id="cookie-box-backdrop" role="dialog" aria-modal="true" aria-label="Cookie notice">
+<div class="cookie-box-backdrop" id="cookie-box-backdrop" role="region" aria-label="Cookie notice">
   <div class="cookie-box">
     <div class="cookie-box-head">
       <div class="cookie-box-icon" aria-hidden="true">

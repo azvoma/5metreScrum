@@ -1465,33 +1465,38 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
     }
     .cookie-box-backdrop {
       position: fixed;
-      inset: 0;
-      background: rgba(10,22,40,0.55);
+      left: 0;
+      right: 0;
+      bottom: 0;
       z-index: 300;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+      align-items: flex-end;
+      justify-content: flex-start;
+      padding: 16px;
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
       transition: opacity .3s ease, visibility .3s;
     }
-    .cookie-box-backdrop.visible { opacity: 1; visibility: visible; pointer-events: auto; }
+    .cookie-box-backdrop.visible { opacity: 1; visibility: visible; }
     .cookie-box {
       background: #fff;
       color: var(--navy);
       border-radius: 16px;
-      padding: 24px;
-      max-width: 360px;
+      padding: 20px 24px;
+      max-width: 400px;
       width: 100%;
       text-align: left;
-      box-shadow: 0 30px 80px rgba(10,22,40,0.35);
+      box-shadow: 0 12px 40px rgba(10,22,40,0.28);
       border: 1px solid var(--slate-100);
-      transform: scale(0.94);
+      transform: translateY(12px);
       transition: transform .3s ease;
     }
-    .cookie-box-backdrop.visible .cookie-box { transform: scale(1); }
+    .cookie-box-backdrop.visible .cookie-box { transform: translateY(0); pointer-events: auto; }
+    @media (max-width: 600px) {
+      .cookie-box-backdrop { padding: 10px; }
+      .cookie-box { max-width: none; padding: 16px 18px; }
+    }
     .cookie-box-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .cookie-box-icon {
       width: 36px;
@@ -1513,7 +1518,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.15; font-weight: 700; }
       font-size: 14px;
       line-height: 1.6;
       color: var(--slate-600);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
     .cookie-box p a { color: var(--green); font-weight: 600; text-decoration: underline; }
     .cookie-box-actions { display: flex; gap: 10px; }
@@ -2102,7 +2107,7 @@ function handleLogout() {
 })();
 </script>
 
-<div class="cookie-box-backdrop" id="cookie-box-backdrop" role="dialog" aria-modal="true" aria-label="Cookie notice">
+<div class="cookie-box-backdrop" id="cookie-box-backdrop" role="region" aria-label="Cookie notice">
   <div class="cookie-box">
     <div class="cookie-box-head">
       <div class="cookie-box-icon" aria-hidden="true">

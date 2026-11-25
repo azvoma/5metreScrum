@@ -53,7 +53,7 @@
         "name": "Are scouts and clubs charged?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Scout board access is currently free for verified clubs during our growth phase. Club CRM and messaging tools are available under a separate club subscription."
+          "text": "Scout board access is currently free for verified clubs during our growth phase. The club CRM and messaging subscription is priced on request: send us a message from the Contact page and we will send a quote."
         }
       },
       {
@@ -238,6 +238,48 @@
   opacity: 0.75;
   border-bottom: none;
 }
+    .cookie-box-backdrop {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 300;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      padding: 16px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .3s ease, visibility .3s;
+    }
+    .cookie-box-backdrop.visible { opacity: 1; visibility: visible; }
+    .cookie-box {
+      background: #fff;
+      color: var(--navy);
+      border-radius: 16px;
+      padding: 20px 24px;
+      max-width: 400px;
+      width: 100%;
+      text-align: left;
+      box-shadow: 0 12px 40px rgba(10,22,40,0.28);
+      border: 1px solid var(--slate-100);
+      transform: translateY(12px);
+      transition: transform .3s ease;
+    }
+    .cookie-box-backdrop.visible .cookie-box { transform: translateY(0); pointer-events: auto; }
+    @media (max-width: 600px) {
+      .cookie-box-backdrop { padding: 10px; }
+      .cookie-box { max-width: none; padding: 16px 18px; }
+    }
+    .cookie-box-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .cookie-box-icon { width: 36px; height: 36px; border-radius: 50%; background: var(--green-glow); color: var(--green); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .cookie-box h4 { font-size: 18px; font-weight: 800; color: var(--navy); }
+    .cookie-box p { font-size: 14px; line-height: 1.6; color: var(--slate-600); margin-bottom: 16px; }
+    .cookie-box p a { color: var(--green); font-weight: 600; text-decoration: underline; }
+    .cookie-box-actions { display: flex; gap: 10px; }
+    .cookie-box-actions .btn { flex: 1; }
+.skip-link{position:absolute;left:12px;top:-60px;z-index:1000;background:#00C853;color:#0A1628;padding:10px 16px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;transition:top .15s;}.skip-link:focus{top:12px;}
 </style>
   <script type="application/ld+json">
 {
@@ -273,6 +315,7 @@
   <script src="/js/analytics.js" defer></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
 <nav class="nav" id="main-nav" role="navigation" aria-label="Main navigation">
   <div class="container">
@@ -321,14 +364,14 @@
 </div>
 
 <!-- PRICING HERO -->
-<div class="page-hero">
+<div class="page-hero" id="main-content" tabindex="-1">
   <div class="ph-bg">
     <img src="https://images.pexels.com/photos/5739177/pexels-photo-5739177.jpeg?auto=compress&cs=tinysrgb&w=1920" alt="Rugby player sprinting with the ball, showcasing speed on a player CV" loading="eager" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjgwMCIgdmlld0JveD0iMCAwIDEyMDAgODAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImIiIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwRjIwNDAiLz48c3RvcCBvZmZzZXQ9IjAuNiIgc3RvcC1jb2xvcj0iIzBBMTYyOCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzA2MjAxNSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjgwMCIgZmlsbD0idXJsKCNiKSIvPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYwMCA0MDApIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMEM4NTMiIHN0cm9rZS1vcGFjaXR5PSIwLjI4IiBzdHJva2Utd2lkdGg9IjYiPjxlbGxpcHNlIHJ4PSIxNTAiIHJ5PSI5MiIgdHJhbnNmb3JtPSJyb3RhdGUoLTI4KSIvPjxsaW5lIHgxPSItMTE4IiB5MT0iNjMiIHgyPSIxMTgiIHkyPSItNjMiLz48bGluZSB4MT0iLTcwIiB5MT0iNTIiIHgyPSItNDAiIHkyPSIzMCIvPjxsaW5lIHgxPSItNDAiIHkxPSI3MCIgeDI9Ii0xMCIgeTI9IjQ4Ii8+PGxpbmUgeDE9IjQwIiB5MT0iLTUyIiB4Mj0iNzAiIHkyPSItMzAiLz48bGluZSB4MT0iMTAiIHkxPSItNzAiIHgyPSI0MCIgeTI9Ii00OCIvPjwvZz48dGV4dCB4PSI2MDAiIHk9IjY0MCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjYiIGZvbnQtd2VpZ2h0PSI3MDAiIGxldHRlci1zcGFjaW5nPSIzIiBmaWxsPSIjM0Q1QTgyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj41IE1FVFJFIFNDUlVNPC90ZXh0Pjwvc3ZnPg=='">
   </div>
   <div class="container ph-inner">
     <nav class="breadcrumb"><a href="/">Home</a><span>&#8250;</span><span>Pricing</span></nav>
     <h1>Start Free.<br><span style="color:var(--green);">Upgrade Anytime.</span></h1>
-    <p>No credit card required. Build your rugby CV profile, get discovered, and upgrade when you're ready for analytics and priority placement.</p>
+    <p>No credit card required. Build your rugby CV profile and get discovered for free. Analytics and priority placement arrive with the First XV plan, which is coming soon: join the waitlist below.</p>
     <div class="billing-toggle" role="group" aria-label="Billing period" style="margin-top:24px;">
       <span class="active" id="lbl-monthly">Monthly</span>
       <div class="toggle-switch" id="billing-toggle" role="switch" aria-checked="false" tabindex="0" aria-label="Switch to annual billing">
@@ -351,7 +394,7 @@
           <span class="amount">£0</span>
           <span class="per">/month</span>
         </div>
-        <p class="plan-desc">Get your verified profile live and discoverable. Perfect for players starting out or testing the platform.</p>
+        <p class="plan-desc">Get your profile live and discoverable. Perfect for players starting out or testing the platform.</p>
         <ul class="feature-list">
           <li class="feature-item"><span class="fi-check">✓</span> Public player profile with custom URL</li>
           <li class="feature-item"><span class="fi-check">✓</span> Full combine stats dashboard</li>
@@ -441,7 +484,7 @@
         <button class="acc-q" onclick="toggleAcc(this)" style="width:100%;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:700;color:var(--navy);background:none;border:none;cursor:pointer;font-family:inherit;text-align:left;">
           Are scouts and clubs charged?<span class="acc-icon" style="font-size:20px;color:var(--green);transition:transform .2s;flex-shrink:0;margin-left:12px;">+</span>
         </button>
-        <div class="acc-a" style="display:none;padding:0 24px 20px;font-size:14px;color:var(--slate-600);line-height:1.65;">Scout board access is currently free for verified clubs during our growth phase. Club CRM and messaging tools are available under a separate club subscription.</div>
+        <div class="acc-a" style="display:none;padding:0 24px 20px;font-size:14px;color:var(--slate-600);line-height:1.65;">Scout board access is currently free for verified clubs during our growth phase. The club CRM and messaging subscription is priced on request: send us a message from the Contact page and we will send a quote.</div>
       </div>
       <div class="acc-item" style="border:1px solid var(--slate-100);border-radius:14px;overflow:hidden;">
         <button class="acc-q" onclick="toggleAcc(this)" style="width:100%;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:700;color:var(--navy);background:none;border:none;cursor:pointer;font-family:inherit;text-align:left;">
@@ -594,7 +637,7 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
 
-<div class="cookie-box-backdrop" id="cookie-box-backdrop" role="dialog" aria-modal="true" aria-label="Cookie notice">
+<div class="cookie-box-backdrop" id="cookie-box-backdrop" role="region" aria-label="Cookie notice">
   <div class="cookie-box">
     <div class="cookie-box-head">
       <div class="cookie-box-icon" aria-hidden="true">
